@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Action Media | Agencia de Contenido Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --magenta: #FF0099;
+      --magenta-light: #FF33BB;
+      --magenta-glow: rgba(255,0,153,0.25);
+      --black: #000000;
+      --dark: #0a0a0a;
+      --dark2: #111111;
+      --dark3: #1a1a1a;
+      --white: #ffffff;
+      --gray: #888888;
+      --light-gray: #cccccc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,0,153,0.15);
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: drop-shadow(0 0 8px var(--magenta-glow));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light-gray);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--magenta); }
+
+    .nav-cta {
+      background: var(--magenta);
+      color: var(--black) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      font-weight: 700 !important;
+    }
+
+    .nav-cta:hover { background: var(--magenta-light) !important; color: var(--black) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(255,0,153,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 30% at 20% 80%, rgba(255,0,153,0.06) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,0,153,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,153,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease 0.2s both;
+      white-space: normal;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 9vw, 130px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .hero-title span { color: var(--magenta); }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--light-gray);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 44px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    .btn-primary {
+      background: var(--magenta);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--magenta-light);
+      box-shadow: 0 0 24px var(--magenta-glow);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--magenta); color: var(--magenta); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      z-index: 1;
+      animation: fadeUp 0.8s ease 1s both;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--magenta);
+      animation: pulse-line 2s ease-in-out infinite;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 48px; }
+
+    .section-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--magenta);
+      margin-bottom: 48px;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--dark); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+      margin-top: 8px;
+    }
+
+    .service-card {
+      background: var(--dark2);
+      padding: 36px 28px;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      border-color: var(--magenta);
+      background: var(--dark3);
+    }
+
+    .service-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .service-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ── PORTAFOLIO ── */
+    #portafolio { background: var(--black); }
+
+    .portfolio-note {
+      background: var(--dark2);
+      border-left: 4px solid var(--magenta);
+      padding: 24px 28px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--light-gray);
+      line-height: 1.6;
+      max-width: 620px;
+    }
+
+    .portfolio-placeholder {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .portfolio-item {
+      aspect-ratio: 4/3;
+      background: var(--dark2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--gray);
+      font-size: 13px;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: default;
+      transition: background 0.2s;
+      border: 1px dashed rgba(255,255,255,0.06);
+    }
+
+    .portfolio-item:hover { background: var(--dark3); color: var(--magenta); }
+
+    .portfolio-item span:first-child { font-size: 32px; }
+
+    /* ── PAQUETES ── */
+    #paquetes { background: var(--dark); }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+      margin-top: 8px;
+    }
+
+    .package-card {
+      background: var(--dark2);
+      padding: 40px 32px;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .package-card:hover { background: var(--dark3); }
+
+    .package-card.featured {
+      border-top: 3px solid var(--magenta);
+    }
+
+    .package-badge {
+      position: absolute;
+      top: 0; right: 24px;
+      background: var(--magenta);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+    }
+
+    .package-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      margin-bottom: 4px;
+    }
+
+    .package-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--magenta);
+      margin-bottom: 4px;
+    }
+
+    .package-period {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 28px;
+    }
+
+    .package-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .package-features li {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--light-gray);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .package-features li::before {
+      content: '—';
+      color: var(--magenta);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .package-cta {
+      display: block;
+      text-align: center;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      border-radius: 2px;
+    }
+
+    .package-cta:hover, .package-card.featured .package-cta {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      color: var(--black);
+    }
+
+    /* ── SOBRE NOSOTROS ── */
+    #nosotros { background: var(--black); }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--light-gray);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .about-text p em {
+      color: var(--magenta);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .stat-box {
+      background: var(--dark2);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      color: var(--magenta);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--dark); }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-intro p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--light-gray);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--dark2);
+      text-decoration: none;
+      color: var(--white);
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .contact-btn:hover {
+      border-color: var(--magenta);
+      background: var(--dark3);
+    }
+
+    .contact-btn-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .contact-btn-info strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--magenta);
+      margin-bottom: 4px;
+    }
+
+    .contact-btn-info span {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--light-gray);
+    }
+
+    .social-links {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark2);
+      color: var(--gray);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-decoration: none;
+      padding: 12px 18px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .social-link:hover {
+      color: var(--magenta);
+      background: var(--dark3);
+    }
+
+    .contact-form-area {
+      background: var(--dark2);
+      padding: 40px 32px;
+    }
+
+    .contact-form-area h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .contact-form-area p {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--magenta);
+    }
+
+    .form-group select option { background: var(--dark3); }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--magenta);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+
+    .form-submit:hover {
+      background: var(--magenta-light);
+      box-shadow: 0 0 24px var(--magenta-glow);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,0,153,0.15);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo img {
+      height: 36px;
+      filter: drop-shadow(0 0 6px var(--magenta-glow));
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .footer-copy span { color: var(--magenta); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.5; width: 40px; }
+      50% { opacity: 1; width: 60px; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      #hero { padding: 0 20px; }
+      .hero-scroll { left: 20px; }
+      .hero-eyebrow { letter-spacing: 2px; font-size: 11px; }
+      .about-layout,
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .portfolio-placeholder { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .packages-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="Logo_PNG.png" alt="One Action Media" />
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="portafolio.html">Portafolio</a></li>
+    <li><a href="#paquetes">Paquetes</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto" class="nav-cta">Cotizar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Agencia de Contenido Digital — República Dominicana</p>
+  <h1 class="hero-title">
+    Cada historia<br />merece <span>una sola</span><br />gran acción.
+  </h1>
+  <p class="hero-sub">
+    Creamos contenido que conecta, impacta y convierte.
+    Video, fotografía, diseño y estrategia digital para marcas que quieren destacar.
+  </p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Cotizar ahora</a>
+    <a href="#servicios" class="btn-outline">Ver servicios</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Explorar
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <p class="section-eyebrow">Lo que hacemos</p>
+  <h2 class="section-title">Nuestros Servicios</h2>
+  <div class="section-divider"></div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎬📸</div>
+      <div class="service-name">Reels & Fotografía Profesional</div>
+      <p class="service-desc">Producción de videos cortos de alto impacto para Instagram, TikTok y Facebook, más sesiones fotográficas para empresas, productos y marcas personales.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🍽️</div>
+      <div class="service-name">Fotografía de Menú</div>
+      <p class="service-desc">Fotografía especializada para restaurantes. Platos que se ven tan buenos como saben.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <div class="service-name">Diseño Gráfico</div>
+      <p class="service-desc">Identidad visual, piezas para redes, artes para eventos y materiales de marca que comunican.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-name">Community Manager</div>
+      <p class="service-desc">Plan completo: gestión de redes, estrategia de contenido, producción audiovisual y fotografía mensual.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎪</div>
+      <div class="service-name">Producción de Eventos</div>
+      <p class="service-desc">Alquiler de sonido profesional y decoración con globos para eventos de cualquier escala.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚁</div>
+      <div class="service-name">Vuelos de Drone</div>
+      <p class="service-desc">Tomas aéreas cinematográficas para proyectos, propiedades, eventos y recorridos visuales.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <div class="service-name">Real Estate & Airbnb</div>
+      <p class="service-desc">Videos de recorrido para propiedades en venta, alquiler o Airbnb. Presentación visual de alto nivel.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💍</div>
+      <div class="service-name">Videos de Bodas</div>
+      <p class="service-desc">Documentamos el día más especial con una narrativa cinematográfica y emotiva que dura para siempre.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📲</div>
+      <div class="service-name">Menú Digital & NFC</div>
+      <p class="service-desc">Colocación de token NFC y elaboración de menús digitales para restaurantes. Moderno, rápido y sin papel.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎥</div>
+      <div class="service-name">Producción Audiovisual</div>
+      <p class="service-desc">Documentales, cortometrajes y videos corporativos con una visión narrativa auténtica y cinématográfica.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-name">Diseño de Páginas Web</div>
+      <p class="service-desc">Sitios web profesionales, modernos y optimizados para tu marca. Presencia digital que impacta desde el primer clic.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAFOLIO -->
+<section id="portafolio">
+  <p class="section-eyebrow">Nuestro trabajo</p>
+  <h2 class="section-title">Portafolio</h2>
+  <div class="section-divider"></div>
+
+  <div class="portfolio-placeholder">
+    <a href="portafolio.html?cat=videos" class="portfolio-item" style="text-decoration:none;">
+      <span>🎬</span><span>Videos</span>
+    </a>
+    <a href="portafolio.html?cat=fotos" class="portfolio-item" style="text-decoration:none;">
+      <span>📸</span><span>Fotos</span>
+    </a>
+    <a href="portafolio.html?cat=bodas" class="portfolio-item" style="text-decoration:none;">
+      <span>💍</span><span>Bodas</span>
+    </a>
+  </div>
+
+  <div style="margin-top:48px;">
+    <a href="portafolio.html" class="btn-primary">Ver portafolio completo →</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="paquetes" style="background: var(--dark); text-align: center; padding: 120px 48px;">
+  <div style="max-width: 780px; margin: 0 auto;">
+    <p class="section-eyebrow" style="justify-content: center; display: block;">¿Listo para empezar?</p>
+    <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 28px;">
+      Cuéntanos tu idea.<br /><span style="color: var(--magenta);">Nosotros la hacemos</span><br />realidad.
+    </h2>
+    <p style="font-size: 18px; font-weight: 300; color: var(--light-gray); line-height: 1.7; max-width: 560px; margin: 0 auto 52px;">
+      Cada proyecto es único. Escríbenos, cuéntanos qué necesitas y te damos una propuesta personalizada sin compromiso.
+    </p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="https://wa.me/18296481698?text=Hola!%20Vi%20su%20página%20y%20me%20interesa%20cotizar%20un%20servicio." target="_blank" class="btn-primary" style="font-size: 15px; padding: 18px 44px;">
+        💬 Escribir por WhatsApp
+      </a>
+      <a href="mailto:evancristia@gmail.com" class="btn-outline" style="font-size: 15px; padding: 18px 44px;">
+        ✉️ Enviar un correo
+      </a>
+    </div>
+    <p style="margin-top: 32px; font-size: 13px; color: var(--gray);">Respondemos en menos de 24 horas · República Dominicana</p>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section id="nosotros">
+  <p class="section-eyebrow">Quiénes somos</p>
+  <h2 class="section-title">Sobre Nosotros</h2>
+  <div class="section-divider"></div>
+
+  <div class="about-layout">
+    <div class="about-text">
+      <p>
+        <em>One Action Media</em> es una agencia de contenido digital con base en la República Dominicana, comprometida con contar historias que conectan de verdad con las personas.
+      </p>
+      <p>
+        Creemos que cada marca tiene una historia única que merece ser contada con <em>autenticidad, creatividad y precisión</em>. No hacemos contenido genérico: hacemos contenido que representa quién eres y lo que ofreces.
+      </p>
+      <p>
+        Desde reels para redes hasta documentales cinematográficos, trabajamos con negocios de todos los sectores a lo largo de todo el país — con pasión, talento y una visión clara: <em>una sola gran acción puede cambiarlo todo</em>.
+      </p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Creatividad</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Servicios</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">RD</div>
+        <div class="stat-label">Todo el país</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Gran Acción</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <p class="section-eyebrow">Hablemos</p>
+  <h2 class="section-title">Contáctanos</h2>
+  <div class="section-divider"></div>
+
+  <div class="contact-layout">
+    <div class="contact-intro">
+      <p>¿Tienes un proyecto en mente? Escríbenos y te respondemos rápido. Estamos listos para ayudarte a crear contenido que impacte.</p>
+
+      <div class="contact-methods">
+        <a href="https://wa.me/18296481698" target="_blank" class="contact-btn">
+          <div class="contact-btn-icon">💬</div>
+          <div class="contact-btn-info">
+            <strong>WhatsApp</strong>
+            <span>+1 (829) 648-1698</span>
+          </div>
+        </a>
+        <a href="mailto:evancristia@gmail.com" class="contact-btn">
+          <div class="contact-btn-icon">✉️</div>
+          <div class="contact-btn-info">
+            <strong>Correo Electrónico</strong>
+            <span>evancristia@gmail.com</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://instagram.com/oneactionmedia" target="_blank" class="social-link">
+          📷 @oneactionmedia
+        </a>
+        <a href="https://instagram.com/misafilmaker" target="_blank" class="social-link">
+          🎬 @misafilmaker
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form-area">
+      <h3>Solicitar Cotización</h3>
+      <p>Te responderemos en menos de 24 horas.</p>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre completo" />
+      </div>
+      <div class="form-group">
+        <label>WhatsApp / Teléfono</label>
+        <input type="tel" placeholder="+1 (809) 000-0000" />
+      </div>
+      <div class="form-group">
+        <label>Servicio de interés</label>
+        <select>
+          <option value="">Selecciona un servicio</option>
+          <option>Reels & Video para Redes</option>
+          <option>Fotografía Profesional</option>
+          <option>Fotografía de Menú</option>
+          <option>Diseño Gráfico</option>
+          <option>Community Manager</option>
+          <option>Producción de Eventos</option>
+          <option>Vuelos de Drone</option>
+          <option>Real Estate & Airbnb</option>
+          <option>Videos de Bodas</option>
+          <option>Menú Digital & NFC</option>
+          <option>Producción Audiovisual</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Mensaje (opcional)</label>
+        <textarea placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+      </div>
+      <button class="form-submit" onclick="sendWhatsApp()">Enviar por WhatsApp →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="Logo_PNG.png" alt="One Action Media" />
+  </div>
+  <div class="footer-copy">
+    © 2025 <span>One Action Media</span>. República Dominicana. Todos los derechos reservados.
+  </div>
+</footer>
+
+<script>
+  function sendWhatsApp() {
+    const name = document.querySelector('input[placeholder="Tu nombre completo"]').value;
+    const phone = document.querySelector('input[placeholder="+1 (809) 000-0000"]').value;
+    const service = document.querySelector('select').value;
+    const msg = document.querySelector('textarea').value;
+    if (!name || !service) {
+      alert('Por favor completa al menos tu nombre y el servicio de interés.');
+      return;
+    }
+    const text = `Hola! Mi nombre es ${name}. Estoy interesado/a en: *${service}*.${phone ? ' Mi número es: ' + phone + '.' : ''}${msg ? ' Mensaje: ' + msg : ''}`;
+    window.open('https://wa.me/18296481698?text=' + encodeURIComponent(text), '_blank');
+  }
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.opacity = '1', e.target.style.transform = 'translateY(0)';
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .package-card, .portfolio-item, .stat-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

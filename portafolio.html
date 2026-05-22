@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portafolio | One Action Media</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --magenta: #FF0099;
+      --magenta-light: #FF33BB;
+      --magenta-glow: rgba(255,0,153,0.25);
+      --black: #000000;
+      --dark2: #111111;
+      --dark3: #1a1a1a;
+      --white: #ffffff;
+      --gray: #888888;
+      --light-gray: #cccccc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,0,153,0.15);
+    }
+    .nav-logo img { height: 44px; width: auto; filter: drop-shadow(0 0 8px var(--magenta-glow)); }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-tab {
+      color: var(--gray); background: none; border: none;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      transition: color 0.2s; cursor: pointer; padding: 0;
+    }
+    .nav-tab:hover, .nav-tab.active { color: var(--magenta); }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--light-gray); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-back::before { content: '←'; font-size: 16px; }
+    .nav-back:hover { color: var(--magenta); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 150px 48px 72px; background: var(--black);
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(255,0,153,0.1);
+    }
+    .hero-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,0,153,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,0,153,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,153,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .page-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(60px, 9vw, 120px); line-height: 0.92;
+    }
+    .page-title span { color: var(--magenta); }
+    .page-sub {
+      font-size: 17px; font-weight: 300; color: var(--light-gray);
+      max-width: 480px; line-height: 1.6; margin-top: 20px;
+    }
+
+    /* ── TABS BAR ── */
+    .tabs-bar {
+      position: sticky; top: 81px; z-index: 90;
+      background: rgba(0,0,0,0.98); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,0,153,0.12);
+      padding: 0 48px; display: flex;
+    }
+    .tab-btn {
+      padding: 20px 36px; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray); background: none; border: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--light-gray); }
+    .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); }
+
+    /* ── SECTION VISIBILITY ── */
+    .port-sec { display: none; background: var(--black); }
+    .port-sec.active { display: block; }
+
+    /* ── SECTION HEADER ── */
+    .sec-head { padding: 64px 48px 40px; }
+    .sec-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 10px;
+    }
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 5vw, 64px); line-height: 1; margin-bottom: 14px;
+    }
+    .sec-divider { width: 48px; height: 3px; background: var(--magenta); }
+
+    /* ── FEATURED VIDEO GRID ── */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px; padding: 0 48px;
+    }
+    .v-card {
+      position: relative; aspect-ratio: 9/16;
+      background: var(--dark2); overflow: hidden; cursor: pointer;
+      transition: transform 0.25s;
+    }
+    .v-card:hover { transform: scale(1.015); z-index: 2; }
+    .v-card:hover .v-overlay { background: rgba(0,0,0,0.2); }
+    .v-card:hover .v-play { transform: translate(-50%,-50%) scale(1.12); box-shadow: 0 0 40px rgba(255,0,153,0.65); }
+    .v-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.42);
+      transition: background 0.25s; z-index: 2;
+    }
+    .v-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 62px; height: 62px; border-radius: 50%;
+      background: var(--magenta); z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 0 24px rgba(255,0,153,0.4);
+    }
+    .v-play svg { width: 20px; height: 20px; fill: var(--black); margin-left: 4px; }
+    .v-label {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      padding: 36px 18px 18px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.88));
+    }
+    .v-cat {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 5px;
+    }
+    .v-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      color: var(--white); line-height: 1;
+    }
+
+    /* ── CTA ROW ── */
+    .cta-row {
+      padding: 40px 48px 72px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--magenta); color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 16px 36px; text-decoration: none; border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--magenta-light); box-shadow: 0 0 24px var(--magenta-glow); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2); color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      padding: 16px 36px; text-decoration: none; border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--magenta); color: var(--magenta); }
+
+    /* ── PHOTO SUBSECTIONS ── */
+    .sub-sec { margin-bottom: 72px; }
+    .sub-sec-head {
+      padding: 0 48px 28px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .sub-sec-line {
+      width: 36px; height: 2px; background: var(--magenta); flex-shrink: 0;
+    }
+    .sub-sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(26px, 3vw, 40px); letter-spacing: 1px; color: var(--white);
+    }
+
+    /* ── MASONRY GALLERY ── */
+    .masonry-wrap { padding: 0 48px; }
+    .masonry { columns: 4; column-gap: 4px; }
+    .m-item {
+      break-inside: avoid; margin-bottom: 4px;
+      overflow: hidden; cursor: pointer;
+    }
+    .m-item img {
+      width: 100%; display: block;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .m-item:hover img { transform: scale(1.04); opacity: 0.82; }
+
+    /* ── PHOTO LIGHTBOX ── */
+    #photo-lb {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.97);
+      display: none; align-items: center; justify-content: center;
+    }
+    #photo-lb.open { display: flex; }
+    #lb-img { max-width: 90vw; max-height: 88vh; object-fit: contain; display: block; }
+    .lb-close {
+      position: absolute; top: 20px; right: 28px;
+      font-size: 36px; cursor: pointer; color: var(--white);
+      background: none; border: none; line-height: 1; transition: color 0.2s;
+    }
+    .lb-close:hover { color: var(--magenta); }
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 22px; cursor: pointer; color: var(--white);
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.12);
+      padding: 16px 20px; transition: background 0.2s, border-color 0.2s;
+    }
+    .lb-arrow:hover { background: var(--magenta); border-color: var(--magenta); color: var(--black); }
+    #lb-prev { left: 16px; }
+    #lb-next { right: 16px; }
+    .lb-counter {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      letter-spacing: 2px; color: var(--gray);
+    }
+    .lb-counter em { color: var(--magenta); font-style: normal; }
+
+    /* ── BODAS ── */
+    .yt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px; padding: 0 48px;
+    }
+    .yt-wrap {
+      position: relative; aspect-ratio: 16/9;
+      background: var(--dark2); overflow: hidden;
+    }
+    .yt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .yt-span2 { grid-column: span 2; }
+
+    /* ── VIDEO MODAL ── */
+    #v-modal {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.96);
+      display: none; align-items: center; justify-content: center;
+    }
+    #v-modal.open { display: flex; }
+    #modal-inner { position: relative; width: min(430px, 90vw); }
+    #modal-video { width: 100%; max-height: 90vh; object-fit: contain; display: block; }
+    #modal-close {
+      position: absolute; top: -48px; right: 0;
+      font-size: 32px; cursor: pointer; color: var(--white);
+      background: none; border: none; transition: color 0.2s;
+    }
+    #modal-close:hover { color: var(--magenta); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,0,153,0.15);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo img { height: 36px; filter: drop-shadow(0 0 6px var(--magenta-glow)); }
+    .footer-copy { font-size: 12px; color: var(--gray); font-weight: 300; }
+    .footer-copy span { color: var(--magenta); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 1024px) {
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+      .masonry { columns: 3; }
+      .yt-grid { grid-template-columns: repeat(2, 1fr); }
+      .yt-span2 { grid-column: span 1; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .page-hero { padding: 120px 20px 56px; }
+      .tabs-bar { padding: 0 20px; overflow-x: auto; }
+      .tab-btn { padding: 16px 20px; font-size: 12px; white-space: nowrap; }
+      .sec-head { padding: 48px 20px 32px; }
+      .video-grid { padding: 0 20px; }
+      .masonry-wrap { padding: 0 20px; }
+      .masonry { columns: 2; }
+      .sub-sec-head { padding: 0 20px 20px; }
+      .cta-row { padding: 32px 20px 56px; }
+      .yt-grid { grid-template-columns: 1fr; padding: 0 20px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+    }
+    @media (max-width: 480px) {
+      .video-grid { grid-template-columns: 1fr; }
+      .masonry { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="Logo_PNG.png" alt="One Action Media" /></a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-tab" id="nt-videos" onclick="switchTab('videos')">Videos</button>
+    <button class="nav-tab" id="nt-fotos" onclick="switchTab('fotos')">Fotos</button>
+    <button class="nav-tab" id="nt-bodas" onclick="switchTab('bodas')">Bodas</button>
+    <a href="index.html" class="nav-back">Inicio</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="page-eyebrow">One Action Media — Nuestro Trabajo</p>
+    <h1 class="page-title">Porta<span>folio</span></h1>
+    <p class="page-sub">Cada proyecto cuenta una historia. Explora nuestro trabajo por categoría.</p>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tab-btn" id="tb-videos" onclick="switchTab('videos')">🎬 Videos</button>
+  <button class="tab-btn" id="tb-fotos" onclick="switchTab('fotos')">📸 Fotos</button>
+  <button class="tab-btn" id="tb-bodas" onclick="switchTab('bodas')">💍 Bodas</button>
+</div>
+
+<!-- ═══════════════════ VIDEOS ═══════════════════ -->
+<div class="port-sec" id="sec-videos">
+  <div class="sec-head">
+    <p class="sec-eyebrow">Videos destacados</p>
+    <h2 class="sec-title">Videos</h2>
+    <div class="sec-divider"></div>
+  </div>
+
+  <div class="video-grid">
+
+    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Redes%20sociales%20.mp4')">
+      <div class="v-overlay"></div>
+      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="v-label">
+        <div class="v-cat">Categoría</div>
+        <div class="v-name">Redes Sociales</div>
+      </div>
+    </div>
+
+    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Restaurantes.mp4')">
+      <div class="v-overlay"></div>
+      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="v-label">
+        <div class="v-cat">Categoría</div>
+        <div class="v-name">Restaurantes</div>
+      </div>
+    </div>
+
+    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Constructoras%20recap%20.mp4')">
+      <div class="v-overlay"></div>
+      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="v-label">
+        <div class="v-cat">Categoría</div>
+        <div class="v-name">Constructoras</div>
+      </div>
+    </div>
+
+    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Medicina.mp4')">
+      <div class="v-overlay"></div>
+      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="v-label">
+        <div class="v-cat">Categoría</div>
+        <div class="v-name">Medicina</div>
+      </div>
+    </div>
+
+    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Eventos%20coorporativos.mp4')">
+      <div class="v-overlay"></div>
+      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="v-label">
+        <div class="v-cat">Categoría</div>
+        <div class="v-name">Eventos Corporativos</div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="cta-row">
+    <a href="https://drive.google.com/drive/folders/1VansxQLT3bKUvQSAWibEAxos95QAmY0P?usp=drive_link"
+       target="_blank" rel="noopener" class="btn-primary">Ver más videos →</a>
+    <a href="index.html#contacto" class="btn-outline">Cotizar un video</a>
+  </div>
+</div>
+
+<!-- ═══════════════════ FOTOS ═══════════════════ -->
+<div class="port-sec" id="sec-fotos">
+  <div class="sec-head">
+    <p class="sec-eyebrow">Galería de imágenes</p>
+    <h2 class="sec-title">Fotos</h2>
+    <div class="sec-divider"></div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-head">
+      <span class="sub-sec-line"></span>
+      <h3 class="sub-sec-title">Fotografía de Menú</h3>
+    </div>
+    <div class="masonry-wrap">
+      <div class="masonry" id="masonry-menu"></div>
+    </div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-head">
+      <span class="sub-sec-line"></span>
+      <h3 class="sub-sec-title">Eventos</h3>
+    </div>
+    <div class="masonry-wrap">
+      <div class="masonry" id="masonry-eventos"></div>
+    </div>
+  </div>
+
+  <div class="sub-sec">
+    <div class="sub-sec-head">
+      <span class="sub-sec-line"></span>
+      <h3 class="sub-sec-title">Deporte</h3>
+    </div>
+    <div class="masonry-wrap">
+      <div class="masonry" id="masonry-deporte"></div>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a href="https://drive.google.com/drive/folders/1cpbJqLqzUWdq__d75E7EW1XQJT5bDNG1?usp=drive_link"
+       target="_blank" rel="noopener" class="btn-primary">Ver más fotos →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════ BODAS ═══════════════════ -->
+<div class="port-sec" id="sec-bodas">
+  <div class="sec-head">
+    <p class="sec-eyebrow">El día más especial</p>
+    <h2 class="sec-title">Bodas</h2>
+    <div class="sec-divider"></div>
+  </div>
+
+  <div class="yt-grid">
+    <div class="yt-span2">
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/wQyWWvwcIsQ"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/lhdYcw5_dCs"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/ryf3iPrRLeY"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/T7avZBi-x8o"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/bV6oUQo2eHc"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a href="index.html#contacto" class="btn-primary">Reservar para mi boda →</a>
+  </div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="v-modal">
+  <div id="modal-inner">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <video id="modal-video" controls playsinline></video>
+  </div>
+</div>
+
+<!-- PHOTO LIGHTBOX -->
+<div id="photo-lb">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-arrow" id="lb-prev" onclick="lbMove(-1)">&#8592;</button>
+  <img id="lb-img" src="" alt="" />
+  <button class="lb-arrow" id="lb-next" onclick="lbMove(1)">&#8594;</button>
+  <div class="lb-counter"><em id="lb-cur">1</em> / <span id="lb-tot">1</span></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="Logo_PNG.png" alt="One Action Media" />
+  </div>
+  <div class="footer-copy">
+    © 2025 <span>One Action Media</span>. República Dominicana. Todos los derechos reservados.
+  </div>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────
+   ALL PHOTOS — flat list from all 3 folders
+   (Portafolio de fotos)
+───────────────────────────────────────── */
+const allPhotos = [
+  /* Fotos de menú */
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','1 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','2 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','3 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','3.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','4 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','4.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','5 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','5.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','6 2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','6.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','7.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00005-39.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00044-223.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00090-9.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00093-238.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00093-51.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00112-31.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00115-34.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00129-251.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00147-260.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00163-266.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00173-57.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00189-59.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00205-283.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00211-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00218-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00245-5.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00246-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00247-2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00250-Editar-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00257-17.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00263-4.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00267-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00287-47.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00308-68.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00326-86.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00327-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00328-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00337-329.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00346-106.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00395-338.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00400-160.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00427-347.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00436-2.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00441-350.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00455-354.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00462-27.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00471-36.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00478-238.jpg'],
+
+  /* Fotos de eventos (doble espacio) */
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00509-3.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00517-10.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00523-15.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00550-39.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00564-51.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00568-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00592-18.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00594-19.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00603-24.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00605-26.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01494-9.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01498-11.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01502-5.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01523-22.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01525-9.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01553-33.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01577-16.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01675 2-21.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01699-22.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01725-26.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01728-28.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01796 2-34.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01796-1.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01864-67.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01867-70.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01877-80.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01879-82.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01899-102.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01900-103.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01919-120.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01931-129.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01950-8.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01958-149.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01964-155.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01966-20.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01986-28.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01992-181.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01993-182.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC02009-35.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC02016-203.jpg'],
+
+  /* Fotos deporte */
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC00939-3.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01012-22.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01151-62.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01251-82.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01303-97.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01409-127.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01503-142.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC05943-5.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC05990-52.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06025-87.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06058-120.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06182-244.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06200-262.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06256-318.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06540-602.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06940-1002.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07252-1314.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07395-1457.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07520-1582.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08285-428.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08299-440.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08509-9.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08560-60.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08829-329.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08923-423.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09001-501.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09073-573.jpg'],
+  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09098-598.jpg']
+];
+
+/* ─────────────────────────────────────────
+   BUILD MASONRY — 3 grids, global index
+───────────────────────────────────────── */
+const gridMap = [
+  { id: 'masonry-menu',     start: 0,  end: 50  },
+  { id: 'masonry-eventos',  start: 50, end: 90  },
+  { id: 'masonry-deporte',  start: 90, end: 118 }
+];
+
+function buildMasonry() {
+  gridMap.forEach(({ id, start, end }) => {
+    const grid = document.getElementById(id);
+    for (let i = start; i < end && i < allPhotos.length; i++) {
+      const [folder, file] = allPhotos[i];
+      const src = folder + '/' + encodeURIComponent(file);
+
+      const item = document.createElement('div');
+      item.className = 'm-item';
+      item.dataset.i = i;
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Foto ' + (i + 1);
+      img.loading = 'lazy';
+      img.onerror = () => { item.remove(); };
+
+      item.appendChild(img);
+      item.addEventListener('click', () => openLb(i));
+      grid.appendChild(item);
+    }
+  });
+}
+
+/* ─────────────────────────────────────────
+   LIGHTBOX
+───────────────────────────────────────── */
+let lbIdx = 0;
+
+function openLb(i) {
+  lbIdx = i;
+  updateLb();
+  document.getElementById('photo-lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLb() {
+  const [folder, file] = allPhotos[lbIdx];
+  document.getElementById('lb-img').src = folder + '/' + encodeURIComponent(file);
+  document.getElementById('lb-cur').textContent = lbIdx + 1;
+  document.getElementById('lb-tot').textContent = allPhotos.length;
+}
+
+function closeLb() {
+  document.getElementById('photo-lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbMove(dir) {
+  lbIdx = (lbIdx + dir + allPhotos.length) % allPhotos.length;
+  updateLb();
+}
+
+document.getElementById('photo-lb').addEventListener('click', e => {
+  if (e.target === document.getElementById('photo-lb')) closeLb();
+});
+
+/* ─────────────────────────────────────────
+   VIDEO MODAL
+───────────────────────────────────────── */
+function openModal(src) {
+  const v = document.getElementById('modal-video');
+  v.src = src; v.load(); v.play();
+  document.getElementById('v-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const v = document.getElementById('modal-video');
+  v.pause(); v.src = '';
+  document.getElementById('v-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('v-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('v-modal')) closeModal();
+});
+
+/* ─────────────────────────────────────────
+   TAB SWITCHING
+───────────────────────────────────────── */
+function switchTab(tab) {
+  document.querySelectorAll('.port-sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn, .nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + tab).classList.add('active');
+  document.getElementById('tb-' + tab).classList.add('active');
+  document.getElementById('nt-' + tab).classList.add('active');
+  const bar = document.querySelector('.tabs-bar');
+  window.scrollTo({ top: bar.offsetTop - 82, behavior: 'smooth' });
+}
+
+/* ─────────────────────────────────────────
+   KEYBOARD
+───────────────────────────────────────── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeLb(); }
+  if (document.getElementById('photo-lb').classList.contains('open')) {
+    if (e.key === 'ArrowLeft')  lbMove(-1);
+    if (e.key === 'ArrowRight') lbMove(1);
+  }
+});
+
+/* ─────────────────────────────────────────
+   URL PARAM  →  open tab directly
+   e.g. portafolio.html?cat=bodas
+───────────────────────────────────────── */
+const initTab = new URLSearchParams(location.search).get('cat');
+if (initTab && ['videos','fotos','bodas'].includes(initTab)) {
+  switchTab(initTab);
+} else {
+  switchTab('videos');   /* default: Videos */
+}
+
+/* INIT */
+buildMasonry();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Videos — superan el límite de 100 MB de GitHub
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.mkv
+
+# Carpetas de medios pesados (fotos ~2.9 GB, videos ~2.4 GB)
+# Hospeda estas en Google Drive o Cloudinary
+Portafolio de videos/
+Portafolio de fotos/
+
+# macOS
+.DS_Store
