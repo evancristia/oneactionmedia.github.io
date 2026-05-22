@@ -532,71 +532,70 @@
 
 <script>
 /* ─────────────────────────────────────────
-   CLOUDINARY — URLs hardcodeadas
-   Cloud: daircfrad  |  Carpetas: menu · eventos · deportes
-   URL miniatura : /upload/w_700,f_auto,q_auto/{folder}/{id}
-   URL lightbox  : /upload/f_auto,q_auto/{folder}/{id}
+   CLOUDINARY — endpoint público por tag
+   GET /image/list/{tag}.json → { resources: [{ public_id, ... }] }
+   Requiere "Resource list" habilitado en Cloudinary → Settings → Security
 ───────────────────────────────────────── */
 const CLOUD = 'daircfrad';
-
-function cldThumb(folder, id) {
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto/${folder}/${encodeURIComponent(id)}`;
-}
-function cldFull(folder, id) {
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${folder}/${encodeURIComponent(id)}`;
-}
-
-/* ── IDs por carpeta — primeros 12 archivos de cada carpeta local ── */
-const IDS_MENU = [
-  '1 2','1','2 2','2','2','3 2','3','4 2','4','5 2','5','6 2'
-];
-
-const IDS_EVENTOS = [
-  'DSC00509-3','DSC00517-10','DSC00523-15','DSC00550-39','DSC00564-51',
-  'DSC00568-1','DSC00592-18','DSC00594-19','DSC00603-24','DSC00605-26',
-  'DSC01494-9','DSC01498-11'
-];
-
-const IDS_DEPORTE = [
-  'DSC00939-3','DSC01012-22','DSC01151-62','DSC01251-82','DSC01303-97',
-  'DSC01409-127','DSC01503-142','DSC05943-5','DSC05990-52','DSC06025-87',
-  'DSC06058-120','DSC06182-244'
-];
+const MAX_PHOTOS = 12;
 
 const PHOTO_GROUPS = [
-  { folder: 'menu',     gridId: 'masonry-menu',    ids: IDS_MENU    },
-  { folder: 'eventos',  gridId: 'masonry-eventos',  ids: IDS_EVENTOS },
-  { folder: 'deportes', gridId: 'masonry-deporte',  ids: IDS_DEPORTE }
+  { tag: 'menu',     gridId: 'masonry-menu'    },
+  { tag: 'eventos',  gridId: 'masonry-eventos'  },
+  { tag: 'deportes', gridId: 'masonry-deporte'  }
 ];
 
-/* ── Array plano para el lightbox: { folder, id } ── */
+function cldThumb(publicId) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto/${publicId}.jpg`;
+}
+function cldFull(publicId) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${publicId}.jpg`;
+}
+
+/* ── Array plano para el lightbox ── */
 let lbPhotos = [];
 
-/* ── Construye los 3 grids de forma síncrona ── */
-function buildMasonry() {
+function addPhotoToGrid(grid, publicId) {
+  const globalIdx = lbPhotos.length;
+  lbPhotos.push(publicId);
+
+  const item = document.createElement('div');
+  item.className = 'm-item';
+
+  const img = document.createElement('img');
+  img.src = cldThumb(publicId);
+  img.alt = publicId.split('/').pop().replace(/[-_]/g, ' ');
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.onerror = () => item.remove();
+
+  item.appendChild(img);
+  item.addEventListener('click', () => openLb(globalIdx));
+  grid.appendChild(item);
+}
+
+async function buildMasonry() {
   lbPhotos = [];
-  PHOTO_GROUPS.forEach(({ folder, gridId, ids }) => {
+  for (const { tag, gridId } of PHOTO_GROUPS) {
     const grid = document.getElementById(gridId);
-    grid.innerHTML = ''; /* quita el spinner */
-    ids.forEach(id => {
-      const globalIdx = lbPhotos.length;
-      lbPhotos.push({ folder, id });
-
-      const item = document.createElement('div');
-      item.className = 'm-item';
-
-      const img = document.createElement('img');
-      img.src = cldThumb(folder, id);
-      img.alt = id.replace(/[-_]/g, ' ');
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.onerror = () => item.remove();
-
-      item.appendChild(img);
-      item.addEventListener('click', () => openLb(globalIdx));
-      grid.appendChild(item);
-    });
-  });
+    grid.innerHTML = '<div class="cld-spinner">Cargando fotos</div>';
+    try {
+      const res = await fetch(`https://res.cloudinary.com/${CLOUD}/image/list/${tag}.json`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const resources = (data.resources || []).slice(0, MAX_PHOTOS);
+      grid.innerHTML = '';
+      if (resources.length === 0) {
+        grid.innerHTML = '<p class="cld-error">No se encontraron fotos en esta categoría.</p>';
+        continue;
+      }
+      resources.forEach(r => addPhotoToGrid(grid, r.public_id));
+    } catch (err) {
+      grid.innerHTML = `<p class="cld-error"><strong>No se pudo cargar la galería.</strong><br>
+        Verifica que el tag <em>${tag}</em> existe en Cloudinary y que "Resource list" está activado
+        en Settings → Security.</p>`;
+    }
+  }
 }
 
 /* ─────────────────────────────────────────
@@ -612,8 +611,7 @@ function openLb(i) {
 }
 
 function updateLb() {
-  const { folder, id } = lbPhotos[lbIdx];
-  document.getElementById('lb-img').src = cldFull(folder, id);
+  document.getElementById('lb-img').src = cldFull(lbPhotos[lbIdx]);
   document.getElementById('lb-cur').textContent = lbIdx + 1;
   document.getElementById('lb-tot').textContent = lbPhotos.length;
 }
@@ -664,10 +662,9 @@ const initTab = new URLSearchParams(location.search).get('cat');
 if (initTab && ['videos','fotos','bodas'].includes(initTab)) {
   switchTab(initTab);
 } else {
-  switchTab('videos');   /* default: Videos */
+  switchTab('videos');
 }
 
-/* INIT */
 buildMasonry();
 </script>
 </body>
