@@ -560,88 +560,148 @@
 
 <script>
 /* ─────────────────────────────────────────
-   CLOUDINARY CONFIGURATION
-   Cloud name: daircfrad
-   Folders: menu · eventos · deportes
-
-   REQUISITO en Cloudinary → Settings → Security:
-   ✅ "Enable resource list" (permite el endpoint /image/list/)
-   Las imágenes deben estar en carpetas con esos nombres exactos.
+   CLOUDINARY — URLs hardcodeadas
+   Cloud: daircfrad  |  Carpetas: menu · eventos · deportes
+   URL miniatura : /upload/w_700,f_auto,q_auto/{folder}/{id}
+   URL lightbox  : /upload/f_auto,q_auto/{folder}/{id}
 ───────────────────────────────────────── */
 const CLOUD = 'daircfrad';
 
-const CLD_CATS = [
-  { folder: 'menu',     gridId: 'masonry-menu',    label: 'Fotografía de Menú' },
-  { folder: 'eventos',  gridId: 'masonry-eventos',  label: 'Eventos' },
-  { folder: 'deportes', gridId: 'masonry-deporte',  label: 'Deporte' }
+function cldThumb(folder, id) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto/${folder}/${encodeURIComponent(id)}`;
+}
+function cldFull(folder, id) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${folder}/${encodeURIComponent(id)}`;
+}
+
+/* ── IDs por carpeta (nombre de archivo sin extensión) ── */
+const IDS_MENU = [
+  '1 2','1','2 2','2','3 2','3','4 2','4','5 2','5','6 2','6','7',
+  'DSC00005-39','DSC00044-223','DSC00090-9','DSC00093-238','DSC00093-51',
+  'DSC00112-31','DSC00115-34','DSC00129-251','DSC00147-260','DSC00163-266',
+  'DSC00173-57','DSC00189-59','DSC00205-283','DSC00211-1','DSC00218-1',
+  'DSC00245-5','DSC00246-1','DSC00247-2','DSC00250-Editar-1','DSC00257-17',
+  'DSC00263-4','DSC00267-1','DSC00287-47','DSC00308-68','DSC00326-86',
+  'DSC00327-1','DSC00328-1','DSC00337-329','DSC00346-106','DSC00395-338',
+  'DSC00400-160','DSC00427-347','DSC00436-2','DSC00441-350','DSC00455-354',
+  'DSC00462-27','DSC00471-36','DSC00478-238','DSC00514-368','DSC00516-418',
+  'DSC00521-281','DSC00550-310','DSC00559-124 2','DSC00574-98','DSC00582-342',
+  'DSC00587-489','DSC00607-509','DSC00609-174','DSC00618-520','DSC00625-398',
+  'DSC00631-1962','DSC00636-401','DSC00654-414','DSC00656-2213','DSC00680-24522',
+  'DSC00690-415','DSC00711-116','DSC00717-282','DSC00726-486','DSC00748-508',
+  'DSC00782-347','DSC00811-129','DSC00844-458','DSC00882-43867',
+  'DSC00913-Editar-2-1','DSC00920-Editar-2','DSC00931-Editar-1','DSC00941-49145',
+  'DSC00959-25','DSC00969-495','DSC01035-582647','DSC02317-76','DSC02350-106',
+  'DSC02352-108','DSC02385-139','DSC02409-163','DSC02449-201','DSC02465-217',
+  'DSC02488-240','DSC02536-288','DSC02561-313','DSC02584-336','DSC03019-5',
+  'DSC03046-32','DSC03076-62','DSC03364-347','DSC03400-382','DSC03522-6',
+  'DSC03554-12','DSC03598-20','DSC03697-36','DSC03735-40','DSC03927-63',
+  'DSC04165-30','DSC04215-78','DSC04227-89','DSC04253-115','DSC04270-132',
+  'DSC05214-27','DSC05229-42','DSC05257-70','DSC05265-78','DSC05502-53',
+  'DSC05506-54','DSC05525-57','DSC05535-58','DSC05548-61','DSC05554-62',
+  'DSC05555-63','DSC05626-74','DSC05647-76','DSC05649-4','DSC05679-34',
+  'DSC05685-81','DSC05687-42','DSC05700-84','DSC05709-87','DSC05745-93',
+  'DSC05788-99','DSC05809-102','DSC05826-105','DSC05861-110','DSC05876-113',
+  'DSC05896-116','DSC05924-118','DSC05956-124','DSC06067-160','DSC07701-5',
+  'DSC07704-8','DSC07716-20','DSC07719-23','DSC07727-31','DSC07730-34',
+  'DSC07735-39','DSC07746-50','DSC07760-64','DSC07765-69','DSC07773-77',
+  'DSC07776-80','DSC07780-84','DSC07784-88','DSC07791-95','DSC07795-99',
+  'DSC07803-107','DSC07814-118','DSC07826-130','DSC07832-136','DSC07842-146',
+  'DSC07843-147','DSC07879-528','DSC07923-533','DSC07955-535','DSC07967-537',
+  'DSC07977-538','DSC07982-539','DSC07985-540','DSC07999-541','DSC08026-542',
+  'DSC08032-543','DSC08061-545','DSC08079-549','DSC08087-550','DSC08096-551',
+  'DSC08116-553','DSC08130-554','DSC08145-555','DSC08197-6','DSC08204-556',
+  'DSC08246-5','DSC08271-8','DSC08310-2','DSC08419-1','DSC08978-49',
+  'DSC09003-74','DSC09027-98','DSC09055-126','DSC09737-145','DSC09742-147',
+  'DSC09760-151','DSC09790-159','DSC09811-164','DSC09818-93','DSC09822-168',
+  'DSC09832-106','DSC09845-117','DSC09875-183','DSC09904-190','DSC09918-23'
 ];
 
-/* URL con transformaciones optimizadas */
-function cldThumb(publicId) {
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto,c_limit/${publicId}`;
-}
-function cldFull(publicId) {
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${publicId}`;
-}
+const IDS_EVENTOS = [
+  'DSC00509-3','DSC00517-10','DSC00523-15','DSC00550-39','DSC00564-51',
+  'DSC00568-1','DSC00592-18','DSC00594-19','DSC00603-24','DSC00605-26',
+  'DSC01494-9','DSC01498-11','DSC01502-5','DSC01523-22','DSC01525-9',
+  'DSC01553-33','DSC01577-16','DSC01675 2-21','DSC01699-22','DSC01725-26',
+  'DSC01728-28','DSC01796 2-34','DSC01796-1','DSC01864-67','DSC01867-70',
+  'DSC01877-80','DSC01879-82','DSC01899-102','DSC01900-103','DSC01919-120',
+  'DSC01931-129','DSC01950-8','DSC01958-149','DSC01964-155','DSC01966-20',
+  'DSC01986-28','DSC01992-181','DSC01993-182','DSC02009-35','DSC02016-203',
+  'DSC02021-208','DSC02029-216','DSC02032-49','DSC02034-221','DSC02049-61',
+  'DSC02052-239','DSC02053-65','DSC02062-249','DSC02067-253','DSC02068-254',
+  'DSC02084-267','DSC02088-92','DSC02096-278','DSC02098-94','DSC02103-97',
+  'DSC02108-288','DSC02118-296','DSC02142-320','DSC02149-327','DSC02175-352',
+  'DSC02588-7','DSC02593-11','DSC02611-25','DSC02616-30','DSC02635-49',
+  'DSC02688-38','DSC02700-42','DSC02706-46','DSC02710-47','DSC02715-49',
+  'DSC03250-245','DSC03269-29','DSC03276-31','DSC03294-35','DSC03299-37',
+  'DSC03339-45','DSC03360-50','DSC03377-53','DSC03393-57','DSC03397-58',
+  'DSC03398-59','DSC03472-74','DSC03477-76','DSC03601-61','DSC03604-64',
+  'DSC03607-67','DSC03610-70','DSC03626-86','DSC03635-4','DSC03638-6',
+  'DSC03639-7','DSC03641-9','DSC03650-17','DSC03651-18','DSC03655-22',
+  'DSC03660-27','DSC03670-37','DSC03683-1','DSC05235-1','DSC05262-7',
+  'DSC05271-8','DSC05287-22','DSC05348-38','DSC05373-43','DSC05395-47',
+  'DSC05417-52','DSC05455-61','DSC05465-66','DSC05486-83','DSC05495-92',
+  'DSC05543-121','DSC05562-123','DSC05564-124','DSC05568-126','DSC05581-131',
+  'DSC05589-133','DSC05617-140','DSC05628-144','DSC05638-146','DSC05685-158',
+  'DSC05702-163','DSC06325-1','DSC06326-2','DSC06327-3','DSC06347-19',
+  'DSC06353-25','DSC06356-28','DSC06360-32','DSC06366-38','DSC08051-3',
+  'DSC08071-12','DSC08074-14','DSC08084-16','DSC08093-21','DSC08122-34',
+  'DSC08129-38','DSC08136-44','DSC08163-3','DSC08189-5','DSC08202-11',
+  'DSC08223-21','DSC08234-27','DSC08238-1','DSC08251-8','DSC08269-17',
+  'DSC08273-20','DSC08276-3','DSC08280-5','DSC08407-23','DSC08412-1',
+  'DSC08471-2-4','DSC08480-7','DSC08488-13','DSC08492-16','DSC08499-19',
+  'DSC08519-31','DSC08571-3','DSC08577-8','DSC08585-14','DSC08662-2',
+  'DSC08695-21','DSC08705-25','DSC08734-39','DSC08755-46','DSC08761-49',
+  'DSC08774-56','DSC08953-7','DSC08976-14','DSC08991-19','DSC09298-6',
+  'DSC09364-14','DSC09378-21','DSC09395-1','DSC09411-9','DSC09416-11',
+  'DSC09425-1','DSC09431-4','DSC09433-5','DSC09440-9','DSC09444-11',
+  'DSC09448-12','DSC09455-15','DSC09459-16','DSC09461-17','DSC09469-20',
+  'DSC09477-22','DSC09486-26','DSC09493-29','DSC09509-3','DSC09554-24',
+  'DSC09556-25','DSC09920-62','DSC09941-69','DSC09989-80'
+];
 
-/* Array plano para el lightbox (se llena al construir) */
+const IDS_DEPORTE = [
+  'DSC00939-3','DSC01012-22','DSC01151-62','DSC01251-82','DSC01303-97',
+  'DSC01409-127','DSC01503-142','DSC05943-5','DSC05990-52','DSC06025-87',
+  'DSC06058-120','DSC06182-244','DSC06200-262','DSC06256-318','DSC06540-602',
+  'DSC06940-1002','DSC07252-1314','DSC07395-1457','DSC07520-1582','DSC08285-428',
+  'DSC08299-440','DSC08509-9','DSC08560-60','DSC08829-329','DSC08923-423',
+  'DSC09001-501','DSC09073-573','DSC09098-598'
+];
+
+const PHOTO_GROUPS = [
+  { folder: 'menu',     gridId: 'masonry-menu',    ids: IDS_MENU    },
+  { folder: 'eventos',  gridId: 'masonry-eventos',  ids: IDS_EVENTOS },
+  { folder: 'deportes', gridId: 'masonry-deporte',  ids: IDS_DEPORTE }
+];
+
+/* ── Array plano para el lightbox: { folder, id } ── */
 let lbPhotos = [];
 
-async function fetchFolder(folder) {
-  /* Cloudinary list endpoint — necesita "Enable resource list" activo */
-  const url = `https://res.cloudinary.com/${CLOUD}/image/list/${folder}.json`;
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    return data.resources || [];
-  } catch (err) {
-    console.warn(`[Cloudinary] No se pudo cargar la carpeta "${folder}":`, err.message);
-    return null; /* null = error, [] = carpeta vacía */
-  }
-}
+/* ── Construye los 3 grids de forma síncrona ── */
+function buildMasonry() {
+  lbPhotos = [];
+  PHOTO_GROUPS.forEach(({ folder, gridId, ids }) => {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = ''; /* quita el spinner */
+    ids.forEach(id => {
+      const globalIdx = lbPhotos.length;
+      lbPhotos.push({ folder, id });
 
-function fillGrid(gridId, resources) {
-  const grid = document.getElementById(gridId);
-  grid.innerHTML = ''; /* quita el spinner */
+      const item = document.createElement('div');
+      item.className = 'm-item';
 
-  if (resources === null) {
-    grid.innerHTML = `
-      <p class="cld-error">
-        <strong>No se pudo conectar con Cloudinary.</strong><br>
-        Activa <em>Enable resource list</em> en Settings → Security de tu cuenta,
-        y verifica que la carpeta exista con ese nombre exacto.
-      </p>`;
-    return;
-  }
-  if (resources.length === 0) {
-    grid.innerHTML = `<p class="cld-error">La carpeta está vacía o no tiene imágenes publicadas.</p>`;
-    return;
-  }
+      const img = document.createElement('img');
+      img.src = cldThumb(folder, id);
+      img.alt = id.replace(/[-_]/g, ' ');
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.onerror = () => item.remove();
 
-  resources.forEach(r => {
-    const globalIdx = lbPhotos.length;
-    lbPhotos.push(r.public_id);
-
-    const item = document.createElement('div');
-    item.className = 'm-item';
-
-    const img = document.createElement('img');
-    img.src = cldThumb(r.public_id);
-    img.alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
-    img.loading = 'lazy';
-    img.decoding = 'async';
-
-    item.appendChild(img);
-    item.addEventListener('click', () => openLb(globalIdx));
-    grid.appendChild(item);
+      item.appendChild(img);
+      item.addEventListener('click', () => openLb(globalIdx));
+      grid.appendChild(item);
+    });
   });
-}
-
-async function buildMasonry() {
-  /* Carga las 3 carpetas en paralelo */
-  const results = await Promise.all(CLD_CATS.map(c => fetchFolder(c.folder)));
-  CLD_CATS.forEach((cat, i) => fillGrid(cat.gridId, results[i]));
 }
 
 /* ─────────────────────────────────────────
@@ -650,7 +710,6 @@ async function buildMasonry() {
 let lbIdx = 0;
 
 function openLb(i) {
-  if (lbPhotos.length === 0) return;
   lbIdx = i;
   updateLb();
   document.getElementById('photo-lb').classList.add('open');
@@ -658,7 +717,8 @@ function openLb(i) {
 }
 
 function updateLb() {
-  document.getElementById('lb-img').src = cldFull(lbPhotos[lbIdx]);
+  const { folder, id } = lbPhotos[lbIdx];
+  document.getElementById('lb-img').src = cldFull(folder, id);
   document.getElementById('lb-cur').textContent = lbIdx + 1;
   document.getElementById('lb-tot').textContent = lbPhotos.length;
 }
@@ -669,7 +729,6 @@ function closeLb() {
 }
 
 function lbMove(dir) {
-  if (lbPhotos.length === 0) return;
   lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
   updateLb();
 }
