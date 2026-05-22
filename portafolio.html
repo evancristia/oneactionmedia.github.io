@@ -123,47 +123,26 @@
     }
     .sec-divider { width: 48px; height: 3px; background: var(--magenta); }
 
-    /* ── FEATURED VIDEO GRID ── */
-    .video-grid {
+    /* ── VERTICAL YOUTUBE GRID ── */
+    .video-grid-yt {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px; padding: 0 48px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px; padding: 0 48px;
     }
-    .v-card {
+    .vyt-card { display: flex; flex-direction: column; gap: 10px; }
+    .vyt-wrap {
       position: relative; aspect-ratio: 9/16;
-      background: var(--dark2); overflow: hidden; cursor: pointer;
-      transition: transform 0.25s;
+      background: var(--dark2); overflow: hidden; border-radius: 4px;
     }
-    .v-card:hover { transform: scale(1.015); z-index: 2; }
-    .v-card:hover .v-overlay { background: rgba(0,0,0,0.2); }
-    .v-card:hover .v-play { transform: translate(-50%,-50%) scale(1.12); box-shadow: 0 0 40px rgba(255,0,153,0.65); }
-    .v-overlay {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.42);
-      transition: background 0.25s; z-index: 2;
+    .vyt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vyt-label {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      color: var(--white); text-align: center; letter-spacing: 1px;
     }
-    .v-play {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 62px; height: 62px; border-radius: 50%;
-      background: var(--magenta); z-index: 3;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.25s, box-shadow 0.25s;
-      box-shadow: 0 0 24px rgba(255,0,153,0.4);
-    }
-    .v-play svg { width: 20px; height: 20px; fill: var(--black); margin-left: 4px; }
-    .v-label {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-      padding: 36px 18px 18px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.88));
-    }
-    .v-cat {
+    .vyt-cat {
       font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
       font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--magenta); margin-bottom: 5px;
-    }
-    .v-name {
-      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
-      color: var(--white); line-height: 1;
+      color: var(--magenta); text-align: center; margin-top: 2px;
     }
 
     /* ── CTA ROW ── */
@@ -283,22 +262,6 @@
     .yt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .yt-span2 { grid-column: span 2; }
 
-    /* ── VIDEO MODAL ── */
-    #v-modal {
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.96);
-      display: none; align-items: center; justify-content: center;
-    }
-    #v-modal.open { display: flex; }
-    #modal-inner { position: relative; width: min(430px, 90vw); }
-    #modal-video { width: 100%; max-height: 90vh; object-fit: contain; display: block; }
-    #modal-close {
-      position: absolute; top: -48px; right: 0;
-      font-size: 32px; cursor: pointer; color: var(--white);
-      background: none; border: none; transition: color 0.2s;
-    }
-    #modal-close:hover { color: var(--magenta); }
-
     /* ── FOOTER ── */
     footer {
       background: var(--black);
@@ -312,7 +275,7 @@
 
     /* ── MOBILE ── */
     @media (max-width: 1024px) {
-      .video-grid { grid-template-columns: repeat(2, 1fr); }
+      .video-grid-yt { grid-template-columns: repeat(3, 1fr); }
       .masonry { columns: 3; }
       .yt-grid { grid-template-columns: repeat(2, 1fr); }
       .yt-span2 { grid-column: span 1; }
@@ -323,7 +286,7 @@
       .tabs-bar { padding: 0 20px; overflow-x: auto; }
       .tab-btn { padding: 16px 20px; font-size: 12px; white-space: nowrap; }
       .sec-head { padding: 48px 20px 32px; }
-      .video-grid { padding: 0 20px; }
+      .video-grid-yt { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
       .masonry-wrap { padding: 0 20px; }
       .masonry { columns: 2; }
       .sub-sec-head { padding: 0 20px 20px; }
@@ -332,7 +295,7 @@
       footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
     }
     @media (max-width: 480px) {
-      .video-grid { grid-template-columns: 1fr; }
+      .video-grid-yt { grid-template-columns: 1fr; }
       .masonry { columns: 1; }
     }
   </style>
@@ -378,53 +341,70 @@
     <div class="sec-divider"></div>
   </div>
 
-  <div class="video-grid">
+  <div class="video-grid-yt">
 
-    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Redes%20sociales%20.mp4')">
-      <div class="v-overlay"></div>
-      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="v-label">
-        <div class="v-cat">Categoría</div>
-        <div class="v-name">Redes Sociales</div>
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/dZIwIjQE5sg"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
       </div>
+      <div class="vyt-label">Restaurantes</div>
     </div>
 
-    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Restaurantes.mp4')">
-      <div class="v-overlay"></div>
-      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="v-label">
-        <div class="v-cat">Categoría</div>
-        <div class="v-name">Restaurantes</div>
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/8ZvSjcLVi-E"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
       </div>
+      <div class="vyt-label">Redes Sociales</div>
     </div>
 
-    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Constructoras%20recap%20.mp4')">
-      <div class="v-overlay"></div>
-      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="v-label">
-        <div class="v-cat">Categoría</div>
-        <div class="v-name">Constructoras</div>
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/HAKpVYfYsP8"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
       </div>
+      <div class="vyt-label">Medicina</div>
     </div>
 
-    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Medicina.mp4')">
-      <div class="v-overlay"></div>
-      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="v-label">
-        <div class="v-cat">Categoría</div>
-        <div class="v-name">Medicina</div>
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/KQ8bDLIyevs"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
       </div>
+      <div class="vyt-label">Eventos</div>
     </div>
 
-    <div class="v-card" onclick="openModal('Portafolio%20de%20videos/Eventos%20coorporativos.mp4')">
-      <div class="v-overlay"></div>
-      <div class="v-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-      <div class="v-label">
-        <div class="v-cat">Categoría</div>
-        <div class="v-name">Eventos Corporativos</div>
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/Ll_bFNKs4yc"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
       </div>
+      <div class="vyt-label">Drone</div>
     </div>
 
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/wkrq4AIO7UY"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="vyt-label">Constructoras</div>
+    </div>
+
+    <div class="vyt-card">
+      <div class="vyt-wrap">
+        <iframe src="https://www.youtube.com/embed/x3V8KBzqNbs"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="vyt-label">Documentales</div>
+    </div>
 
   </div>
 
@@ -528,14 +508,6 @@
 
   <div class="cta-row">
     <a href="index.html#contacto" class="btn-primary">Reservar para mi boda →</a>
-  </div>
-</div>
-
-<!-- VIDEO MODAL -->
-<div id="v-modal">
-  <div id="modal-inner">
-    <button id="modal-close" onclick="closeModal()">✕</button>
-    <video id="modal-video" controls playsinline></video>
   </div>
 </div>
 
@@ -738,27 +710,6 @@ document.getElementById('photo-lb').addEventListener('click', e => {
 });
 
 /* ─────────────────────────────────────────
-   VIDEO MODAL
-───────────────────────────────────────── */
-function openModal(src) {
-  const v = document.getElementById('modal-video');
-  v.src = src; v.load(); v.play();
-  document.getElementById('v-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  const v = document.getElementById('modal-video');
-  v.pause(); v.src = '';
-  document.getElementById('v-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('v-modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('v-modal')) closeModal();
-});
-
-/* ─────────────────────────────────────────
    TAB SWITCHING
 ───────────────────────────────────────── */
 function switchTab(tab) {
@@ -775,7 +726,7 @@ function switchTab(tab) {
    KEYBOARD
 ───────────────────────────────────────── */
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeLb(); }
+  if (e.key === 'Escape') { closeLb(); }
   if (document.getElementById('photo-lb').classList.contains('open')) {
     if (e.key === 'ArrowLeft')  lbMove(-1);
     if (e.key === 'ArrowRight') lbMove(1);
