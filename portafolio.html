@@ -215,6 +215,31 @@
     }
     .m-item:hover img { transform: scale(1.04); opacity: 0.82; }
 
+    /* ── LOADING / ERROR STATES ── */
+    .cld-spinner {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 0; gap: 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray);
+    }
+    .cld-spinner::before {
+      content: '';
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid rgba(255,0,153,0.2);
+      border-top-color: var(--magenta);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .cld-error {
+      padding: 40px 0;
+      font-size: 14px; font-weight: 300;
+      color: var(--gray); line-height: 1.7;
+      font-family: 'Barlow', sans-serif;
+    }
+    .cld-error strong { color: var(--magenta); font-weight: 600; }
+
     /* ── PHOTO LIGHTBOX ── */
     #photo-lb {
       position: fixed; inset: 0; z-index: 300;
@@ -424,7 +449,9 @@
       <h3 class="sub-sec-title">Fotografía de Menú</h3>
     </div>
     <div class="masonry-wrap">
-      <div class="masonry" id="masonry-menu"></div>
+      <div class="masonry" id="masonry-menu">
+        <div class="cld-spinner">Cargando fotos</div>
+      </div>
     </div>
   </div>
 
@@ -434,7 +461,9 @@
       <h3 class="sub-sec-title">Eventos</h3>
     </div>
     <div class="masonry-wrap">
-      <div class="masonry" id="masonry-eventos"></div>
+      <div class="masonry" id="masonry-eventos">
+        <div class="cld-spinner">Cargando fotos</div>
+      </div>
     </div>
   </div>
 
@@ -444,7 +473,9 @@
       <h3 class="sub-sec-title">Deporte</h3>
     </div>
     <div class="masonry-wrap">
-      <div class="masonry" id="masonry-deporte"></div>
+      <div class="masonry" id="masonry-deporte">
+        <div class="cld-spinner">Cargando fotos</div>
+      </div>
     </div>
   </div>
 
@@ -529,167 +560,88 @@
 
 <script>
 /* ─────────────────────────────────────────
-   ALL PHOTOS — flat list from all 3 folders
-   (Portafolio de fotos)
+   CLOUDINARY CONFIGURATION
+   Cloud name: daircfrad
+   Folders: menu · eventos · deportes
+
+   REQUISITO en Cloudinary → Settings → Security:
+   ✅ "Enable resource list" (permite el endpoint /image/list/)
+   Las imágenes deben estar en carpetas con esos nombres exactos.
 ───────────────────────────────────────── */
-const allPhotos = [
-  /* Fotos de menú */
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','1 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','2 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','3 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','3.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','4 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','4.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','5 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','5.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','6 2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','6.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','7.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00005-39.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00044-223.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00090-9.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00093-238.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00093-51.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00112-31.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00115-34.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00129-251.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00147-260.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00163-266.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00173-57.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00189-59.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00205-283.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00211-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00218-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00245-5.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00246-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00247-2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00250-Editar-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00257-17.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00263-4.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00267-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00287-47.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00308-68.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00326-86.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00327-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00328-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00337-329.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00346-106.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00395-338.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00400-160.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00427-347.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00436-2.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00441-350.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00455-354.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00462-27.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00471-36.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20de%20men%C3%BA','DSC00478-238.jpg'],
+const CLOUD = 'daircfrad';
 
-  /* Fotos de eventos (doble espacio) */
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00509-3.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00517-10.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00523-15.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00550-39.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00564-51.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00568-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00592-18.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00594-19.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00603-24.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC00605-26.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01494-9.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01498-11.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01502-5.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01523-22.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01525-9.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01553-33.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01577-16.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01675 2-21.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01699-22.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01725-26.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01728-28.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01796 2-34.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01796-1.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01864-67.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01867-70.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01877-80.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01879-82.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01899-102.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01900-103.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01919-120.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01931-129.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01950-8.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01958-149.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01964-155.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01966-20.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01986-28.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01992-181.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC01993-182.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC02009-35.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20%20de%20eventos','DSC02016-203.jpg'],
-
-  /* Fotos deporte */
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC00939-3.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01012-22.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01151-62.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01251-82.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01303-97.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01409-127.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC01503-142.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC05943-5.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC05990-52.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06025-87.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06058-120.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06182-244.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06200-262.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06256-318.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06540-602.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC06940-1002.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07252-1314.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07395-1457.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC07520-1582.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08285-428.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08299-440.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08509-9.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08560-60.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08829-329.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC08923-423.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09001-501.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09073-573.jpg'],
-  ['Portafolio%20de%20fotos/Fotos%20deporte','DSC09098-598.jpg']
+const CLD_CATS = [
+  { folder: 'menu',     gridId: 'masonry-menu',    label: 'Fotografía de Menú' },
+  { folder: 'eventos',  gridId: 'masonry-eventos',  label: 'Eventos' },
+  { folder: 'deportes', gridId: 'masonry-deporte',  label: 'Deporte' }
 ];
 
-/* ─────────────────────────────────────────
-   BUILD MASONRY — 3 grids, global index
-───────────────────────────────────────── */
-const gridMap = [
-  { id: 'masonry-menu',     start: 0,  end: 50  },
-  { id: 'masonry-eventos',  start: 50, end: 90  },
-  { id: 'masonry-deporte',  start: 90, end: 118 }
-];
+/* URL con transformaciones optimizadas */
+function cldThumb(publicId) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto,c_limit/${publicId}`;
+}
+function cldFull(publicId) {
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${publicId}`;
+}
 
-function buildMasonry() {
-  gridMap.forEach(({ id, start, end }) => {
-    const grid = document.getElementById(id);
-    for (let i = start; i < end && i < allPhotos.length; i++) {
-      const [folder, file] = allPhotos[i];
-      const src = folder + '/' + encodeURIComponent(file);
+/* Array plano para el lightbox (se llena al construir) */
+let lbPhotos = [];
 
-      const item = document.createElement('div');
-      item.className = 'm-item';
-      item.dataset.i = i;
+async function fetchFolder(folder) {
+  /* Cloudinary list endpoint — necesita "Enable resource list" activo */
+  const url = `https://res.cloudinary.com/${CLOUD}/image/list/${folder}.json`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data.resources || [];
+  } catch (err) {
+    console.warn(`[Cloudinary] No se pudo cargar la carpeta "${folder}":`, err.message);
+    return null; /* null = error, [] = carpeta vacía */
+  }
+}
 
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'Foto ' + (i + 1);
-      img.loading = 'lazy';
-      img.onerror = () => { item.remove(); };
+function fillGrid(gridId, resources) {
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = ''; /* quita el spinner */
 
-      item.appendChild(img);
-      item.addEventListener('click', () => openLb(i));
-      grid.appendChild(item);
-    }
+  if (resources === null) {
+    grid.innerHTML = `
+      <p class="cld-error">
+        <strong>No se pudo conectar con Cloudinary.</strong><br>
+        Activa <em>Enable resource list</em> en Settings → Security de tu cuenta,
+        y verifica que la carpeta exista con ese nombre exacto.
+      </p>`;
+    return;
+  }
+  if (resources.length === 0) {
+    grid.innerHTML = `<p class="cld-error">La carpeta está vacía o no tiene imágenes publicadas.</p>`;
+    return;
+  }
+
+  resources.forEach(r => {
+    const globalIdx = lbPhotos.length;
+    lbPhotos.push(r.public_id);
+
+    const item = document.createElement('div');
+    item.className = 'm-item';
+
+    const img = document.createElement('img');
+    img.src = cldThumb(r.public_id);
+    img.alt = r.public_id.split('/').pop().replace(/[-_]/g, ' ');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+
+    item.appendChild(img);
+    item.addEventListener('click', () => openLb(globalIdx));
+    grid.appendChild(item);
   });
+}
+
+async function buildMasonry() {
+  /* Carga las 3 carpetas en paralelo */
+  const results = await Promise.all(CLD_CATS.map(c => fetchFolder(c.folder)));
+  CLD_CATS.forEach((cat, i) => fillGrid(cat.gridId, results[i]));
 }
 
 /* ─────────────────────────────────────────
@@ -698,6 +650,7 @@ function buildMasonry() {
 let lbIdx = 0;
 
 function openLb(i) {
+  if (lbPhotos.length === 0) return;
   lbIdx = i;
   updateLb();
   document.getElementById('photo-lb').classList.add('open');
@@ -705,10 +658,9 @@ function openLb(i) {
 }
 
 function updateLb() {
-  const [folder, file] = allPhotos[lbIdx];
-  document.getElementById('lb-img').src = folder + '/' + encodeURIComponent(file);
+  document.getElementById('lb-img').src = cldFull(lbPhotos[lbIdx]);
   document.getElementById('lb-cur').textContent = lbIdx + 1;
-  document.getElementById('lb-tot').textContent = allPhotos.length;
+  document.getElementById('lb-tot').textContent = lbPhotos.length;
 }
 
 function closeLb() {
@@ -717,7 +669,8 @@ function closeLb() {
 }
 
 function lbMove(dir) {
-  lbIdx = (lbIdx + dir + allPhotos.length) % allPhotos.length;
+  if (lbPhotos.length === 0) return;
+  lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
   updateLb();
 }
 
