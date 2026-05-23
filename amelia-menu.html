@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amelia — Menú</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background-color: #080808;
+  color: #F5F0E8;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+:root {
+  --gold:      #C9A84C;
+  --gold-lt:   #E8C97A;
+  --gold-dim:  #8B6E2A;
+  --white:     #F5F0E8;
+  --black:     #080808;
+}
+
+/* ── HERO ── */
+.hero {
+  background-color: #080808;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 60px 24px 100px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.hero-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.08);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  animation: pulse 5s ease-in-out infinite;
+}
+.ring1{width:420px;height:420px;}
+.ring2{width:620px;height:620px;animation-delay:1.5s;}
+.ring3{width:820px;height:820px;animation-delay:3s;}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.55}}
+
+.hero-content { position: relative; z-index: 2; }
+
+.eyebrow {
+  color: #C9A84C;
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 20px;
+  display: block;
+  animation: fadeUp 1s ease both 0.3s;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(80px, 18vw, 150px);
+  line-height: 0.9;
+  background: linear-gradient(150deg, #E8C97A 0%, #C9A84C 50%, #8B6E2A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp 1s ease both 0.5s;
+}
+
+.hero-tagline {
+  color: rgba(245,240,232,0.45);
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 48px;
+  display: block;
+  animation: fadeUp 1s ease both 0.7s;
+}
+
+.divider-line {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  margin: 0 auto 40px;
+  animation: fadeIn 1s ease both 0.9s;
+}
+
+/* ── NAV ── */
+.nav-wrap {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s ease both 1.1s;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: rgba(245,240,232,0.6);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+.nav-btn:hover  { border-color:rgba(201,168,76,0.7); color:#E8C97A; background:rgba(201,168,76,0.06); }
+.nav-btn.active { border-color:#C9A84C; color:#E8C97A; background:rgba(201,168,76,0.1); }
+
+/* ── SECTIONS ── */
+.section { display:none; background-color:#080808; min-height:100vh; padding:70px 0 100px; }
+.section.active { display:block; }
+
+.sec-header { text-align:center; padding:0 24px; margin-bottom:50px; }
+.sec-label  { display:block; color:#C9A84C; font-size:10px; letter-spacing:6px; text-transform:uppercase; margin-bottom:14px; }
+.sec-title  { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(40px,8vw,60px); color:#F5F0E8; line-height:1; }
+.sec-divider{ width:100px; height:1px; background:linear-gradient(90deg,transparent,#C9A84C,transparent); margin:20px auto 0; }
+
+/* ── DISH LIST ── */
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(201,168,76,0.12);
+}
+
+.dish-row {
+  background: #0D0D0D;
+  display: flex;
+  align-items: stretch;
+  cursor: pointer;
+  transition: background 0.3s;
+  overflow: hidden;
+  min-height: 120px;
+}
+.dish-row:hover { background:#141414; }
+
+.dish-img-wrap {
+  width: 120px; min-width: 120px; height: 120px;
+  overflow: hidden; flex-shrink: 0;
+}
+.dish-img-wrap img {
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:brightness(0.85) saturate(0.9);
+  transition:transform 0.5s ease;
+  display:block;
+}
+.dish-row:hover .dish-img-wrap img { transform:scale(1.07); }
+
+.dish-img-placeholder {
+  width:100%; height:100%;
+  background:linear-gradient(135deg,#1a1a1a,#0d0d0d);
+  display:flex; align-items:center; justify-content:center;
+  font-size:32px;
+}
+
+.dish-left-accent {
+  width:2px; min-width:2px;
+  background:linear-gradient(to bottom,#E8C97A,#8B6E2A);
+  opacity:0; transition:opacity 0.3s;
+}
+.dish-row:hover .dish-left-accent { opacity:1; }
+
+.dish-body {
+  flex:1; padding:18px 20px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.dish-num  { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; color:#8B6E2A; letter-spacing:2px; margin-bottom:5px; }
+.dish-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; color:#F5F0E8; margin-bottom:4px; line-height:1.2; }
+.dish-sub  { font-size:11px; color:rgba(245,240,232,0.45); letter-spacing:0.5px; line-height:1.5; }
+
+.dish-tags-row { display:flex; gap:5px; margin-top:8px; flex-wrap:wrap; }
+.tag { font-size:8px; letter-spacing:2px; text-transform:uppercase; color:#8B6E2A; border:1px solid rgba(201,168,76,0.18); padding:2px 7px; }
+
+.dish-price-col { padding:18px 20px 18px 8px; display:flex; align-items:center; justify-content:flex-end; flex-shrink:0; }
+.dish-price { font-family:'Cormorant Garamond',serif; font-size:18px; color:#E8C97A; text-align:right; line-height:1.2; }
+.dish-price small { display:block; font-family:'Raleway',sans-serif; font-size:9px; color:#8B6E2A; letter-spacing:2px; font-weight:200; }
+
+/* ── BEVERAGE LIST ── */
+.bev-list { display:flex; flex-direction:column; gap:1px; background:rgba(201,168,76,0.12); }
+
+.bev-row {
+  background:#0D0D0D;
+  display:flex; align-items:center;
+  cursor:pointer; transition:background 0.3s;
+  overflow:hidden; min-height:90px;
+}
+.bev-row:hover { background:#141414; }
+
+.bev-img-wrap {
+  width:90px; min-width:90px; height:90px;
+  overflow:hidden; flex-shrink:0;
+}
+.bev-img-wrap img {
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:brightness(0.85) saturate(0.85);
+  transition:transform 0.5s ease;
+  display:block;
+}
+.bev-row:hover .bev-img-wrap img { transform:scale(1.07); }
+
+.bev-icon-wrap {
+  width:90px; min-width:90px; height:90px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px;
+  background:rgba(201,168,76,0.04);
+  flex-shrink:0;
+}
+
+.bev-body { flex:1; padding:16px; }
+.bev-name { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:#F5F0E8; margin-bottom:3px; }
+.bev-sub  { font-size:11px; color:rgba(245,240,232,0.4); }
+
+.bev-price-col { padding:16px 20px; flex-shrink:0; }
+.bev-price { font-family:'Cormorant Garamond',serif; font-size:17px; color:#E8C97A; text-align:right; }
+.bev-price small { display:block; font-family:'Raleway',sans-serif; font-size:9px; color:#8B6E2A; letter-spacing:2px; font-weight:200; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.9); z-index:9000;
+  align-items:flex-end; justify-content:center;
+  backdrop-filter:blur(10px);
+}
+.modal-overlay.open { display:flex; }
+
+.modal-sheet {
+  background:#111111;
+  border-top:1px solid rgba(201,168,76,0.2);
+  width:100%; max-width:600px; max-height:92vh;
+  overflow-y:auto; position:relative;
+  animation:slideUp 0.4s cubic-bezier(0.34,1.1,0.64,1);
+}
+@keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+.modal-img {
+  width:100%; height:220px;
+  object-fit:cover; filter:brightness(0.8); display:block;
+}
+.modal-img-placeholder {
+  width:100%; height:180px;
+  background:linear-gradient(135deg,#1a1a1a,#0e0e0e);
+  display:flex; align-items:center; justify-content:center; font-size:60px;
+}
+
+.modal-body { padding:32px 28px 40px; }
+
+.modal-close {
+  position:absolute; top:16px; right:20px;
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(201,168,76,0.3);
+  color:#C9A84C; width:36px; height:36px; border-radius:50%;
+  cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.3s; z-index:10;
+}
+.modal-close:hover { background:rgba(201,168,76,0.15); }
+
+.m-num  { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12px; color:#8B6E2A; letter-spacing:3px; margin-bottom:8px; display:block; }
+.m-name { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:#F5F0E8; line-height:1.1; margin-bottom:6px; }
+.m-sub  { font-size:11px; color:#C9A84C; letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; display:block; }
+.m-bar  { width:50px; height:1px; background:linear-gradient(90deg,#C9A84C,transparent); margin-bottom:18px; }
+.m-desc { font-size:14px; line-height:1.8; color:rgba(245,240,232,0.65); margin-bottom:14px; }
+.m-ing  { font-size:11px; color:#8B6E2A; letter-spacing:0.5px; line-height:1.8; margin-bottom:24px; }
+.m-footer { display:flex; align-items:center; justify-content:space-between; padding-top:18px; border-top:1px solid rgba(201,168,76,0.12); }
+.m-price  { font-family:'Cormorant Garamond',serif; font-size:28px; color:#E8C97A; }
+.m-tags   { display:flex; gap:6px; flex-wrap:wrap; }
+
+/* ── FOOTER ── */
+.page-footer { background:#080808; text-align:center; padding:50px 24px; border-top:1px solid rgba(201,168,76,0.1); }
+.page-footer .fn  { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:26px; color:#C9A84C; margin-bottom:10px; }
+.page-footer .fn2 { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,0.3); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ── SCROLL CUE ── */
+.scroll-cue {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  cursor:pointer; animation:fadeIn 1.2s ease both 1.6s;
+}
+.scroll-cue span { font-size:9px; letter-spacing:4px; text-transform:uppercase; color:#8B6E2A; }
+.scroll-line { width:1px; height:36px; background:linear-gradient(#8B6E2A,transparent); animation:scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:.4}50%{opacity:1} }
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .dish-img-wrap{width:90px;min-width:90px;height:90px;}
+  .dish-body{padding:14px 12px;}
+  .dish-price-col{padding:14px 12px 14px 4px;}
+  .dish-name{font-size:17px;}
+  .bev-img-wrap,.bev-icon-wrap{width:72px;min-width:72px;height:72px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-ring ring1"></div>
+  <div class="hero-ring ring2"></div>
+  <div class="hero-ring ring3"></div>
+  <div class="hero-content">
+    <span class="eyebrow">Gastronomía de autor &nbsp;·&nbsp; Experiencia exclusiva</span>
+    <h1 class="hero-name">Amelia Restaurant</h1>
+    <span class="hero-tagline">Menú de temporada · 2025</span>
+    <div class="divider-line"></div>
+    <nav class="nav-wrap">
+      <button class="nav-btn active" onclick="show('entradas',this)">Entradas</button>
+      <button class="nav-btn"        onclick="show('platos',this)">Platos</button>
+      <button class="nav-btn"        onclick="show('postres',this)">Postres</button>
+      <button class="nav-btn"        onclick="show('bebidas',this)">Bebidas</button>
+    </nav>
+  </div>
+  <div class="scroll-cue" onclick="document.getElementById('entradas').scrollIntoView({behavior:'smooth'})">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ ENTRADAS ══ -->
+<section class="section active" id="entradas">
+  <div class="sec-header">
+    <span class="sec-label">Para comenzar</span>
+    <h2 class="sec-title">Entradas</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="dish-list" id="list-entradas"></div>
+</section>
+
+<!-- ══ PLATOS ══ -->
+<section class="section" id="platos">
+  <div class="sec-header">
+    <span class="sec-label">La experiencia central</span>
+    <h2 class="sec-title">Platos Principales</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="dish-list" id="list-platos"></div>
+</section>
+
+<!-- ══ POSTRES ══ -->
+<section class="section" id="postres">
+  <div class="sec-header">
+    <span class="sec-label">El cierre perfecto</span>
+    <h2 class="sec-title">Postres</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="dish-list" id="list-postres"></div>
+</section>
+
+<!-- ══ BEBIDAS ══ -->
+<section class="section" id="bebidas">
+  <div class="sec-header">
+    <span class="sec-label">Selección de autor</span>
+    <h2 class="sec-title">Bebidas</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="bev-list" id="list-bebidas"></div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="page-footer">
+  <p class="fn">Amelia Restaurant</p>
+  <p class="fn2">Todos los precios incluyen ITBIS · Propina no incluida</p>
+</footer>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modal" onclick="maybeClose(event)">
+  <div class="modal-sheet">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="m-img-wrap"></div>
+    <div class="modal-body">
+      <span class="m-num"  id="m-num"></span>
+      <h2   class="m-name" id="m-name"></h2>
+      <span class="m-sub"  id="m-sub"></span>
+      <div  class="m-bar"></div>
+      <p    class="m-desc" id="m-desc"></p>
+      <p    class="m-ing"  id="m-ing"></p>
+      <div  class="m-footer">
+        <span class="m-price" id="m-price"></span>
+        <div  class="m-tags"  id="m-tags"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const menu = {
+
+  // ── 8 ENTRADAS ──
+  entradas: [
+    {
+      name:"Ostras Belón al Champagne", sub:"Del Atlántico Norte",
+      desc:"Tres ostras frescas de Bretaña servidas sobre sal de roca con espuma de champagne brut, perlas de vinagre de Jerez y microgreens de rábano.",
+      ing:"Ostras Belón · Champagne Brut · Vinagre de Jerez · Limón Meyer",
+      price:"RD$1,850", tags:["Frío","Mariscos"], emoji:"🦪",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495630/Ostras_Belo%CC%81n_al_Champagne_Del_Atla%CC%81ntico_Norte_jj2u6w.png"
+    },
+    {
+      name:"Foie Gras Poêlé", sub:"Con brioche dorado",
+      desc:"Escalope de foie gras de pato sellado a fuego alto, sobre brioche artesanal tostado, reducción de higo negro y sal Maldon.",
+      ing:"Foie Gras de Pato · Higos Negros · Brioche · Sal Maldon",
+      price:"RD$2,100", tags:["Caliente","Aves"], emoji:"🍳",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495633/Foie_Gras_Poe%CC%82le%CC%81_Con_brioche_dorado_zx3ncs.png"
+    },
+    {
+      name:"Carpaccio di Manzo", sub:"Wagyu A4 · Trufa negra",
+      desc:"Finas láminas de wagyu A4 cortadas a mano, aceite de trufa negra Périgord, parmigiano reggiano 36 meses, rúcula silvestre.",
+      ing:"Wagyu A4 · Trufa Negra · Parmigiano 36M · Rúcula Silvestre",
+      price:"RD$2,450", tags:["Frío","Res"], emoji:"🥩",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495634/Carpaccio_di_Manzo_Wagyu_A4_Trufa_negra_tkld5w.png"
+    },
+    {
+      name:"Velouté de Cep", sub:"Crema de hongos silvestres",
+      desc:"Crema sedosa de boletus porcini con aceite de cebollino, croutons de pan de campo y láminas de hongo deshidratado.",
+      ing:"Boletus Porcini · Cebollino · Crema Fraîche · Trufa Blanca",
+      price:"RD$980", tags:["Caliente","Vegetariano"], emoji:"🍄",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495626/Veloute%CC%81_de_Cep_Crema_de_hongos_silvestres_pdrxe4.png"
+    },
+    {
+      name:"Ceviche de Pargo Dorado", sub:"Leche de tigre negra",
+      desc:"Pargo fresco del día marinado en leche de tigre con tinta de calamar, aguacate haas, maíz morado crocante y ají amarillo.",
+      ing:"Pargo · Leche de Tigre · Tinta de Calamar · Aguacate Haas",
+      price:"RD$1,200", tags:["Frío","Pesca"], emoji:"🐟",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495629/Ceviche_de_Pargo_Dorado_Leche_de_tigre_negra_zjy7i4.png"
+    },
+    {
+      name:"Burrata Ahumada", sub:"Tomate heirloom · Pesto oro",
+      desc:"Burrata italiana ahumada en frío sobre cama de tomates heirloom, pesto de albahaca y pistachos, aceite extra virgen Picual.",
+      ing:"Burrata DOP · Tomate Heirloom · Albahaca · Pistachos",
+      price:"RD$1,100", tags:["Frío","Vegetariano"], emoji:"🧀",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495590/Burrata_Ahumada_Tomate_heirloom_Pesto_oro_xpbgd3.png"
+    },
+    {
+      name:"Tartar de Atún Rojo", sub:"Sésamo · Yuzu · Caviar",
+      desc:"Atún rojo de almadraba finamente picado a cuchillo con emulsión de yuzu, aceite de sésamo tostado y caviar Ossetra.",
+      ing:"Atún Rojo · Yuzu · Sésamo Tostado · Caviar Ossetra",
+      price:"RD$2,800", tags:["Frío","Pesca","Premium"], emoji:"🐠",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495592/Tartar_de_Atu%CC%81n_Rojo_Se%CC%81samo_Yuzu_Caviar_muo1rz.png"
+    },
+    {
+      name:"Vieiras Saint-Jacques", sub:"Coliflor · Curry suave · Limón",
+      desc:"Vieiras bretonas selladas a la mantequilla de avellana, puré de coliflor al curry amarillo, aceite de limón confitado.",
+      ing:"Vieiras Bretonas · Coliflor · Curry · Mantequilla Avellana",
+      price:"RD$1,950", tags:["Caliente","Mariscos"], emoji:"🫘",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495631/Vieiras_Saint-Jacques_Coliflor_Curry_suave_Limo%CC%81n_djq8s7.png"
+    },
+  ],
+
+  // ── 15 PLATOS PRINCIPALES ──
+  platos: [
+    {
+      name:"Filete Wellington", sub:"Wagyu · Duxelles · Hojaldre",
+      desc:"Lomo de wagyu envuelto en duxelles de champiñones silvestres y jamón Ibérico, cubierto con hojaldre al horno. Salsa Périgueux.",
+      ing:"Lomo Wagyu · Duxelles · Jamón Ibérico · Hojaldre",
+      price:"RD$4,500", tags:["Caliente","Res","Signature"], emoji:"🥩",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495608/Filete_Wellington_Wagyu_Duxelles_Hojaldre_m2n4mm.png"
+    },
+    {
+      name:"Lubina en Costra de Sal", sub:"Hinojo · Azafrán · Mar",
+      desc:"Lubina entera del Mediterráneo cocinada en costra de sal marina con hierbas de Provenza. Beurre blanc de azafrán.",
+      ing:"Lubina Mediterránea · Sal Marina · Hierbas Provençales · Azafrán",
+      price:"RD$3,200", tags:["Caliente","Pesca"], emoji:"🐡",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495619/Lubina_en_Costra_de_Sal_Hinojo_Azafra%CC%81n_Mar_db1smy.png"
+    },
+    {
+      name:"Pichón Asado", sub:"Foie · Puré negro · Jus",
+      desc:"Pichón de Bresse asado con pechuga rosada, puré negro de ajo, foie gras sellado y jus reducido con oporto.",
+      ing:"Pichón de Bresse · Foie Gras · Ajo Negro · Oporto",
+      price:"RD$3,800", tags:["Caliente","Aves"], emoji:"🍗",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495613/Picho%CC%81n_Asado_Foie_Pure%CC%81_negro_Jus_lmyxjg.png"
+    },
+    {
+      name:"Risotto alla Trufa", sub:"Carnaroli · Parmesano · Trufa",
+      desc:"Arroz Carnaroli mantecado con parmigiano reggiano 36 meses, rayadura de trufa negra fresca al momento del servicio.",
+      ing:"Arroz Carnaroli · Trufa Negra · Parmigiano · Mantequilla AOP",
+      price:"RD$2,600", tags:["Caliente","Vegetariano"], emoji:"🍚",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495625/Risotto_alla_Trufa_Carnaroli_Parmesano_Trufa_vwitmi.png"
+    },
+    {
+      name:"Cordero de Leche Confitado", sub:"Harissa · Cuscús de almendras",
+      desc:"Paletilla de cordero lechal confitada 8 horas en aceite de oliva y especias, con harissa artesanal y almendras tostadas.",
+      ing:"Cordero Lechal · Harissa · Almendras · Ras el Hanout",
+      price:"RD$3,500", tags:["Caliente","Cordero"], emoji:"🍖",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495616/Cordero_de_Leche_Confitado_Harissa_Cuscu%CC%81s_de_almendras_lbq9lm.png"
+    },
+    {
+      name:"Langosta Thermidor", sub:"Clásico revisitado",
+      desc:"Langosta del Caribe gratinada con crema de mostaza Dijon, gruyère envejecido y tarragon. Flambeada con armagnac.",
+      ing:"Langosta · Mostaza Dijon · Gruyère · Armagnac",
+      price:"RD$5,200", tags:["Caliente","Mariscos","Premium"], emoji:"🦞",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495620/Langosta_Thermidor_Cla%CC%81sico_revisitado_cylkt7.png"
+    },
+    {
+      name:"Cochinillo Lacado", sub:"Miel de trufa · Manzana verde",
+      desc:"Cochinillo ibérico de Segovia lacado 6 horas con miel de trufa, espuma de manzana verde y chips de papa violeta.",
+      ing:"Cochinillo Ibérico · Miel de Trufa · Manzana Verde · Papa Violeta",
+      price:"RD$4,100", tags:["Caliente","Cerdo"], emoji:"🐷",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495609/Cochinillo_Lacado_Miel_de_trufa_Manzana_verde_cqf8qc.png"
+    },
+    {
+      name:"Tataki de Buey de Mar", sub:"Dashi · Ponzu · Jengibre",
+      desc:"Medallones sellados en costra de especias, sobre gelatina de dashi fría, ponzu cítrico y jengibre encurtido en shiso.",
+      ing:"Buey de Mar · Dashi · Ponzu · Jengibre · Shiso",
+      price:"RD$3,700", tags:["Semifrío","Mariscos"], emoji:"🦀",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495622/Tataki_de_Buey_de_Mar_Dashi_Ponzu_Jengibre_esgznx.png"
+    },
+    {
+      name:"Magret de Pato Ahumado", sub:"Reducción de cereza negra",
+      desc:"Pechuga ahumada en madera de cerezo, reducción de cerezas negras al Kirsch, puré de batata morada.",
+      ing:"Magret de Pato · Cerezas Negras · Kirsch · Batata Morada",
+      price:"RD$3,100", tags:["Caliente","Aves"], emoji:"🦆",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495612/Magret_de_Pato_Ahumado_Reduccio%CC%81n_de_cereza_negra_fgfrsk.png"
+    },
+    {
+      name:"Gnocchi al Tartufo", sub:"Burro dorato · Salvia",
+      desc:"Gnocchi artesanales de papa esponjosos, con burro dorato perfumado, salvia crujiente y láminas de trufa blanca de Alba.",
+      ing:"Papa · Burro · Salvia · Trufa Blanca de Alba",
+      price:"RD$2,900", tags:["Caliente","Vegetariano"], emoji:"🍝",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495615/Gnocchi_al_Tartufo_Burro_dorato_Salvia_cnfk5z.png"
+    },
+    {
+      name:"Besugo a la Sal Rosa", sub:"Himalaya · Limón Negro · EVOO",
+      desc:"Besugo salvaje asado sobre lecho de sal rosa del Himalaya, limón negro fermentado y aceite de primera cosecha.",
+      ing:"Besugo Salvaje · Sal Rosa Himalaya · Limón Negro · Aceite Picual",
+      price:"RD$3,300", tags:["Caliente","Pesca"], emoji:"🐟",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495618/Besugo_a_la_Sal_Rosa_Himalaya_Limo%CC%81n_Negro_EVOO_zaxber.png"
+    },
+    {
+      name:"Solomillo A5 Japonés", sub:"Wagyu Miyazaki · Chimichurri trufado",
+      desc:"El plato más exclusivo de Amelia. Wagyu A5 de Miyazaki, sous vide a 54 °C, sellado en mantequilla clarificada.",
+      ing:"Wagyu A5 Miyazaki · Mantequilla Clarificada · Trufa Negra · Flor de Sal",
+      price:"RD$7,800", tags:["Caliente","Res","Ultra Premium"], emoji:"🥩",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495623/Solomillo_A5_Japone%CC%81s_Wagyu_Miyazaki_Chimichurri_trufado_cljhx1.png"
+    },
+    {
+      name:"Ravioles de Langostino", sub:"Bisque dorado · Estragón",
+      desc:"Ravioles negros rellenos de langostino del Caribe, ricota di bufala, en bisque concentrado con emulsión de estragón.",
+      ing:"Langostino · Ricota di Bufala · Bisque · Estragón",
+      price:"RD$2,750", tags:["Caliente","Mariscos","Pasta"], emoji:"🦐",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495606/Ravioles_de_Langostino_Bisque_dorado_Estrago%CC%81n_ny5sjz.png"
+    },
+    {
+      name:"Carrillera Ibérica Estofada", sub:"48 horas · Ribera del Duero",
+      desc:"Carrillera de cerdo ibérico estofada 48 horas en Ribera del Duero, espuma de foie gras, puré de apio nabo.",
+      ing:"Cerdo Ibérico · Ribera del Duero · Foie Gras · Apio Nabo",
+      price:"RD$2,900", tags:["Caliente","Cerdo"], emoji:"🍲",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495627/Carrillera_Ibe%CC%81rica_Estofada_48_horas_Ribera_del_Duero_zkkqbl.png"
+    },
+    {
+      name:"Chateaubriand para Dos", sub:"Para compartir en mesa",
+      desc:"Doble corte de solomillo prime, servido en tabla con tres salsas de autor: Béarnaise, chimichurri trufado y Bordelaise.",
+      ing:"Solomillo Prime · Béarnaise · Chimichurri · Bordelaise",
+      price:"RD$8,500", tags:["Caliente","Res","Para Compartir"], emoji:"🥩",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495619/Chateaubriand_para_Dos_Para_compartir_en_mesa_szim8v.png"
+    },
+  ],
+
+  // ── 4 POSTRES ──
+  postres: [
+    {
+      name:"Soufflé de Grand Marnier", sub:"Con helado de vainilla Bourbon",
+      desc:"Soufflé de naranja y Grand Marnier recién horneado (18 min), con helado de vainilla Bourbon. Se solicita con anticipación.",
+      ing:"Grand Marnier · Naranja · Vainilla Bourbon · Clara de Huevo",
+      price:"RD$980", tags:["Caliente","Horno"], emoji:"🍊",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495605/Souffle%CC%81_de_Grand_Marnier_Con_helado_de_vainilla_Bourbon_vhhtip.png"
+    },
+    {
+      name:"Tarta Tatin de Pera William", sub:"Caramelo · Crema mascarpone",
+      desc:"Peras William caramelizadas en mantequilla demerara, masa quebrada dorada, mascarpone con cardamomo.",
+      ing:"Pera William · Caramelo · Mascarpone · Cardamomo",
+      price:"RD$850", tags:["Caliente","Frutos"], emoji:"🍐",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495602/Tarta_Tatin_de_Pera_William_Caramelo_Crema_mascarpone_r34lwc.png"
+    },
+    {
+      name:"Coulant de Chocolate 75%", sub:"Centro fundente · Sal de flor",
+      desc:"Bizcocho de chocolate negro 75% Ecuador con centro líquido, espejo de crema inglesa de vainilla y flor de sal.",
+      ing:"Chocolate 75% Ecuador · Crema Inglesa · Flor de Sal · Mantequilla AOP",
+      price:"RD$780", tags:["Caliente","Chocolate"], emoji:"🍫",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495604/Coulant_de_Chocolate_75_Centro_fundente_Sal_de_flor_bmfura.png"
+    },
+    {
+      name:"Île Flottante con Oro", sub:"Merengue · Crème anglaise · 24K",
+      desc:"Merengue poché con caramelo crujiente, crème anglaise perfumada con lavanda y hoja de pan de oro 24K.",
+      ing:"Clara de Huevo · Lavanda · Crème Anglaise · Pan de Oro 24K",
+      price:"RD$1,050", tags:["Frío","Signature"], emoji:"✨",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495601/I%CC%82le_Flottante_con_Oro_Merengue_Cre%CC%80me_anglaise_24K_uo68gw.png"
+    },
+  ],
+
+  // ── 12 BEBIDAS ──
+  bebidas: [
+    {
+      emoji:"🍾", name:"Dom Pérignon Vintage", sub:"Champagne · Francia",
+      desc:"Burbujas elegantes con notas de brioche, melocotón blanco y minerales.",
+      price:"RD$4,200",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495584/Dom_Pe%CC%81rignon_Vintage_Champagne_Francia_eg9lef.png"
+    },
+    {
+      emoji:"🍷", name:"Opus One 2019", sub:"Cabernet · Napa Valley",
+      desc:"Cuerpo pleno, taninos sedosos, cassis y cedro. La cima de California.",
+      price:"RD$6,500",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495586/Opus_One_2019_Cabernet_Napa_Valley_ji7pfw.png"
+    },
+    {
+      emoji:"🍷", name:"Sassicaia 2018", sub:"Bolgheri DOC · Toscana",
+      desc:"Super-toscano icónico. Intenso, elegante, con final interminable.",
+      price:"RD$5,800",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495582/Sassicaia_2018_Bolgheri_DOC_Toscana_o7qubs.png"
+    },
+    {
+      emoji:"🥃", name:"Macallan 18 Años", sub:"Single Malt · Speyside",
+      desc:"Sherry casks de roble europeo. Higos, naranja seca y especias cálidas.",
+      price:"RD$1,800",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495580/Macallan_18_An%CC%83os_Single_Malt_Speyside_jousus.png"
+    },
+    {
+      emoji:"🍸", name:"Negroni di Amelia", sub:"Cóctel Signature",
+      desc:"Gin infusionado con trufa negra, Campari, vermut rosso y cáscara de naranja flambeada.",
+      price:"RD$680",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495589/Negroni_di_Amelia_Co%CC%81ctel_Signature_zzoybz.png"
+    },
+    {
+      emoji:"🍸", name:"Perla Negra", sub:"Cóctel de autor",
+      desc:"Vodka Grey Goose, caviar de aceite de oliva, espuma de mar y pepino liofilizado.",
+      price:"RD$720",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495585/Perla_Negra_Co%CC%81ctel_de_autor_vxv2j4.png"
+    },
+    {
+      emoji:"🍸", name:"Golden Hour", sub:"Cóctel Sunset",
+      desc:"Ron Dictador 20 años, passion fruit, jengibre, cúrcuma y agua de rosas.",
+      price:"RD$590",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495588/Golden_Hour_Co%CC%81ctel_Sunset_byju98.png"
+    },
+    {
+      emoji:"🥂", name:"Krug Grande Cuvée", sub:"Champagne · Prestige",
+      desc:"Multi-vintage de la maison Krug. Tostado, miel y cítricos frescos.",
+      price:"RD$3,800",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495581/Krug_Grande_Cuve%CC%81e_Champagne_Prestige_zztdry.png"
+    },
+    {
+      emoji:"🍵", name:"Matcha Ceremony", sub:"Té de ceremonia · Japón",
+      desc:"Matcha Uji de primera cosecha preparado con técnica tradicional. Con wagashi artesanal.",
+      price:"RD$480",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495598/Matcha_Ceremony_Te%CC%81_de_ceremonia_Japo%CC%81n_bfmkzq.png"
+    },
+    {
+      emoji:"☕", name:"Geisha Panamá Pour-Over", sub:"Café de especialidad",
+      desc:"El café más exclusivo del mundo, cosecha 2024. Jazmín, melocotón y bergamota.",
+      price:"RD$890",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495595/Geisha_Panama%CC%81_Pour-Over_Cafe%CC%81_de_especialidad_dz6xd0.png"
+    },
+    {
+      emoji:"🍸", name:"Yuzu Martini", sub:"Cítrico · Delicado",
+      desc:"Vodka Belvedere, licor de yuzu, foam de limón kaffir y esencia de cilantro.",
+      price:"RD$640",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495597/Yuzu_Martini_Ci%CC%81trico_Delicado_rp1fxc.png"
+    },
+    {
+      emoji:"💧", name:"Acqua Panna · S.Pellegrino", sub:"Aguas minerales premium",
+      desc:"Selección de aguas minerales de origen volcánico. Con o sin gas.",
+      price:"RD$320",
+      img:"https://res.cloudinary.com/daircfrad/image/upload/v1779495600/Acqua_Panna_S.Pellegrino_Aguas_minerales_premium_byivi1.png"
+    },
+  ]
+};
+
+// ── RENDER DISHES ──
+function dishImgHtml(d) {
+  if (d.img) {
+    const esc = d.emoji.replace(/'/g,"\\'");
+    return `<div class="dish-img-wrap">
+      <img src="${d.img}" alt="${d.name}" loading="lazy"
+           onerror="this.parentElement.innerHTML='<div class=\\'dish-img-placeholder\\'>${esc}</div>'">
+    </div>`;
+  }
+  return `<div class="dish-img-wrap"><div class="dish-img-placeholder">${d.emoji}</div></div>`;
+}
+
+['entradas','platos','postres'].forEach(cat => {
+  document.getElementById(`list-${cat}`).innerHTML = menu[cat].map((d, i) => {
+    const tags = (d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+    return `
+    <div class="dish-row" onclick="openDish('${cat}',${i})">
+      ${dishImgHtml(d)}
+      <div class="dish-left-accent"></div>
+      <div class="dish-body">
+        <span class="dish-num">No. ${String(i+1).padStart(2,'0')}</span>
+        <h3 class="dish-name">${d.name}</h3>
+        <p class="dish-sub">${d.sub}</p>
+        <div class="dish-tags-row">${tags}</div>
+      </div>
+      <div class="dish-price-col">
+        <div class="dish-price">${d.price}<small>DOP</small></div>
+      </div>
+    </div>`;
+  }).join('');
+});
+
+// ── RENDER BEVERAGES ──
+document.getElementById('list-bebidas').innerHTML = menu.bebidas.map((d,i) => {
+  const thumb = d.img
+    ? `<div class="bev-img-wrap"><img src="${d.img}" alt="${d.name}" loading="lazy"
+         onerror="this.parentElement.outerHTML='<div class=\\'bev-icon-wrap\\'>${d.emoji}</div>'"></div>`
+    : `<div class="bev-icon-wrap">${d.emoji}</div>`;
+  return `
+  <div class="bev-row" onclick="openBev(${i})">
+    ${thumb}
+    <div class="bev-body">
+      <h3 class="bev-name">${d.name}</h3>
+      <p class="bev-sub">${d.sub}</p>
+    </div>
+    <div class="bev-price-col">
+      <div class="bev-price">${d.price}<small>DOP</small></div>
+    </div>
+  </div>`;
+}).join('');
+
+// ── NAVIGATION ──
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ── MODAL ──
+function openDish(cat, i) {
+  const d = menu[cat][i];
+  document.getElementById('m-img-wrap').innerHTML = d.img
+    ? `<img class="modal-img" src="${d.img}" alt="${d.name}"
+            onerror="this.outerHTML='<div class=\\'modal-img-placeholder\\'>${d.emoji}</div>'">`
+    : `<div class="modal-img-placeholder">${d.emoji}</div>`;
+  document.getElementById('m-num').textContent   = `No. ${String(i+1).padStart(2,'0')}`;
+  document.getElementById('m-name').textContent  = d.name;
+  document.getElementById('m-sub').textContent   = d.sub;
+  document.getElementById('m-desc').textContent  = d.desc;
+  document.getElementById('m-ing').textContent   = d.ing ? `Ingredientes: ${d.ing}` : '';
+  document.getElementById('m-price').textContent = d.price;
+  document.getElementById('m-tags').innerHTML    = (d.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+  openModal();
+}
+
+function openBev(i) {
+  const d = menu.bebidas[i];
+  document.getElementById('m-img-wrap').innerHTML = d.img
+    ? `<img class="modal-img" src="${d.img}" alt="${d.name}"
+            onerror="this.outerHTML='<div class=\\'modal-img-placeholder\\'>${d.emoji}</div>'">`
+    : `<div class="modal-img-placeholder">${d.emoji}</div>`;
+  document.getElementById('m-num').textContent   = '';
+  document.getElementById('m-name').textContent  = d.name;
+  document.getElementById('m-sub').textContent   = d.sub;
+  document.getElementById('m-desc').textContent  = d.desc;
+  document.getElementById('m-ing').textContent   = '';
+  document.getElementById('m-price').textContent = d.price;
+  document.getElementById('m-tags').innerHTML    = '';
+  openModal();
+}
+
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function maybeClose(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
