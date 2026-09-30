@@ -85,15 +85,31 @@
     .nav-cta:hover { background: var(--magenta-light) !important; color: var(--black) !important; }
 
     /* ── HERO ── */
+    #hero-scrub {
+      position: relative;
+      height: 250vh;
+    }
+
     #hero {
-      min-height: 100vh;
+      height: 100vh;
+      position: sticky;
+      top: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       padding: 0 48px;
-      position: relative;
       overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+      z-index: 0;
     }
 
     .hero-bg {
@@ -221,7 +237,37 @@
     }
 
     /* ── SECTION BASE ── */
-    section { padding: 100px 48px; }
+    section { padding: 100px 48px; position: relative; overflow: hidden; }
+
+    .section-bg-video-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .section-bg-video {
+      position: absolute;
+      top: -10%;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      opacity: 0.22;
+      will-change: transform;
+    }
+
+    .section-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .section-content {
+      position: relative;
+      z-index: 2;
+    }
 
     .section-eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
@@ -263,6 +309,20 @@
       border-bottom: 3px solid transparent;
       transition: border-color 0.2s, background 0.2s;
       cursor: default;
+      position: relative;
+    }
+
+    .service-badge {
+      position: absolute;
+      top: 0; right: 0;
+      background: var(--magenta);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 12px;
     }
 
     .service-card:hover {
@@ -697,7 +757,9 @@
       nav { padding: 16px 20px; }
       .nav-links { display: none; }
       section { padding: 72px 20px; }
+      #hero-scrub { height: 100vh; }
       #hero { padding: 0 20px; }
+      .section-bg-video { opacity: 0.16; }
       .hero-scroll { left: 20px; }
       .hero-eyebrow { letter-spacing: 2px; font-size: 11px; }
       .about-layout,
@@ -725,29 +787,37 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <p class="hero-eyebrow">Agencia de Contenido Digital — República Dominicana</p>
-  <h1 class="hero-title">
-    Cada historia<br />merece <span>una sola</span><br />gran acción.
-  </h1>
-  <p class="hero-sub">
-    Creamos contenido que conecta, impacta y convierte.
-    Video, fotografía, diseño y estrategia digital para marcas que quieren destacar.
-  </p>
-  <div class="hero-actions">
-    <a href="#contacto" class="btn-primary">Cotizar ahora</a>
-    <a href="#servicios" class="btn-outline">Ver servicios</a>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    Explorar
-  </div>
-</section>
+<div id="hero-scrub">
+  <section id="hero">
+    <video id="hero-video" class="hero-video" muted playsinline preload="auto" src="assets/bg/hero.mp4"></video>
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <p class="hero-eyebrow">Agencia de Contenido Digital — República Dominicana</p>
+    <h1 class="hero-title">
+      Cada historia<br />merece <span>una sola</span><br />gran acción.
+    </h1>
+    <p class="hero-sub">
+      Creamos contenido que conecta, impacta y convierte.
+      Video, fotografía, diseño y estrategia digital para marcas que quieren destacar.
+    </p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">Cotizar ahora</a>
+      <a href="#servicios" class="btn-outline">Ver servicios</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Explorar
+    </div>
+  </section>
+</div>
 
 <!-- SERVICIOS -->
 <section id="servicios">
+  <div class="section-bg-video-wrap">
+    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/servicios.mp4"></video>
+  </div>
+  <div class="section-bg-overlay"></div>
+  <div class="section-content">
   <p class="section-eyebrow">Lo que hacemos</p>
   <h2 class="section-title">Nuestros Servicios</h2>
   <div class="section-divider"></div>
@@ -794,9 +864,10 @@
       <p class="service-desc">Documentamos el día más especial con una narrativa cinematográfica y emotiva que dura para siempre.</p>
     </div>
     <div class="service-card">
+      <div class="service-badge">Producto Propio</div>
       <div class="service-icon">📲</div>
-      <div class="service-name">Menú Digital & NFC</div>
-      <p class="service-desc">Colocación de token NFC y elaboración de menús digitales para restaurantes. Moderno, rápido y sin papel.</p>
+      <div class="service-name">OneMenu — Menú Digital & NFC</div>
+      <p class="service-desc">OneMenu, nuestro producto propio de menús digitales: colocación de token NFC y elaboración de menús para restaurantes. Moderno, rápido y sin papel.</p>
     </div>
     <div class="service-card">
       <div class="service-icon">🎥</div>
@@ -805,14 +876,30 @@
     </div>
     <div class="service-card">
       <div class="service-icon">🌐</div>
-      <div class="service-name">Diseño de Páginas Web</div>
+      <div class="service-name">Diseñamos Páginas Web</div>
       <p class="service-desc">Sitios web profesionales, modernos y optimizados para tu marca. Presencia digital que impacta desde el primer clic.</p>
     </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <div class="service-name">Sistemas con IA</div>
+      <p class="service-desc">Automatización, chatbots y sistemas inteligentes con inteligencia artificial para optimizar la atención y operación de tu negocio.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Videos con IA</div>
+      <p class="service-desc">Producción de videos generados con inteligencia artificial: anuncios, contenido de marca y piezas visuales imposibles de filmar, creadas en tiempo récord.</p>
+    </div>
+  </div>
   </div>
 </section>
 
 <!-- PORTAFOLIO -->
 <section id="portafolio">
+  <div class="section-bg-video-wrap">
+    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
+  </div>
+  <div class="section-bg-overlay"></div>
+  <div class="section-content">
   <p class="section-eyebrow">Nuestro trabajo</p>
   <h2 class="section-title">Portafolio</h2>
   <div class="section-divider"></div>
@@ -835,11 +922,16 @@
   <div style="margin-top:48px;">
     <a href="portafolio.html" class="btn-primary">Ver portafolio completo →</a>
   </div>
+  </div>
 </section>
 
 <!-- CTA -->
 <section id="paquetes" style="background: var(--dark); text-align: center; padding: 120px 48px;">
-  <div style="max-width: 780px; margin: 0 auto;">
+  <div class="section-bg-video-wrap">
+    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
+  </div>
+  <div class="section-bg-overlay"></div>
+  <div class="section-content" style="max-width: 780px; margin: 0 auto;">
     <p class="section-eyebrow" style="justify-content: center; display: block;">¿Listo para empezar?</p>
     <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 28px;">
       Cuéntanos tu idea.<br /><span style="color: var(--magenta);">Nosotros la hacemos</span><br />realidad.
@@ -861,6 +953,11 @@
 
 <!-- SOBRE NOSOTROS -->
 <section id="nosotros">
+  <div class="section-bg-video-wrap">
+    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/nosotros.mp4"></video>
+  </div>
+  <div class="section-bg-overlay"></div>
+  <div class="section-content">
   <p class="section-eyebrow">Quiénes somos</p>
   <h2 class="section-title">Sobre Nosotros</h2>
   <div class="section-divider"></div>
@@ -876,6 +973,9 @@
       <p>
         Desde reels para redes hasta documentales cinematográficos, trabajamos con negocios de todos los sectores a lo largo de todo el país — con pasión, talento y una visión clara: <em>una sola gran acción puede cambiarlo todo</em>.
       </p>
+      <p>
+        Además de nuestros servicios de producción, contenido y diseño, desarrollamos <em>OneMenu</em>, nuestro propio producto de menús digitales con tecnología NFC para restaurantes.
+      </p>
     </div>
 
     <div class="about-stats">
@@ -884,7 +984,7 @@
         <div class="stat-label">Creatividad</div>
       </div>
       <div class="stat-box">
-        <div class="stat-number">10+</div>
+        <div class="stat-number">13+</div>
         <div class="stat-label">Servicios</div>
       </div>
       <div class="stat-box">
@@ -897,10 +997,16 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- CONTACTO -->
 <section id="contacto">
+  <div class="section-bg-video-wrap">
+    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/contacto.mp4"></video>
+  </div>
+  <div class="section-bg-overlay"></div>
+  <div class="section-content">
   <p class="section-eyebrow">Hablemos</p>
   <h2 class="section-title">Contáctanos</h2>
   <div class="section-divider"></div>
@@ -960,8 +1066,11 @@
           <option>Vuelos de Drone</option>
           <option>Real Estate & Airbnb</option>
           <option>Videos de Bodas</option>
-          <option>Menú Digital & NFC</option>
+          <option>OneMenu (Menú Digital & NFC)</option>
           <option>Producción Audiovisual</option>
+          <option>Diseño de Páginas Web</option>
+          <option>Sistemas con IA</option>
+          <option>Videos con IA</option>
         </select>
       </div>
       <div class="form-group">
@@ -970,6 +1079,7 @@
       </div>
       <button class="form-submit" onclick="sendWhatsApp()">Enviar por WhatsApp →</button>
     </div>
+  </div>
   </div>
 </section>
 
@@ -1010,6 +1120,75 @@
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
+
+  // ── FONDOS DE VIDEO ──
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isNarrowScreen = window.matchMedia('(max-width: 768px)').matches;
+
+  // Hero: scroll-scrubbing (el scroll controla el frame del video)
+  const heroScrub = document.getElementById('hero-scrub');
+  const heroVideo = document.getElementById('hero-video');
+
+  if (heroVideo) {
+    if (prefersReducedMotion || isNarrowScreen) {
+      heroVideo.loop = true;
+      const tryPlayHero = () => heroVideo.play().catch(() => {});
+      if (heroVideo.readyState >= 3) tryPlayHero();
+      else heroVideo.addEventListener('canplay', tryPlayHero, { once: true });
+    } else {
+      heroVideo.addEventListener('loadedmetadata', () => {
+        let ticking = false;
+        function updateHeroScrub() {
+          const total = heroScrub.offsetHeight - window.innerHeight;
+          const scrolled = Math.min(Math.max(-heroScrub.getBoundingClientRect().top, 0), total);
+          const progress = total > 0 ? scrolled / total : 0;
+          const t = progress * heroVideo.duration;
+          if (Number.isFinite(t)) heroVideo.currentTime = t;
+          ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(updateHeroScrub); ticking = true; }
+        }, { passive: true });
+        updateHeroScrub();
+      });
+    }
+  }
+
+  // Demás secciones: video en loop con efecto parallax al hacer scroll
+  const parallaxVideos = document.querySelectorAll('.section-bg-video');
+  parallaxVideos.forEach(v => {
+    v.loop = true;
+    const tryPlay = () => v.play().catch(() => {});
+    if (v.readyState >= 3) tryPlay();
+    else v.addEventListener('canplay', tryPlay, { once: true });
+  });
+
+  // Reanudar videos si el navegador los pausó por estar la pestaña en segundo plano
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      parallaxVideos.forEach(v => { if (v.paused) v.play().catch(() => {}); });
+      if (heroVideo && (prefersReducedMotion || isNarrowScreen) && heroVideo.paused) {
+        heroVideo.play().catch(() => {});
+      }
+    }
+  });
+
+  if (!prefersReducedMotion && !isNarrowScreen) {
+    let parallaxTicking = false;
+    function updateParallax() {
+      parallaxVideos.forEach(v => {
+        const rect = v.parentElement.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const offset = (window.innerHeight / 2 - center) * 0.12;
+        v.style.transform = `translateY(${offset}px)`;
+      });
+      parallaxTicking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!parallaxTicking) { requestAnimationFrame(updateParallax); parallaxTicking = true; }
+    }, { passive: true });
+    updateParallax();
+  }
 </script>
 
 </body>

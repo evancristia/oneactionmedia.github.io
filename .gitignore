@@ -6,6 +6,9 @@
 *.avi
 *.mkv
 
+# Videos de fondo generados (livianos, sí se suben al repo)
+!assets/bg/*.mp4
+
 # Carpetas de medios pesados (fotos ~2.9 GB, videos ~2.4 GB)
 # Hospeda estas en Google Drive o Cloudinary
 Portafolio de videos/
@@ -13,3 +16,9 @@ Portafolio de fotos/
 
 # macOS
 .DS_Store
+
+# Secretos / API keys
+.env
+
+# Configuración local de herramientas (no es parte del sitio)
+.claude/
