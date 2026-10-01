@@ -22,3 +22,9 @@ Portafolio de fotos/
 
 # Configuración local de herramientas (no es parte del sitio)
 .claude/
+node_modules/
+package.json
+package-lock.json
+
+# Imágenes/clips de borrador (no son parte del sitio final)
+assets/stills-draft/

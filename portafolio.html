@@ -249,6 +249,44 @@
     }
     .lb-counter em { color: var(--magenta); font-style: normal; }
 
+    /* ── PORTAFOLIO WEB ── */
+    .web-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      padding: 0 48px;
+    }
+    .web-card { text-decoration: none; color: inherit; display: block; }
+    .web-frame {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .web-card:hover .web-frame {
+      transform: translateY(-6px);
+      border-color: rgba(255,0,153,0.4);
+      box-shadow: 0 20px 40px rgba(255,0,153,0.15);
+    }
+    .web-frame-bar { display: flex; gap: 6px; padding: 10px 14px; background: var(--dark3); }
+    .web-frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+    .web-frame img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
+    .web-card-name {
+      margin-top: 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--white);
+    }
+    .web-card-placeholder .web-frame {
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray); font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 2px; text-transform: uppercase; font-size: 13px; text-align: center; padding: 20px;
+    }
+    .web-card-placeholder .web-card-name { color: var(--gray); }
+
     /* ── BODAS ── */
     .yt-grid {
       display: grid;
@@ -311,6 +349,7 @@
     <button class="nav-tab" id="nt-videos" onclick="switchTab('videos')">Videos</button>
     <button class="nav-tab" id="nt-fotos" onclick="switchTab('fotos')">Fotos</button>
     <button class="nav-tab" id="nt-bodas" onclick="switchTab('bodas')">Bodas</button>
+    <button class="nav-tab" id="nt-web" onclick="switchTab('web')">Portafolio Web</button>
     <button class="nav-tab" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')">Menú Digital</button>
     <a href="index.html" class="nav-back">Inicio</a>
   </div>
@@ -332,6 +371,7 @@
   <button class="tab-btn" id="tb-videos" onclick="switchTab('videos')">🎬 Videos</button>
   <button class="tab-btn" id="tb-fotos" onclick="switchTab('fotos')">📸 Fotos</button>
   <button class="tab-btn" id="tb-bodas" onclick="switchTab('bodas')">💍 Bodas</button>
+  <button class="tab-btn" id="tb-web" onclick="switchTab('web')">🌐 Portafolio Web</button>
   <button class="tab-btn" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')">🍽️ Menú Digital</button>
 </div>
 
@@ -509,6 +549,33 @@
   </div>
 </div>
 
+<!-- ═══════════════════ PORTAFOLIO WEB ═══════════════════ -->
+<div class="port-sec" id="sec-web">
+  <div class="sec-head">
+    <p class="sec-eyebrow">Diseño y desarrollo</p>
+    <h2 class="sec-title">Portafolio Web</h2>
+    <div class="sec-divider"></div>
+  </div>
+
+  <div class="web-grid">
+    <a class="web-card" href="https://oneactionmedia.com" target="_blank" rel="noopener">
+      <div class="web-frame">
+        <div class="web-frame-bar"><span></span><span></span><span></span></div>
+        <img src="assets/portfolio-web/oneactionmedia.jpg" alt="One Action Media" loading="lazy" />
+      </div>
+      <div class="web-card-name">One Action Media</div>
+    </a>
+    <div class="web-card web-card-placeholder">
+      <div class="web-frame">Próximamente<br />más proyectos</div>
+      <div class="web-card-name">Tu marca aquí</div>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <a href="index.html#contacto" class="btn-primary">Cotizar mi página web →</a>
+  </div>
+</div>
+
 <!-- PHOTO LIGHTBOX -->
 <div id="photo-lb">
   <button class="lb-close" onclick="closeLb()">✕</button>
@@ -656,7 +723,7 @@ document.addEventListener('keydown', e => {
    e.g. portafolio.html?cat=bodas
 ───────────────────────────────────────── */
 const initTab = new URLSearchParams(location.search).get('cat');
-if (initTab && ['videos','fotos','bodas'].includes(initTab)) {
+if (initTab && ['videos','fotos','bodas','web'].includes(initTab)) {
   switchTab(initTab);
 } else {
   switchTab('videos');

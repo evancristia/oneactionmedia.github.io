@@ -85,31 +85,15 @@
     .nav-cta:hover { background: var(--magenta-light) !important; color: var(--black) !important; }
 
     /* ── HERO ── */
-    #hero-scrub {
-      position: relative;
-      height: 250vh;
-    }
-
     #hero {
-      height: 100vh;
-      position: sticky;
-      top: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
       padding: 0 48px;
+      position: relative;
       overflow: hidden;
-    }
-
-    .hero-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.4;
-      z-index: 0;
     }
 
     .hero-bg {
@@ -236,31 +220,26 @@
       animation: pulse-line 2s ease-in-out infinite;
     }
 
-    /* ── SECTION BASE ── */
-    section { padding: 100px 48px; position: relative; overflow: hidden; }
-
-    .section-bg-video-wrap {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .section-bg-video {
-      position: absolute;
+    /* ── FONDO GLOBAL (fijo, un solo video para toda la página) ── */
+    .page-bg-video {
+      position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.22;
+      opacity: 0.32;
+      z-index: -2;
     }
 
-    .section-bg-overlay {
-      position: absolute;
+    .page-bg-overlay {
+      position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.5);
-      z-index: 1;
+      z-index: -1;
     }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 48px; position: relative; overflow: hidden; background: transparent; }
 
     .section-content {
       position: relative;
@@ -292,27 +271,49 @@
     }
 
     /* ── SERVICIOS ── */
-    #servicios { background: var(--dark); }
-
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2px;
-      margin-top: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
     }
 
     .service-card {
-      background: var(--dark2);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
       padding: 36px 28px;
-      border-bottom: 3px solid transparent;
-      transition: border-color 0.2s, background 0.2s;
-      cursor: default;
       position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.45s cubic-bezier(.2,.8,.2,1), border-color 0.35s, background 0.35s, box-shadow 0.45s;
     }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255,0,153,0.45);
+      background: rgba(255,0,153,0.06);
+      box-shadow: 0 24px 48px rgba(255,0,153,0.18);
+    }
+
+    .service-number {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      color: rgba(255,255,255,0.1);
+      line-height: 1;
+      transition: color 0.35s;
+    }
+
+    .service-card:hover .service-number { color: rgba(255,0,153,0.35); }
 
     .service-badge {
       position: absolute;
-      top: 0; right: 0;
+      top: 0; left: 0;
       background: var(--magenta);
       color: var(--black);
       font-family: 'Barlow Condensed', sans-serif;
@@ -321,16 +322,12 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       padding: 5px 12px;
-    }
-
-    .service-card:hover {
-      border-color: var(--magenta);
-      background: var(--dark3);
+      border-radius: 0 0 10px 0;
     }
 
     .service-icon {
       font-size: 28px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .service-name {
@@ -341,6 +338,8 @@
       text-transform: uppercase;
       margin-bottom: 10px;
       color: var(--white);
+      position: relative;
+      z-index: 1;
     }
 
     .service-desc {
@@ -348,10 +347,11 @@
       font-weight: 300;
       color: var(--gray);
       line-height: 1.6;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── PORTAFOLIO ── */
-    #portafolio { background: var(--black); }
 
     .portfolio-note {
       background: var(--dark2);
@@ -394,7 +394,6 @@
     .portfolio-item span:first-child { font-size: 32px; }
 
     /* ── PAQUETES ── */
-    #paquetes { background: var(--dark); }
 
     .packages-grid {
       display: grid;
@@ -496,7 +495,6 @@
     }
 
     /* ── SOBRE NOSOTROS ── */
-    #nosotros { background: var(--black); }
 
     .about-layout {
       display: grid;
@@ -549,7 +547,6 @@
     }
 
     /* ── CONTACTO ── */
-    #contacto { background: var(--dark); }
 
     .contact-layout {
       display: grid;
@@ -755,9 +752,8 @@
       nav { padding: 16px 20px; }
       .nav-links { display: none; }
       section { padding: 72px 20px; }
-      #hero-scrub { height: 100vh; }
       #hero { padding: 0 20px; }
-      .section-bg-video { opacity: 0.16; }
+      .page-bg-video { opacity: 0.18; }
       .hero-scroll { left: 20px; }
       .hero-eyebrow { letter-spacing: 2px; font-size: 11px; }
       .about-layout,
@@ -769,6 +765,10 @@
   </style>
 </head>
 <body>
+
+<!-- FONDO GLOBAL -->
+<video id="page-bg-video" class="page-bg-video" muted playsinline preload="auto" src="assets/bg/recorrido.mp4"></video>
+<div class="page-bg-overlay"></div>
 
 <!-- NAV -->
 <nav>
@@ -785,36 +785,29 @@
 </nav>
 
 <!-- HERO -->
-<div id="hero-scrub">
-  <section id="hero">
-    <video id="hero-video" class="hero-video" muted playsinline preload="auto" src="assets/bg/hero.mp4"></video>
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <p class="hero-eyebrow">Agencia de Contenido Digital — República Dominicana</p>
-    <h1 class="hero-title">
-      Cada historia<br />merece <span>una sola</span><br />gran acción.
-    </h1>
-    <p class="hero-sub">
-      Creamos contenido que conecta, impacta y convierte.
-      Video, fotografía, diseño y estrategia digital para marcas que quieren destacar.
-    </p>
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">Cotizar ahora</a>
-      <a href="#servicios" class="btn-outline">Ver servicios</a>
-    </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      Explorar
-    </div>
-  </section>
-</div>
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Agencia de Contenido Digital — República Dominicana</p>
+  <h1 class="hero-title">
+    Cada historia<br />merece <span>una sola</span><br />gran acción.
+  </h1>
+  <p class="hero-sub">
+    Creamos contenido que conecta, impacta y convierte.
+    Video, fotografía, diseño y estrategia digital para marcas que quieren destacar.
+  </p>
+  <div class="hero-actions">
+    <a href="#contacto" class="btn-primary">Cotizar ahora</a>
+    <a href="#servicios" class="btn-outline">Ver servicios</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Explorar
+  </div>
+</section>
 
 <!-- SERVICIOS -->
 <section id="servicios">
-  <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/servicios.mp4"></video>
-  </div>
-  <div class="section-bg-overlay"></div>
   <div class="section-content">
   <p class="section-eyebrow">Lo que hacemos</p>
   <h2 class="section-title">Nuestros Servicios</h2>
@@ -822,67 +815,80 @@
 
   <div class="services-grid">
     <div class="service-card">
+      <div class="service-number">01</div>
       <div class="service-icon">🎬📸</div>
       <div class="service-name">Reels & Fotografía Profesional</div>
       <p class="service-desc">Producción de videos cortos de alto impacto para Instagram, TikTok y Facebook, más sesiones fotográficas para empresas, productos y marcas personales.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">02</div>
       <div class="service-icon">🍽️</div>
       <div class="service-name">Fotografía de Menú</div>
       <p class="service-desc">Fotografía especializada para restaurantes. Platos que se ven tan buenos como saben.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">03</div>
       <div class="service-icon">🎨</div>
       <div class="service-name">Diseño Gráfico</div>
       <p class="service-desc">Identidad visual, piezas para redes, artes para eventos y materiales de marca que comunican.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">04</div>
       <div class="service-icon">📱</div>
       <div class="service-name">Community Manager</div>
       <p class="service-desc">Plan completo: gestión de redes, estrategia de contenido, producción audiovisual y fotografía mensual.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">05</div>
       <div class="service-icon">🎪</div>
       <div class="service-name">Producción de Eventos</div>
       <p class="service-desc">Alquiler de sonido profesional y decoración con globos para eventos de cualquier escala.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">06</div>
       <div class="service-icon">🚁</div>
       <div class="service-name">Vuelos de Drone</div>
       <p class="service-desc">Tomas aéreas cinematográficas para proyectos, propiedades, eventos y recorridos visuales.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">07</div>
       <div class="service-icon">🏠</div>
       <div class="service-name">Real Estate & Airbnb</div>
       <p class="service-desc">Videos de recorrido para propiedades en venta, alquiler o Airbnb. Presentación visual de alto nivel.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">08</div>
       <div class="service-icon">💍</div>
       <div class="service-name">Videos de Bodas</div>
       <p class="service-desc">Documentamos el día más especial con una narrativa cinematográfica y emotiva que dura para siempre.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">09</div>
       <div class="service-badge">Producto Propio</div>
       <div class="service-icon">📲</div>
       <div class="service-name">OneMenu — Menú Digital & NFC</div>
       <p class="service-desc">OneMenu, nuestro producto propio de menús digitales: colocación de token NFC y elaboración de menús para restaurantes. Moderno, rápido y sin papel.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">10</div>
       <div class="service-icon">🎥</div>
       <div class="service-name">Producción Audiovisual</div>
       <p class="service-desc">Documentales, cortometrajes y videos corporativos con una visión narrativa auténtica y cinématográfica.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">11</div>
       <div class="service-icon">🌐</div>
       <div class="service-name">Diseñamos Páginas Web</div>
       <p class="service-desc">Sitios web profesionales, modernos y optimizados para tu marca. Presencia digital que impacta desde el primer clic.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">12</div>
       <div class="service-icon">🤖</div>
       <div class="service-name">Sistemas con IA</div>
       <p class="service-desc">Automatización, chatbots y sistemas inteligentes con inteligencia artificial para optimizar la atención y operación de tu negocio.</p>
     </div>
     <div class="service-card">
+      <div class="service-number">13</div>
       <div class="service-icon">✨</div>
       <div class="service-name">Videos con IA</div>
       <p class="service-desc">Producción de videos generados con inteligencia artificial: anuncios, contenido de marca y piezas visuales imposibles de filmar, creadas en tiempo récord.</p>
@@ -893,10 +899,6 @@
 
 <!-- PORTAFOLIO -->
 <section id="portafolio">
-  <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
-  </div>
-  <div class="section-bg-overlay"></div>
   <div class="section-content">
   <p class="section-eyebrow">Nuestro trabajo</p>
   <h2 class="section-title">Portafolio</h2>
@@ -912,6 +914,9 @@
     <a href="portafolio.html?cat=bodas" class="portfolio-item" style="text-decoration:none;">
       <span>💍</span><span>Bodas</span>
     </a>
+    <a href="portafolio.html?cat=web" class="portfolio-item" style="text-decoration:none;">
+      <span>🌐</span><span>Portafolio Web</span>
+    </a>
     <a href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener" class="portfolio-item" style="text-decoration:none;">
       <span>🍽️</span><span>Menú Digital</span>
     </a>
@@ -924,11 +929,7 @@
 </section>
 
 <!-- CTA -->
-<section id="paquetes" style="background: var(--dark); text-align: center; padding: 120px 48px;">
-  <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
-  </div>
-  <div class="section-bg-overlay"></div>
+<section id="paquetes" style="text-align: center; padding: 120px 48px;">
   <div class="section-content" style="max-width: 780px; margin: 0 auto;">
     <p class="section-eyebrow" style="justify-content: center; display: block;">¿Listo para empezar?</p>
     <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 7vw, 100px); line-height: 0.95; margin-bottom: 28px;">
@@ -951,10 +952,6 @@
 
 <!-- SOBRE NOSOTROS -->
 <section id="nosotros">
-  <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/nosotros.mp4"></video>
-  </div>
-  <div class="section-bg-overlay"></div>
   <div class="section-content">
   <p class="section-eyebrow">Quiénes somos</p>
   <h2 class="section-title">Sobre Nosotros</h2>
@@ -1000,10 +997,6 @@
 
 <!-- CONTACTO -->
 <section id="contacto">
-  <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/contacto.mp4"></video>
-  </div>
-  <div class="section-bg-overlay"></div>
   <div class="section-content">
   <p class="section-eyebrow">Hablemos</p>
   <h2 class="section-title">Contáctanos</h2>
@@ -1105,77 +1098,58 @@
     window.open('https://wa.me/18296481698?text=' + encodeURIComponent(text), '_blank');
   }
 
-  // Fade-in on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.style.opacity = '1', e.target.style.transform = 'translateY(0)';
+  // Animaciones de entrada por scroll (con movimiento y stagger)
+  function revealGroup(selector, initialTransform, staggerStep) {
+    const els = document.querySelectorAll(selector);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach((el, i) => {
+      const delay = (i % 8) * staggerStep;
+      el.style.opacity = '0';
+      el.style.transform = initialTransform;
+      el.style.transition = `opacity 0.7s cubic-bezier(.22,.9,.3,1) ${delay}s, transform 0.7s cubic-bezier(.22,.9,.3,1) ${delay}s`;
+      obs.observe(el);
     });
-  }, { threshold: 0.1 });
+  }
 
-  document.querySelectorAll('.service-card, .package-card, .portfolio-item, .stat-box').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
+  revealGroup('.section-eyebrow, .section-title, .section-divider', 'translateX(-28px)', 0.05);
+  revealGroup('.service-card, .package-card, .portfolio-item, .stat-box', 'translateY(36px) scale(0.95)', 0.07);
 
-  // ── FONDOS DE VIDEO: el scroll controla el frame, nunca se reproducen solos ──
+  // ── FONDO DE VIDEO GLOBAL: el scroll de toda la página controla el frame ──
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isNarrowScreen = window.matchMedia('(max-width: 768px)').matches;
-  const staticMotion = prefersReducedMotion || isNarrowScreen;
+  const pageBgVideo = document.getElementById('page-bg-video');
 
-  function whenReady(video, cb) {
-    if (video.readyState >= 1) cb();
-    else video.addEventListener('loadedmetadata', cb, { once: true });
-  }
-
-  // Hero: el progreso de scroll dentro de su wrapper alto mueve el frame (efecto "pinned")
-  const heroScrub = document.getElementById('hero-scrub');
-  const heroVideo = document.getElementById('hero-video');
-
-  if (heroVideo) {
-    whenReady(heroVideo, () => {
-      if (staticMotion) {
-        heroVideo.currentTime = heroVideo.duration * 0.35;
+  if (pageBgVideo) {
+    const setFrame = () => {
+      if (prefersReducedMotion) {
+        pageBgVideo.currentTime = pageBgVideo.duration * 0.3;
         return;
       }
-      let ticking = false;
-      function updateHeroScrub() {
-        const total = heroScrub.offsetHeight - window.innerHeight;
-        const scrolled = Math.min(Math.max(-heroScrub.getBoundingClientRect().top, 0), total);
-        const progress = total > 0 ? scrolled / total : 0;
-        heroVideo.currentTime = progress * heroVideo.duration;
-        ticking = false;
-      }
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(updateHeroScrub); ticking = true; }
-      }, { passive: true });
-      updateHeroScrub();
-    });
-  }
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = total > 0 ? Math.min(Math.max(window.scrollY / total, 0), 1) : 0;
+      pageBgVideo.currentTime = progress * pageBgVideo.duration;
+    };
 
-  // Demás secciones: el frame avanza de forma lineal conforme la sección pasa por el viewport
-  document.querySelectorAll('.section-bg-video').forEach(video => {
-    whenReady(video, () => {
-      const section = video.closest('section');
-      if (staticMotion || !section) {
-        video.currentTime = video.duration * 0.4;
-        return;
+    const onReady = () => {
+      setFrame();
+      if (!prefersReducedMotion) {
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) { requestAnimationFrame(() => { setFrame(); ticking = false; }); ticking = true; }
+        }, { passive: true });
+        window.addEventListener('resize', setFrame);
       }
-      let ticking = false;
-      function updateSectionScrub() {
-        const rect = section.getBoundingClientRect();
-        const total = rect.height + window.innerHeight;
-        const progress = Math.min(Math.max((window.innerHeight - rect.top) / total, 0), 1);
-        video.currentTime = progress * video.duration;
-        ticking = false;
-      }
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(updateSectionScrub); ticking = true; }
-      }, { passive: true });
-      updateSectionScrub();
-    });
-  });
+    };
+
+    if (pageBgVideo.readyState >= 1) onReady();
+    else pageBgVideo.addEventListener('loadedmetadata', onReady, { once: true });
+  }
 </script>
 
 </body>
