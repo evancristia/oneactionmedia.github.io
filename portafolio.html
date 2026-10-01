@@ -105,6 +105,10 @@
     }
     .tab-btn:hover { color: var(--light-gray); }
     .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); }
+    .tab-icon {
+      display: inline-block;
+      filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(290deg) saturate(8) brightness(1.1);
+    }
 
     /* ── SECTION VISIBILITY ── */
     .port-sec { display: none; background: var(--black); }
@@ -368,11 +372,11 @@
 
 <!-- TABS -->
 <div class="tabs-bar">
-  <button class="tab-btn" id="tb-videos" onclick="switchTab('videos')">🎬 Videos</button>
-  <button class="tab-btn" id="tb-fotos" onclick="switchTab('fotos')">📸 Fotos</button>
-  <button class="tab-btn" id="tb-bodas" onclick="switchTab('bodas')">💍 Bodas</button>
-  <button class="tab-btn" id="tb-web" onclick="switchTab('web')">🌐 Portafolio Web</button>
-  <button class="tab-btn" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')">🍽️ Menú Digital</button>
+  <button class="tab-btn" id="tb-videos" onclick="switchTab('videos')"><span class="tab-icon">🎬</span> Videos</button>
+  <button class="tab-btn" id="tb-fotos" onclick="switchTab('fotos')"><span class="tab-icon">📸</span> Fotos</button>
+  <button class="tab-btn" id="tb-bodas" onclick="switchTab('bodas')"><span class="tab-icon">💍</span> Bodas</button>
+  <button class="tab-btn" id="tb-web" onclick="switchTab('web')"><span class="tab-icon">🌐</span> Portafolio Web</button>
+  <button class="tab-btn" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')"><span class="tab-icon">🍽️</span> Menú Digital</button>
 </div>
 
 <!-- ═══════════════════ VIDEOS ═══════════════════ -->
