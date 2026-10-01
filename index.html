@@ -248,13 +248,11 @@
 
     .section-bg-video {
       position: absolute;
-      top: -10%;
-      left: 0;
+      inset: 0;
       width: 100%;
-      height: 120%;
+      height: 100%;
       object-fit: cover;
       opacity: 0.22;
-      will-change: transform;
     }
 
     .section-bg-overlay {
@@ -814,7 +812,7 @@
 <!-- SERVICIOS -->
 <section id="servicios">
   <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/servicios.mp4"></video>
+    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/servicios.mp4"></video>
   </div>
   <div class="section-bg-overlay"></div>
   <div class="section-content">
@@ -896,7 +894,7 @@
 <!-- PORTAFOLIO -->
 <section id="portafolio">
   <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
+    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
   </div>
   <div class="section-bg-overlay"></div>
   <div class="section-content">
@@ -928,7 +926,7 @@
 <!-- CTA -->
 <section id="paquetes" style="background: var(--dark); text-align: center; padding: 120px 48px;">
   <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
+    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/portafolio.mp4"></video>
   </div>
   <div class="section-bg-overlay"></div>
   <div class="section-content" style="max-width: 780px; margin: 0 auto;">
@@ -954,7 +952,7 @@
 <!-- SOBRE NOSOTROS -->
 <section id="nosotros">
   <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/nosotros.mp4"></video>
+    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/nosotros.mp4"></video>
   </div>
   <div class="section-bg-overlay"></div>
   <div class="section-content">
@@ -1003,7 +1001,7 @@
 <!-- CONTACTO -->
 <section id="contacto">
   <div class="section-bg-video-wrap">
-    <video class="section-bg-video" muted loop playsinline preload="auto" src="assets/bg/contacto.mp4"></video>
+    <video class="section-bg-video" muted playsinline preload="auto" src="assets/bg/contacto.mp4"></video>
   </div>
   <div class="section-bg-overlay"></div>
   <div class="section-content">
@@ -1121,74 +1119,63 @@
     observer.observe(el);
   });
 
-  // ── FONDOS DE VIDEO ──
+  // ── FONDOS DE VIDEO: el scroll controla el frame, nunca se reproducen solos ──
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isNarrowScreen = window.matchMedia('(max-width: 768px)').matches;
+  const staticMotion = prefersReducedMotion || isNarrowScreen;
 
-  // Hero: scroll-scrubbing (el scroll controla el frame del video)
+  function whenReady(video, cb) {
+    if (video.readyState >= 1) cb();
+    else video.addEventListener('loadedmetadata', cb, { once: true });
+  }
+
+  // Hero: el progreso de scroll dentro de su wrapper alto mueve el frame (efecto "pinned")
   const heroScrub = document.getElementById('hero-scrub');
   const heroVideo = document.getElementById('hero-video');
 
   if (heroVideo) {
-    if (prefersReducedMotion || isNarrowScreen) {
-      heroVideo.loop = true;
-      const tryPlayHero = () => heroVideo.play().catch(() => {});
-      if (heroVideo.readyState >= 3) tryPlayHero();
-      else heroVideo.addEventListener('canplay', tryPlayHero, { once: true });
-    } else {
-      heroVideo.addEventListener('loadedmetadata', () => {
-        let ticking = false;
-        function updateHeroScrub() {
-          const total = heroScrub.offsetHeight - window.innerHeight;
-          const scrolled = Math.min(Math.max(-heroScrub.getBoundingClientRect().top, 0), total);
-          const progress = total > 0 ? scrolled / total : 0;
-          const t = progress * heroVideo.duration;
-          if (Number.isFinite(t)) heroVideo.currentTime = t;
-          ticking = false;
-        }
-        window.addEventListener('scroll', () => {
-          if (!ticking) { requestAnimationFrame(updateHeroScrub); ticking = true; }
-        }, { passive: true });
-        updateHeroScrub();
-      });
-    }
-  }
-
-  // Demás secciones: video en loop con efecto parallax al hacer scroll
-  const parallaxVideos = document.querySelectorAll('.section-bg-video');
-  parallaxVideos.forEach(v => {
-    v.loop = true;
-    const tryPlay = () => v.play().catch(() => {});
-    if (v.readyState >= 3) tryPlay();
-    else v.addEventListener('canplay', tryPlay, { once: true });
-  });
-
-  // Reanudar videos si el navegador los pausó por estar la pestaña en segundo plano
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      parallaxVideos.forEach(v => { if (v.paused) v.play().catch(() => {}); });
-      if (heroVideo && (prefersReducedMotion || isNarrowScreen) && heroVideo.paused) {
-        heroVideo.play().catch(() => {});
+    whenReady(heroVideo, () => {
+      if (staticMotion) {
+        heroVideo.currentTime = heroVideo.duration * 0.35;
+        return;
       }
-    }
-  });
-
-  if (!prefersReducedMotion && !isNarrowScreen) {
-    let parallaxTicking = false;
-    function updateParallax() {
-      parallaxVideos.forEach(v => {
-        const rect = v.parentElement.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        const offset = (window.innerHeight / 2 - center) * 0.12;
-        v.style.transform = `translateY(${offset}px)`;
-      });
-      parallaxTicking = false;
-    }
-    window.addEventListener('scroll', () => {
-      if (!parallaxTicking) { requestAnimationFrame(updateParallax); parallaxTicking = true; }
-    }, { passive: true });
-    updateParallax();
+      let ticking = false;
+      function updateHeroScrub() {
+        const total = heroScrub.offsetHeight - window.innerHeight;
+        const scrolled = Math.min(Math.max(-heroScrub.getBoundingClientRect().top, 0), total);
+        const progress = total > 0 ? scrolled / total : 0;
+        heroVideo.currentTime = progress * heroVideo.duration;
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(updateHeroScrub); ticking = true; }
+      }, { passive: true });
+      updateHeroScrub();
+    });
   }
+
+  // Demás secciones: el frame avanza de forma lineal conforme la sección pasa por el viewport
+  document.querySelectorAll('.section-bg-video').forEach(video => {
+    whenReady(video, () => {
+      const section = video.closest('section');
+      if (staticMotion || !section) {
+        video.currentTime = video.duration * 0.4;
+        return;
+      }
+      let ticking = false;
+      function updateSectionScrub() {
+        const rect = section.getBoundingClientRect();
+        const total = rect.height + window.innerHeight;
+        const progress = Math.min(Math.max((window.innerHeight - rect.top) / total, 0), 1);
+        video.currentTime = progress * video.duration;
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(updateSectionScrub); ticking = true; }
+      }, { passive: true });
+      updateSectionScrub();
+    });
+  });
 </script>
 
 </body>
