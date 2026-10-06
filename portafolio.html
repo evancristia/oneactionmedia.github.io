@@ -2,625 +2,790 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Portafolio | One Action Media</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Portafolio de One Action Media: videos, fotografía, bodas, páginas web y menús digitales para negocios en República Dominicana." />
+  <meta name="theme-color" content="#0b090b" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://oneactionmedia.com/portafolio.html" />
+  <meta property="og:title" content="Portafolio | One Action Media" />
+  <meta property="og:description" content="Cada proyecto cuenta una historia. Explora nuestro trabajo por categoría." />
+  <meta property="og:image" content="https://img.youtube.com/vi/Ll_bFNKs4yc/maxresdefault.jpg" />
+  <link rel="icon" type="image/png" href="Logo_PNG.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --magenta: #FF0099;
-      --magenta-light: #FF33BB;
-      --magenta-glow: rgba(255,0,153,0.25);
-      --black: #000000;
-      --dark2: #111111;
-      --dark3: #1a1a1a;
-      --white: #ffffff;
-      --gray: #888888;
-      --light-gray: #cccccc;
+      --magenta: #ff0099;
+      --magenta-hi: #ff3dae;
+      --magenta-ink: #1a0010;
+      --magenta-wash: rgba(255, 0, 153, 0.08);
+      --magenta-line: rgba(255, 0, 153, 0.35);
+
+      --ink-0: #0b090b;
+      --ink-1: #121013;
+      --ink-2: #1a171b;
+      --ink-3: #242026;
+      --line: rgba(245, 236, 242, 0.1);
+      --line-strong: rgba(245, 236, 242, 0.2);
+      --text: #f5ecf2;
+      --text-2: #b9aeb6;
+      --text-3: #8c828b;
+
+      --f-display: 'Archivo', 'Arial Narrow', sans-serif;
+      --f-serif: 'Instrument Serif', Georgia, serif;
+      --f-mono: 'Geist Mono', ui-monospace, monospace;
+      --f-body: 'Archivo', system-ui, sans-serif;
+
+      --gutter: clamp(20px, 4.2vw, 64px);
+      --max: 1440px;
+      --nav-h: 76px;
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+      --z-grain: 50;
+      --z-tabs: 90;
+      --z-nav: 100;
+      --z-lightbox: 300;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--ink-0);
+      color: var(--text);
+      font-family: var(--f-body);
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button { font: inherit; color: inherit; }
+    ::selection { background: var(--magenta); color: var(--magenta-ink); }
+    :focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; border-radius: 2px; }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb { background: var(--magenta); border-radius: 2px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--ink-0); }
+    ::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--magenta); }
+
+    .skip-link {
+      position: absolute; left: 16px; top: -60px;
+      background: var(--magenta); color: var(--magenta-ink);
+      font: 600 14px/1 var(--f-body);
+      padding: 12px 16px; z-index: 400; text-decoration: none;
+      transition: top .2s var(--ease-out);
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+    .mono {
+      font-family: var(--f-mono);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .accent {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: -0.01em;
+      color: var(--magenta);
+    }
+
+    .grain {
+      position: fixed; inset: -50%;
+      width: 200%; height: 200%;
+      pointer-events: none;
+      z-index: var(--z-grain);
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain 1s steps(6) infinite;
+    }
+    @keyframes grain {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-3%, 2%); }
+      40% { transform: translate(2%, -4%); }
+      60% { transform: translate(-4%, -1%); }
+      80% { transform: translate(3%, 3%); }
+    }
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,0,153,0.15);
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: var(--z-nav);
+      background: rgba(11, 9, 11, 0.82);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      backdrop-filter: blur(16px) saturate(140%);
     }
-    .nav-logo img { height: 44px; width: auto; filter: drop-shadow(0 0 8px var(--magenta-glow)); }
-    .nav-right { display: flex; align-items: center; gap: 32px; }
-    .nav-tab {
-      color: var(--gray); background: none; border: none;
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
-      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-      transition: color 0.2s; cursor: pointer; padding: 0;
-    }
-    .nav-tab:hover, .nav-tab.active { color: var(--magenta); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
+    .nav-logo { display: inline-flex; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: clamp(16px, 2.6vw, 32px); }
     .nav-back {
-      display: flex; align-items: center; gap: 8px;
-      color: var(--light-gray); text-decoration: none;
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
-      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-      transition: color 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color .25s var(--ease-out);
     }
-    .nav-back::before { content: '←'; font-size: 16px; }
-    .nav-back:hover { color: var(--magenta); }
+    .nav-back svg { width: 16px; height: 16px; transition: transform .35s var(--ease-out); }
+    .nav-back:hover { color: var(--text); }
+    .nav-back:hover svg { transform: translateX(-3px); }
 
-    /* ── PAGE HERO ── */
+    /* ── BOTONES ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      font-family: var(--f-body);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 16px 26px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color .3s var(--ease-out), color .3s var(--ease-out), border-color .3s var(--ease-out), transform .2s var(--ease-out), box-shadow .4s var(--ease-out);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform .35s var(--ease-out); }
+    .btn:hover svg.arrow { transform: translateX(3px); }
+    .btn-primary { background: var(--magenta); color: var(--magenta-ink); }
+    .btn-primary:hover { background: var(--magenta-hi); box-shadow: 0 10px 40px -10px rgba(255, 0, 153, 0.6); }
+    .btn-ghost { border-color: var(--line-strong); color: var(--text); background: rgba(11, 9, 11, 0.3); }
+    .btn-ghost:hover { border-color: var(--text); background: rgba(245, 236, 242, 0.06); }
+    .btn-sm { padding: 10px 18px; font-size: 14px; }
+    .btn-lg { padding: 20px 32px; font-size: 16px; }
+
+    /* ── HERO DE PÁGINA ── */
     .page-hero {
-      padding: 150px 48px 72px; background: var(--black);
-      position: relative; overflow: hidden;
-      border-bottom: 1px solid rgba(255,0,153,0.1);
+      position: relative;
+      padding-top: calc(var(--nav-h) + clamp(56px, 9vw, 128px));
+      padding-bottom: clamp(40px, 5vw, 72px);
+      overflow: hidden;
     }
-    .hero-glow {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 85% 50%, rgba(255,0,153,0.07) 0%, transparent 70%);
-      pointer-events: none;
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0; z-index: -1;
+      background:
+        radial-gradient(60% 90% at 88% 20%, rgba(255, 0, 153, 0.16), transparent 70%),
+        radial-gradient(40% 60% at 10% 100%, rgba(255, 0, 153, 0.06), transparent 70%);
     }
-    .hero-lines {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,0,153,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,0,153,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .hero-content { position: relative; z-index: 1; }
-    .page-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
-      font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--magenta); margin-bottom: 12px;
-    }
+    .page-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+    .page-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--magenta); }
+    .page-eyebrow .mono { color: var(--text-2); }
     .page-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(60px, 9vw, 120px); line-height: 0.92;
+      font-family: var(--f-display);
+      font-variation-settings: 'wdth' 64;
+      font-weight: 800;
+      font-size: clamp(76px, 15vw, 248px);
+      line-height: 0.82;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
     }
-    .page-title span { color: var(--magenta); }
-    .page-sub {
-      font-size: 17px; font-weight: 300; color: var(--light-gray);
-      max-width: 480px; line-height: 1.6; margin-top: 20px;
+    .page-title .accent { font-size: 1.02em; }
+    .page-title .line { display: block; overflow: hidden; padding-top: 0.12em; margin-top: -0.12em; }
+    .page-title .line > span { display: inline-block; animation: rise 1.1s var(--ease-out) both; }
+    .page-foot {
+      display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap;
+      margin-top: clamp(28px, 3.4vw, 48px);
+      animation: fade 1s var(--ease-out) .4s both;
     }
+    .page-sub { font-size: clamp(17px, 1.4vw, 20px); color: var(--text-2); max-width: 44ch; text-wrap: pretty; }
 
-    /* ── TABS BAR ── */
+    @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+    @keyframes fade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+    /* ── BARRA DE CATEGORÍAS ── */
     .tabs-bar {
-      position: sticky; top: 81px; z-index: 90;
-      background: rgba(0,0,0,0.98); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,0,153,0.12);
-      padding: 0 48px; display: flex;
+      position: sticky; top: var(--nav-h); z-index: var(--z-tabs);
+      background: rgba(11, 9, 11, 0.86);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-block: 1px solid var(--line);
     }
+    .tabs {
+      display: flex; gap: clamp(4px, 1vw, 8px);
+      overflow-x: auto; scrollbar-width: none;
+      padding-block: 10px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
     .tab-btn {
-      padding: 20px 36px; cursor: pointer;
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
-      font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gray); background: none; border: none;
-      border-bottom: 3px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: none;
+      cursor: pointer;
+      font-size: 15px; font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color .25s var(--ease-out), background-color .25s var(--ease-out), border-color .25s var(--ease-out);
     }
-    .tab-btn:hover { color: var(--light-gray); }
-    .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); }
-    .tab-icon {
-      display: inline-block;
-      filter: grayscale(1) brightness(0.5) sepia(1) hue-rotate(290deg) saturate(8) brightness(1.1);
-    }
+    .tab-btn .mono { font-size: 11px; transition: color .25s; }
+    .tab-btn svg { width: 14px; height: 14px; color: var(--text-3); }
+    .tab-btn:hover { color: var(--text); background: rgba(245, 236, 242, 0.05); }
+    .tab-btn.active { color: var(--text); border-color: var(--line-strong); background: rgba(245, 236, 242, 0.06); }
+    .tab-btn.active .mono { color: var(--magenta); }
 
-    /* ── SECTION VISIBILITY ── */
-    .port-sec { display: none; background: var(--black); }
-    .port-sec.active { display: block; }
-
-    /* ── SECTION HEADER ── */
-    .sec-head { padding: 64px 48px 40px; }
-    .sec-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
-      font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
-      color: var(--magenta); margin-bottom: 10px;
+    /* ── SECCIONES ── */
+    .port-sec { display: none; padding-bottom: clamp(72px, 9vw, 128px); }
+    .port-sec.active { display: block; animation: fade .7s var(--ease-out) both; }
+    .sec-head {
+      display: flex; justify-content: space-between; align-items: end; gap: 16px 32px; flex-wrap: wrap;
+      padding-top: clamp(56px, 7vw, 104px);
+      margin-bottom: clamp(32px, 4vw, 56px);
     }
+    .sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .sec-label::before { content: ''; width: 28px; height: 1px; background: var(--magenta); }
+    .sec-label .mono { color: var(--text-2); }
     .sec-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(38px, 5vw, 64px); line-height: 1; margin-bottom: 14px;
+      font-family: var(--f-display);
+      font-variation-settings: 'wdth' 64;
+      font-weight: 800;
+      font-size: clamp(48px, 7vw, 112px);
+      line-height: 0.86;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
     }
-    .sec-divider { width: 48px; height: 3px; background: var(--magenta); }
 
-    /* ── VERTICAL YOUTUBE GRID ── */
+    /* ── VIDEO (fachada: miniatura + play, el reproductor carga al tocar) ── */
     .video-grid-yt {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px; padding: 0 48px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(10px, 1.2vw, 16px);
     }
-    .vyt-card { display: flex; flex-direction: column; gap: 10px; }
-    .vyt-wrap {
-      position: relative; aspect-ratio: 9/16;
-      background: var(--dark2); overflow: hidden; border-radius: 4px;
+    .vyt-card { display: flex; flex-direction: column; gap: 14px; }
+    .vyt-wrap, .yt-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      background: var(--ink-2);
+      isolation: isolate;
     }
-    .vyt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vyt-wrap { aspect-ratio: 9 / 16; }
+    .yt-wrap { aspect-ratio: 16 / 9; }
+    .vyt-wrap iframe, .yt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    .yt-facade {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: 0; padding: 0;
+      background: none;
+      cursor: pointer;
+    }
+    .yt-facade img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      filter: saturate(0.85) contrast(1.05);
+      transition: transform 1.2s var(--ease-out), filter .6s var(--ease-out);
+    }
+    .vyt-wrap .yt-facade img { transform: scale(1.36); }
+    .yt-facade::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(11, 9, 11, 0.05) 40%, rgba(11, 9, 11, 0.75) 100%);
+    }
+    .yt-facade:hover img, .yt-facade:focus-visible img { filter: saturate(1) contrast(1.05); }
+    .yt-wrap .yt-facade:hover img { transform: scale(1.06); }
+    .vyt-wrap .yt-facade:hover img { transform: scale(1.42); }
+    .play {
+      position: absolute; z-index: 2;
+      left: 50%; top: 50%;
+      width: 68px; height: 68px;
+      margin: -34px 0 0 -34px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(11, 9, 11, 0.45);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(245, 236, 242, 0.35);
+      color: var(--text);
+      transition: background-color .35s var(--ease-out), border-color .35s, color .35s, transform .5s var(--ease-out);
+    }
+    .play svg { width: 22px; height: 22px; margin-left: 3px; }
+    .yt-facade:hover .play, .yt-facade:focus-visible .play {
+      background: var(--magenta); border-color: var(--magenta); color: var(--magenta-ink);
+      transform: scale(1.08);
+    }
     .vyt-label {
-      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
-      color: var(--white); text-align: center; letter-spacing: 1px;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+      font-family: var(--f-display);
+      font-variation-settings: 'wdth' 80;
+      font-weight: 650;
+      font-size: clamp(18px, 1.6vw, 22px);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
     }
-    .vyt-cat {
-      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
-      font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--magenta); text-align: center; margin-top: 2px;
-    }
+    .vyt-label .mono { font-size: 11px; }
 
-    /* ── CTA ROW ── */
     .cta-row {
-      padding: 40px 48px 72px;
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      margin-top: clamp(36px, 4vw, 56px);
     }
-    .btn-primary {
-      background: var(--magenta); color: var(--black);
-      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
-      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      padding: 16px 36px; text-decoration: none; border-radius: 2px;
-      transition: background 0.2s, box-shadow 0.2s; display: inline-block;
-    }
-    .btn-primary:hover { background: var(--magenta-light); box-shadow: 0 0 24px var(--magenta-glow); }
-    .btn-outline {
-      border: 1px solid rgba(255,255,255,0.2); color: var(--white);
-      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
-      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-      padding: 16px 36px; text-decoration: none; border-radius: 2px;
-      transition: border-color 0.2s, color 0.2s; display: inline-block;
-    }
-    .btn-outline:hover { border-color: var(--magenta); color: var(--magenta); }
 
-    /* ── PHOTO SUBSECTIONS ── */
-    .sub-sec { margin-bottom: 72px; }
+    /* ── FOTOS ── */
+    .sub-sec + .sub-sec { margin-top: clamp(56px, 7vw, 96px); }
     .sub-sec-head {
-      padding: 0 48px 28px;
-      display: flex; align-items: center; gap: 16px;
-    }
-    .sub-sec-line {
-      width: 36px; height: 2px; background: var(--magenta); flex-shrink: 0;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      padding-bottom: 16px; margin-bottom: 20px;
+      border-bottom: 1px solid var(--line);
     }
     .sub-sec-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(26px, 3vw, 40px); letter-spacing: 1px; color: var(--white);
+      font-family: var(--f-display);
+      font-variation-settings: 'wdth' 72;
+      font-weight: 700;
+      font-size: clamp(28px, 3vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
     }
-
-    /* ── MASONRY GALLERY ── */
-    .masonry-wrap { padding: 0 48px; }
-    .masonry { columns: 4; column-gap: 4px; }
+    .masonry { columns: 4; column-gap: 8px; }
     .m-item {
-      break-inside: avoid; margin-bottom: 4px;
-      overflow: hidden; cursor: pointer;
+      break-inside: avoid; margin-bottom: 8px;
+      overflow: hidden; cursor: zoom-in;
+      border-radius: 4px;
+      background: var(--ink-2);
+      display: block; width: 100%;
+      border: 0; padding: 0;
+      position: relative;
     }
     .m-item img {
       width: 100%; display: block;
-      transition: transform 0.3s, opacity 0.3s;
+      opacity: 0;
+      transition: transform .9s var(--ease-out), opacity .6s var(--ease-out), filter .5s;
     }
-    .m-item:hover img { transform: scale(1.04); opacity: 0.82; }
+    .m-item img.loaded { opacity: 1; }
+    .m-item:hover img { transform: scale(1.04); filter: brightness(1.08); }
 
-    /* ── LOADING / ERROR STATES ── */
-    .cld-spinner {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 60px 0; gap: 18px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gray);
+    /* Estado de carga: bloques con el ritmo de la galería */
+    .skeleton { columns: 4; column-gap: 8px; }
+    .skeleton span {
+      display: block; break-inside: avoid; margin-bottom: 8px; border-radius: 4px;
+      background: linear-gradient(100deg, var(--ink-2) 30%, var(--ink-3) 50%, var(--ink-2) 70%);
+      background-size: 300% 100%;
+      animation: shimmer 1.6s linear infinite;
     }
-    .cld-spinner::before {
-      content: '';
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 3px solid rgba(255,0,153,0.2);
-      border-top-color: var(--magenta);
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .skeleton span:nth-child(3n) { aspect-ratio: 3 / 4; }
+    .skeleton span:nth-child(3n+1) { aspect-ratio: 4 / 3; }
+    .skeleton span:nth-child(3n+2) { aspect-ratio: 1; }
+    @keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
     .cld-error {
-      padding: 40px 0;
-      font-size: 14px; font-weight: 300;
-      color: var(--gray); line-height: 1.7;
-      font-family: 'Barlow', sans-serif;
+      padding: 32px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 6px;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.7;
     }
-    .cld-error strong { color: var(--magenta); font-weight: 600; }
+    .cld-error strong { color: var(--text); font-weight: 600; }
 
-    /* ── PHOTO LIGHTBOX ── */
+    /* ── LIGHTBOX ── */
     #photo-lb {
-      position: fixed; inset: 0; z-index: 300;
-      background: rgba(0,0,0,0.97);
-      display: none; align-items: center; justify-content: center;
+      position: fixed; inset: 0; z-index: var(--z-lightbox);
+      background: rgba(11, 9, 11, 0.96);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity .35s var(--ease-out), visibility .35s;
     }
-    #photo-lb.open { display: flex; }
-    #lb-img { max-width: 90vw; max-height: 88vh; object-fit: contain; display: block; }
-    .lb-close {
-      position: absolute; top: 20px; right: 28px;
-      font-size: 36px; cursor: pointer; color: var(--white);
-      background: none; border: none; line-height: 1; transition: color 0.2s;
+    #photo-lb.open { opacity: 1; visibility: visible; }
+    #lb-img {
+      max-width: min(90vw, 1600px); max-height: 84vh;
+      object-fit: contain; display: block;
+      border-radius: 4px;
+      transition: opacity .25s;
     }
-    .lb-close:hover { color: var(--magenta); }
-    .lb-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      font-size: 22px; cursor: pointer; color: var(--white);
-      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.12);
-      padding: 16px 20px; transition: background 0.2s, border-color 0.2s;
+    .lb-btn {
+      position: absolute;
+      width: 52px; height: 52px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: rgba(11, 9, 11, 0.55);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      cursor: pointer;
+      transition: background-color .25s, border-color .25s, color .25s, transform .2s var(--ease-out);
     }
-    .lb-arrow:hover { background: var(--magenta); border-color: var(--magenta); color: var(--black); }
-    #lb-prev { left: 16px; }
-    #lb-next { right: 16px; }
+    .lb-btn svg { width: 20px; height: 20px; }
+    .lb-btn:hover { background: var(--magenta); border-color: var(--magenta); color: var(--magenta-ink); }
+    .lb-btn:active { transform: scale(0.94); }
+    .lb-close { top: calc(16px + env(safe-area-inset-top)); right: 16px; }
+    #lb-prev { left: 16px; top: 50%; margin-top: -26px; }
+    #lb-next { right: 16px; top: 50%; margin-top: -26px; }
     .lb-counter {
-      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
-      letter-spacing: 2px; color: var(--gray);
+      position: absolute; bottom: calc(20px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+      font-variant-numeric: tabular-nums;
     }
-    .lb-counter em { color: var(--magenta); font-style: normal; }
+    .lb-counter em { color: var(--text); font-style: normal; }
 
     /* ── PORTAFOLIO WEB ── */
     .web-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-      padding: 0 48px;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+      gap: clamp(20px, 2.4vw, 32px);
     }
     .web-card { text-decoration: none; color: inherit; display: block; }
     .web-frame {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--ink-1);
+      border: 1px solid var(--line);
       border-radius: 10px;
       overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.9);
+      transition: transform .6s var(--ease-out), border-color .4s var(--ease-out), box-shadow .6s var(--ease-out);
     }
     .web-card:hover .web-frame {
       transform: translateY(-6px);
-      border-color: rgba(255,0,153,0.4);
-      box-shadow: 0 20px 40px rgba(255,0,153,0.15);
+      border-color: var(--magenta-line);
+      box-shadow: 0 40px 70px -40px rgba(255, 0, 153, 0.35);
     }
-    .web-frame-bar { display: flex; gap: 6px; padding: 10px 14px; background: var(--dark3); }
-    .web-frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); }
-    .web-frame img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
+    .web-frame-bar { display: flex; gap: 6px; padding: 12px 14px; background: var(--ink-2); border-bottom: 1px solid var(--line); }
+    .web-frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(245, 236, 242, 0.14); }
+    .web-frame img {
+      width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top;
+      transition: transform 1.2s var(--ease-out);
+    }
+    .web-card:hover .web-frame img { transform: scale(1.03); }
     .web-card-name {
-      margin-top: 14px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      color: var(--white);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      margin-top: 16px;
+      font-family: var(--f-display);
+      font-variation-settings: 'wdth' 80;
+      font-weight: 650;
+      font-size: 20px;
+      letter-spacing: -0.01em;
     }
+    .web-card-name svg { width: 18px; height: 18px; color: var(--text-3); transition: transform .4s var(--ease-out), color .3s; }
+    .web-card:hover .web-card-name svg { color: var(--magenta); transform: translate(3px, -3px); }
     .web-card-placeholder .web-frame {
-      aspect-ratio: 4/3;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gray); font-family: 'Barlow Condensed', sans-serif;
-      letter-spacing: 2px; text-transform: uppercase; font-size: 13px; text-align: center; padding: 20px;
+      aspect-ratio: 4 / 3;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      background: transparent;
+      border: 1px dashed var(--line-strong);
+      box-shadow: none;
+      text-align: center; padding: 20px;
     }
-    .web-card-placeholder .web-card-name { color: var(--gray); }
+    .web-card-placeholder .web-frame span:first-child {
+      font-family: var(--f-serif); font-style: italic; font-size: 32px; color: var(--text-2); line-height: 1.1;
+    }
+    .web-card-placeholder .web-card-name { color: var(--text-3); }
 
     /* ── BODAS ── */
     .yt-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px; padding: 0 48px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(10px, 1.2vw, 16px);
     }
-    .yt-wrap {
-      position: relative; aspect-ratio: 16/9;
-      background: var(--dark2); overflow: hidden;
-    }
-    .yt-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .yt-span2 { grid-column: span 2; }
+    .yt-span2 { grid-column: span 2; grid-row: span 2; }
+    .yt-span2 .yt-wrap { height: 100%; aspect-ratio: auto; min-height: 100%; }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--black);
-      border-top: 1px solid rgba(255,0,153,0.15);
-      padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .footer-logo img { height: 36px; filter: drop-shadow(0 0 6px var(--magenta-glow)); }
-    .footer-copy { font-size: 12px; color: var(--gray); font-weight: 300; }
-    .footer-copy span { color: var(--magenta); }
+    footer { border-top: 1px solid var(--line); padding-block: 40px calc(40px + env(safe-area-inset-bottom)); }
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .foot img { height: 34px; width: auto; }
+    .foot-copy { font-size: 13px; color: var(--text-3); }
+    .foot-copy span { color: var(--text-2); }
 
-    /* ── MOBILE ── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .video-grid-yt { grid-template-columns: repeat(3, 1fr); }
-      .masonry { columns: 3; }
-      .yt-grid { grid-template-columns: repeat(2, 1fr); }
-      .yt-span2 { grid-column: span 1; }
+      .video-grid-yt { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .masonry, .skeleton { columns: 3; }
+      .yt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .yt-span2 { grid-column: span 2; grid-row: span 1; }
+      .yt-span2 .yt-wrap { aspect-ratio: 16 / 9; height: auto; }
     }
     @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .page-hero { padding: 120px 20px 56px; }
-      .tabs-bar { padding: 0 20px; overflow-x: auto; }
-      .tab-btn { padding: 16px 20px; font-size: 12px; white-space: nowrap; }
-      .sec-head { padding: 48px 20px 32px; }
-      .video-grid-yt { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
-      .masonry-wrap { padding: 0 20px; }
-      .masonry { columns: 2; }
-      .sub-sec-head { padding: 0 20px 20px; }
-      .cta-row { padding: 32px 20px 56px; }
-      .yt-grid { grid-template-columns: 1fr; padding: 0 20px; }
-      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+      :root { --nav-h: 64px; }
+      .nav-logo img { height: 34px; }
+      .video-grid-yt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .masonry, .skeleton { columns: 2; }
+      .yt-grid { grid-template-columns: 1fr; }
+      .yt-span2 { grid-column: span 1; }
+      .play { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+      .lb-btn { width: 44px; height: 44px; }
+      #lb-prev, #lb-next { top: auto; bottom: calc(10px + env(safe-area-inset-bottom)); margin-top: 0; }
+      .foot { flex-direction: column; text-align: center; }
     }
     @media (max-width: 480px) {
-      .video-grid-yt { grid-template-columns: 1fr; }
-      .masonry { columns: 1; }
+      body { font-size: 16px; }
+      .nav-right .btn { display: none; }
+      .tab-btn { padding: 10px 14px; font-size: 14px; }
+      .cta-row .btn { flex: 1 1 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      html { scroll-behavior: auto; }
+      .grain { animation: none; }
     }
   </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="grain" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></symbol>
+  <symbol id="i-back" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10H4M9 5l-5 5 5 5"/></symbol>
+  <symbol id="i-out" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14L14 6M7 6h7v7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></symbol>
+</svg>
+
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <a href="index.html"><img src="Logo_PNG.png" alt="One Action Media" /></a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="One Action Media — inicio">
+      <img src="Logo_PNG.png" alt="One Action Media" width="48" height="40" />
+    </a>
+    <div class="nav-right">
+      <a href="index.html" class="nav-back"><svg><use href="#i-back"/></svg>Inicio</a>
+      <a href="index.html#contacto" class="btn btn-primary btn-sm">Cotizar</a>
+    </div>
   </div>
-  <div class="nav-right">
-    <button class="nav-tab" id="nt-videos" onclick="switchTab('videos')">Videos</button>
-    <button class="nav-tab" id="nt-fotos" onclick="switchTab('fotos')">Fotos</button>
-    <button class="nav-tab" id="nt-bodas" onclick="switchTab('bodas')">Bodas</button>
-    <button class="nav-tab" id="nt-web" onclick="switchTab('web')">Portafolio Web</button>
-    <button class="nav-tab" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')">Menú Digital</button>
-    <a href="index.html" class="nav-back">Inicio</a>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-eyebrow"><span class="mono">One Action Media — Nuestro Trabajo</span></div>
+    <h1 class="page-title"><span class="line"><span>Porta<em class="accent">folio</em></span></span></h1>
+    <div class="page-foot">
+      <p class="page-sub">Cada proyecto cuenta una historia. Explora nuestro trabajo por categoría.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORÍAS -->
+<nav class="tabs-bar" aria-label="Categorías del portafolio">
+  <div class="wrap tabs" role="tablist">
+    <button class="tab-btn" id="tb-videos" role="tab" aria-controls="sec-videos" onclick="switchTab('videos')"><span class="mono">01</span>Videos</button>
+    <button class="tab-btn" id="tb-fotos" role="tab" aria-controls="sec-fotos" onclick="switchTab('fotos')"><span class="mono">02</span>Fotos</button>
+    <button class="tab-btn" id="tb-bodas" role="tab" aria-controls="sec-bodas" onclick="switchTab('bodas')"><span class="mono">03</span>Bodas</button>
+    <button class="tab-btn" id="tb-web" role="tab" aria-controls="sec-web" onclick="switchTab('web')"><span class="mono">04</span>Portafolio Web</button>
+    <a class="tab-btn" href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener"><span class="mono">05</span>Menú Digital <svg><use href="#i-out"/></svg></a>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="hero-glow"></div>
-  <div class="hero-lines"></div>
-  <div class="hero-content">
-    <p class="page-eyebrow">One Action Media — Nuestro Trabajo</p>
-    <h1 class="page-title">Porta<span>folio</span></h1>
-    <p class="page-sub">Cada proyecto cuenta una historia. Explora nuestro trabajo por categoría.</p>
-  </div>
-</div>
-
-<!-- TABS -->
-<div class="tabs-bar">
-  <button class="tab-btn" id="tb-videos" onclick="switchTab('videos')"><span class="tab-icon">🎬</span> Videos</button>
-  <button class="tab-btn" id="tb-fotos" onclick="switchTab('fotos')"><span class="tab-icon">📸</span> Fotos</button>
-  <button class="tab-btn" id="tb-bodas" onclick="switchTab('bodas')"><span class="tab-icon">💍</span> Bodas</button>
-  <button class="tab-btn" id="tb-web" onclick="switchTab('web')"><span class="tab-icon">🌐</span> Portafolio Web</button>
-  <button class="tab-btn" onclick="window.open('menu-amelia-restaurante/amelia-menu.html','_blank')"><span class="tab-icon">🍽️</span> Menú Digital</button>
-</div>
-
 <!-- ═══════════════════ VIDEOS ═══════════════════ -->
-<div class="port-sec" id="sec-videos">
-  <div class="sec-head">
-    <p class="sec-eyebrow">Videos destacados</p>
-    <h2 class="sec-title">Videos</h2>
-    <div class="sec-divider"></div>
+<section class="port-sec" id="sec-videos" role="tabpanel" aria-labelledby="tb-videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label"><span class="mono">Videos destacados</span></div>
+        <h2 class="sec-title">Videos</h2>
+      </div>
+    </div>
+
+    <div class="video-grid-yt">
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="dZIwIjQE5sg" data-title="Restaurantes"></div>
+        <div class="vyt-label">Restaurantes <span class="mono">01</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="8ZvSjcLVi-E" data-title="Negocios Variados"></div>
+        <div class="vyt-label">Negocios Variados <span class="mono">02</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="HAKpVYfYsP8" data-title="Medicina"></div>
+        <div class="vyt-label">Medicina <span class="mono">03</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="KQ8bDLIyevs" data-title="Eventos"></div>
+        <div class="vyt-label">Eventos <span class="mono">04</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="Ll_bFNKs4yc" data-title="Drone"></div>
+        <div class="vyt-label">Drone <span class="mono">05</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="wkrq4AIO7UY" data-title="Constructoras"></div>
+        <div class="vyt-label">Constructoras <span class="mono">06</span></div>
+      </div>
+      <div class="vyt-card">
+        <div class="vyt-wrap" data-yt="x3V8KBzqNbs" data-title="Documentales"></div>
+        <div class="vyt-label">Documentales <span class="mono">07</span></div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a href="https://drive.google.com/drive/folders/1VansxQLT3bKUvQSAWibEAxos95QAmY0P?usp=drive_link"
+         target="_blank" rel="noopener" class="btn btn-primary btn-lg">Ver más videos <svg class="arrow"><use href="#i-arrow"/></svg></a>
+      <a href="index.html#contacto" class="btn btn-ghost btn-lg">Cotizar un video</a>
+    </div>
   </div>
-
-  <div class="video-grid-yt">
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/dZIwIjQE5sg"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Restaurantes</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/8ZvSjcLVi-E"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Negocios Variados</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/HAKpVYfYsP8"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Medicina</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/KQ8bDLIyevs"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Eventos</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/Ll_bFNKs4yc"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Drone</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/wkrq4AIO7UY"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Constructoras</div>
-    </div>
-
-    <div class="vyt-card">
-      <div class="vyt-wrap">
-        <iframe src="https://www.youtube.com/embed/x3V8KBzqNbs"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="vyt-label">Documentales</div>
-    </div>
-
-  </div>
-
-  <div class="cta-row">
-    <a href="https://drive.google.com/drive/folders/1VansxQLT3bKUvQSAWibEAxos95QAmY0P?usp=drive_link"
-       target="_blank" rel="noopener" class="btn-primary">Ver más videos →</a>
-    <a href="index.html#contacto" class="btn-outline">Cotizar un video</a>
-  </div>
-</div>
+</section>
 
 <!-- ═══════════════════ FOTOS ═══════════════════ -->
-<div class="port-sec" id="sec-fotos">
-  <div class="sec-head">
-    <p class="sec-eyebrow">Galería de imágenes</p>
-    <h2 class="sec-title">Fotos</h2>
-    <div class="sec-divider"></div>
-  </div>
-
-  <div class="sub-sec">
-    <div class="sub-sec-head">
-      <span class="sub-sec-line"></span>
-      <h3 class="sub-sec-title">Fotografía de Menú</h3>
-    </div>
-    <div class="masonry-wrap">
-      <div class="masonry" id="masonry-menu">
-        <div class="cld-spinner">Cargando fotos</div>
+<section class="port-sec" id="sec-fotos" role="tabpanel" aria-labelledby="tb-fotos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label"><span class="mono">Galería de imágenes</span></div>
+        <h2 class="sec-title">Fotos</h2>
       </div>
     </div>
-  </div>
 
-  <div class="sub-sec">
-    <div class="sub-sec-head">
-      <span class="sub-sec-line"></span>
-      <h3 class="sub-sec-title">Eventos</h3>
-    </div>
-    <div class="masonry-wrap">
-      <div class="masonry" id="masonry-eventos">
-        <div class="cld-spinner">Cargando fotos</div>
+    <div class="sub-sec">
+      <div class="sub-sec-head">
+        <h3 class="sub-sec-title">Fotografía de Menú</h3>
+        <span class="mono" id="count-menu"></span>
       </div>
+      <div class="masonry" id="masonry-menu" aria-busy="true"></div>
     </div>
-  </div>
 
-  <div class="sub-sec">
-    <div class="sub-sec-head">
-      <span class="sub-sec-line"></span>
-      <h3 class="sub-sec-title">Deporte</h3>
-    </div>
-    <div class="masonry-wrap">
-      <div class="masonry" id="masonry-deporte">
-        <div class="cld-spinner">Cargando fotos</div>
+    <div class="sub-sec">
+      <div class="sub-sec-head">
+        <h3 class="sub-sec-title">Eventos</h3>
+        <span class="mono" id="count-eventos"></span>
       </div>
+      <div class="masonry" id="masonry-eventos" aria-busy="true"></div>
+    </div>
+
+    <div class="sub-sec">
+      <div class="sub-sec-head">
+        <h3 class="sub-sec-title">Deporte</h3>
+        <span class="mono" id="count-deporte"></span>
+      </div>
+      <div class="masonry" id="masonry-deporte" aria-busy="true"></div>
     </div>
   </div>
-
-</div>
+</section>
 
 <!-- ═══════════════════ BODAS ═══════════════════ -->
-<div class="port-sec" id="sec-bodas">
-  <div class="sec-head">
-    <p class="sec-eyebrow">El día más especial</p>
-    <h2 class="sec-title">Bodas</h2>
-    <div class="sec-divider"></div>
-  </div>
+<section class="port-sec" id="sec-bodas" role="tabpanel" aria-labelledby="tb-bodas">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label"><span class="mono">El día más especial</span></div>
+        <h2 class="sec-title">Bodas</h2>
+      </div>
+    </div>
 
-  <div class="yt-grid">
-    <div class="yt-span2">
-      <div class="yt-wrap">
-        <iframe src="https://www.youtube.com/embed/wQyWWvwcIsQ"
-          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
+    <div class="yt-grid">
+      <div class="yt-span2"><div class="yt-wrap" data-yt="wQyWWvwcIsQ" data-title="Video de boda"></div></div>
+      <div><div class="yt-wrap" data-yt="lhdYcw5_dCs" data-title="Video de boda"></div></div>
+      <div><div class="yt-wrap" data-yt="ryf3iPrRLeY" data-title="Video de boda"></div></div>
+      <div><div class="yt-wrap" data-yt="T7avZBi-x8o" data-title="Video de boda"></div></div>
+      <div><div class="yt-wrap" data-yt="bV6oUQo2eHc" data-title="Video de boda"></div></div>
     </div>
-    <div>
-      <div class="yt-wrap">
-        <iframe src="https://www.youtube.com/embed/lhdYcw5_dCs"
-          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
-    </div>
-    <div>
-      <div class="yt-wrap">
-        <iframe src="https://www.youtube.com/embed/ryf3iPrRLeY"
-          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
-    </div>
-    <div>
-      <div class="yt-wrap">
-        <iframe src="https://www.youtube.com/embed/T7avZBi-x8o"
-          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
-    </div>
-    <div>
-      <div class="yt-wrap">
-        <iframe src="https://www.youtube.com/embed/bV6oUQo2eHc"
-          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
-    </div>
-  </div>
 
-  <div class="cta-row">
-    <a href="index.html#contacto" class="btn-primary">Reservar para mi boda →</a>
+    <div class="cta-row">
+      <a href="index.html#contacto" class="btn btn-primary btn-lg">Reservar para mi boda <svg class="arrow"><use href="#i-arrow"/></svg></a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- ═══════════════════ PORTAFOLIO WEB ═══════════════════ -->
-<div class="port-sec" id="sec-web">
-  <div class="sec-head">
-    <p class="sec-eyebrow">Diseño y desarrollo</p>
-    <h2 class="sec-title">Portafolio Web</h2>
-    <div class="sec-divider"></div>
-  </div>
+<section class="port-sec" id="sec-web" role="tabpanel" aria-labelledby="tb-web">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-label"><span class="mono">Diseño y desarrollo</span></div>
+        <h2 class="sec-title">Portafolio Web</h2>
+      </div>
+    </div>
 
-  <div class="web-grid">
-    <a class="web-card" href="https://oneactionmedia.com" target="_blank" rel="noopener">
-      <div class="web-frame">
-        <div class="web-frame-bar"><span></span><span></span><span></span></div>
-        <img src="assets/portfolio-web/oneactionmedia.jpg" alt="One Action Media" loading="lazy" />
+    <div class="web-grid">
+      <a class="web-card" href="https://oneactionmedia.com" target="_blank" rel="noopener">
+        <div class="web-frame">
+          <div class="web-frame-bar"><span></span><span></span><span></span></div>
+          <img src="assets/portfolio-web/oneactionmedia.jpg" alt="Página web de One Action Media" loading="lazy" />
+        </div>
+        <div class="web-card-name">One Action Media <svg><use href="#i-out"/></svg></div>
+      </a>
+      <a class="web-card" href="https://maracuyagastrobar.com" target="_blank" rel="noopener">
+        <div class="web-frame">
+          <div class="web-frame-bar"><span></span><span></span><span></span></div>
+          <img src="assets/portfolio-web/maracuya.jpg" alt="Página web de Maracuyá Gastro Bar" loading="lazy" />
+        </div>
+        <div class="web-card-name">Maracuyá Gastro Bar <svg><use href="#i-out"/></svg></div>
+      </a>
+      <a class="web-card" href="https://onemenurd.com" target="_blank" rel="noopener">
+        <div class="web-frame">
+          <div class="web-frame-bar"><span></span><span></span><span></span></div>
+          <img src="assets/portfolio-web/onemenu.jpg" alt="Página web de OneMenu" loading="lazy" />
+        </div>
+        <div class="web-card-name">OneMenu RD <svg><use href="#i-out"/></svg></div>
+      </a>
+      <a class="web-card" href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener">
+        <div class="web-frame">
+          <div class="web-frame-bar"><span></span><span></span><span></span></div>
+          <img src="assets/portfolio-web/amelia.jpg" alt="Menú digital del restaurante Amelia" loading="lazy" />
+        </div>
+        <div class="web-card-name">Menú Digital Amelia <svg><use href="#i-out"/></svg></div>
+      </a>
+      <div class="web-card web-card-placeholder">
+        <div class="web-frame"><span>Próximamente</span><span class="mono">más proyectos</span></div>
+        <div class="web-card-name">Tu marca aquí</div>
       </div>
-      <div class="web-card-name">One Action Media</div>
-    </a>
-    <a class="web-card" href="https://maracuyagastrobar.com" target="_blank" rel="noopener">
-      <div class="web-frame">
-        <div class="web-frame-bar"><span></span><span></span><span></span></div>
-        <img src="assets/portfolio-web/maracuya.jpg" alt="Maracuyá Gastro Bar" loading="lazy" />
-      </div>
-      <div class="web-card-name">Maracuyá Gastro Bar</div>
-    </a>
-    <a class="web-card" href="https://onemenurd.com" target="_blank" rel="noopener">
-      <div class="web-frame">
-        <div class="web-frame-bar"><span></span><span></span><span></span></div>
-        <img src="assets/portfolio-web/onemenu.jpg" alt="OneMenu" loading="lazy" />
-      </div>
-      <div class="web-card-name">OneMenu RD</div>
-    </a>
-    <a class="web-card" href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener">
-      <div class="web-frame">
-        <div class="web-frame-bar"><span></span><span></span><span></span></div>
-        <img src="assets/portfolio-web/amelia.jpg" alt="Menú Digital Amelia" loading="lazy" />
-      </div>
-      <div class="web-card-name">Menú Digital Amelia</div>
-    </a>
-    <div class="web-card web-card-placeholder">
-      <div class="web-frame">Próximamente<br />más proyectos</div>
-      <div class="web-card-name">Tu marca aquí</div>
+    </div>
+
+    <div class="cta-row">
+      <a href="index.html#contacto" class="btn btn-primary btn-lg">Cotizar mi página web <svg class="arrow"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
+</section>
 
-  <div class="cta-row">
-    <a href="index.html#contacto" class="btn-primary">Cotizar mi página web →</a>
-  </div>
-</div>
+</main>
 
-<!-- PHOTO LIGHTBOX -->
-<div id="photo-lb">
-  <button class="lb-close" onclick="closeLb()">✕</button>
-  <button class="lb-arrow" id="lb-prev" onclick="lbMove(-1)">&#8592;</button>
+<!-- LIGHTBOX -->
+<div id="photo-lb" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">
+  <button class="lb-btn lb-close" onclick="closeLb()" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+  <button class="lb-btn" id="lb-prev" onclick="lbMove(-1)" aria-label="Foto anterior"><svg><use href="#i-back"/></svg></button>
   <img id="lb-img" src="" alt="" />
-  <button class="lb-arrow" id="lb-next" onclick="lbMove(1)">&#8594;</button>
-  <div class="lb-counter"><em id="lb-cur">1</em> / <span id="lb-tot">1</span></div>
+  <button class="lb-btn" id="lb-next" onclick="lbMove(1)" aria-label="Foto siguiente"><svg><use href="#i-arrow"/></svg></button>
+  <div class="lb-counter mono"><em id="lb-cur">1</em> / <span id="lb-tot">1</span></div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    <img src="Logo_PNG.png" alt="One Action Media" />
-  </div>
-  <div class="footer-copy">
-    © 2025 <span>One Action Media</span>. República Dominicana. Todos los derechos reservados.
+  <div class="wrap foot">
+    <img src="Logo_PNG.png" alt="One Action Media" width="41" height="34" loading="lazy" />
+    <p class="foot-copy">© 2025 <span>One Action Media</span>. República Dominicana. Todos los derechos reservados.</p>
   </div>
 </footer>
 
 <script>
+/* ─────────────────────────────────────────
+   YOUTUBE — miniatura primero, el reproductor
+   se carga solo cuando el visitante lo pide
+───────────────────────────────────────── */
+const YT_ALLOW = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+
+document.querySelectorAll('[data-yt]').forEach(wrap => {
+  const id = wrap.dataset.yt;
+  const vertical = wrap.classList.contains('vyt-wrap');
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'yt-facade';
+  btn.setAttribute('aria-label', 'Reproducir video: ' + wrap.dataset.title);
+  btn.innerHTML = `<img src="https://img.youtube.com/vi/${id}/${vertical ? 'hqdefault' : 'maxresdefault'}.jpg" alt="" loading="lazy" decoding="async" />
+    <span class="play"><svg><use href="#i-play"/></svg></span>`;
+  btn.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    iframe.title = wrap.dataset.title;
+    iframe.allow = YT_ALLOW;
+    iframe.allowFullscreen = true;
+    wrap.replaceChildren(iframe);
+  });
+  wrap.appendChild(btn);
+});
+
 /* ─────────────────────────────────────────
    CLOUDINARY — endpoint público por tag
    GET /image/list/{tag}.json → { resources: [{ public_id, ... }] }
@@ -629,33 +794,44 @@
 const CLOUD = 'daircfrad';
 
 const PHOTO_GROUPS = [
-  { tag: 'menu',     gridId: 'masonry-menu'    },
-  { tag: 'eventos',  gridId: 'masonry-eventos'  },
-  { tag: 'deportes', gridId: 'masonry-deporte'  }
+  { tag: 'menu',     gridId: 'masonry-menu',    countId: 'count-menu'    },
+  { tag: 'eventos',  gridId: 'masonry-eventos', countId: 'count-eventos' },
+  { tag: 'deportes', gridId: 'masonry-deporte', countId: 'count-deporte' }
 ];
 
 function cldThumb(publicId) {
   return `https://res.cloudinary.com/${CLOUD}/image/upload/w_700,f_auto,q_auto/${publicId}.jpg`;
 }
+// La cuenta solo entrega la variante w_700 y el original: cualquier otra
+// transformación responde 401, así que el visor usa el original sin transformar.
 function cldFull(publicId) {
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/f_auto,q_auto/${publicId}.jpg`;
+  return `https://res.cloudinary.com/${CLOUD}/image/upload/${publicId}.jpg`;
+}
+
+function skeleton(grid) {
+  grid.className = 'skeleton';
+  grid.innerHTML = '<span></span>'.repeat(8);
 }
 
 /* ── Array plano para el lightbox ── */
 let lbPhotos = [];
 
-function addPhotoToGrid(grid, publicId) {
+function addPhotoToGrid(grid, r) {
   const globalIdx = lbPhotos.length;
-  lbPhotos.push(publicId);
+  lbPhotos.push(r.public_id);
 
-  const item = document.createElement('div');
+  const item = document.createElement('button');
+  item.type = 'button';
   item.className = 'm-item';
+  if (r.width && r.height) item.style.aspectRatio = `${r.width} / ${r.height}`;
+  item.setAttribute('aria-label', 'Ampliar foto ' + (globalIdx + 1));
 
   const img = document.createElement('img');
-  img.src = cldThumb(publicId);
-  img.alt = publicId.split('/').pop().replace(/[-_]/g, ' ');
+  img.src = cldThumb(r.public_id);
+  img.alt = '';
   img.loading = 'lazy';
   img.decoding = 'async';
+  img.onload = () => img.classList.add('loaded');
   img.onerror = () => item.remove();
 
   item.appendChild(img);
@@ -665,24 +841,29 @@ function addPhotoToGrid(grid, publicId) {
 
 async function buildMasonry() {
   lbPhotos = [];
-  for (const { tag, gridId } of PHOTO_GROUPS) {
+  for (const { tag, gridId, countId } of PHOTO_GROUPS) {
     const grid = document.getElementById(gridId);
-    grid.innerHTML = '<div class="cld-spinner">Cargando fotos</div>';
+    skeleton(grid);
     try {
       const res = await fetch(`https://res.cloudinary.com/${CLOUD}/image/list/${tag}.json`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const resources = data.resources || [];
+      grid.className = 'masonry';
       grid.innerHTML = '';
+      grid.removeAttribute('aria-busy');
       if (resources.length === 0) {
-        grid.innerHTML = '<p class="cld-error">No se encontraron fotos en esta categoría.</p>';
+        grid.innerHTML = '<p class="cld-error">Todavía no hay fotos en esta categoría.</p>';
         continue;
       }
-      resources.forEach(r => addPhotoToGrid(grid, r.public_id));
+      document.getElementById(countId).textContent = `${resources.length} fotos`;
+      resources.forEach(r => addPhotoToGrid(grid, r));
     } catch (err) {
+      grid.className = 'masonry';
+      grid.removeAttribute('aria-busy');
       grid.innerHTML = `<p class="cld-error"><strong>No se pudo cargar la galería.</strong><br>
-        Verifica que el tag <em>${tag}</em> existe en Cloudinary y que "Resource list" está activado
-        en Settings → Security.</p>`;
+        Revisa tu conexión y vuelve a cargar la página. Si sigue fallando, escríbenos por WhatsApp y te enviamos muestras.</p>`;
+      console.warn(`Cloudinary: el tag "${tag}" no respondió (${err.message}). Verifica que exista y que "Resource list" esté activado en Settings → Security.`);
     }
   }
 }
@@ -690,24 +871,38 @@ async function buildMasonry() {
 /* ─────────────────────────────────────────
    LIGHTBOX
 ───────────────────────────────────────── */
+const lb = document.getElementById('photo-lb');
 let lbIdx = 0;
+let lbReturnFocus = null;
 
 function openLb(i) {
   lbIdx = i;
+  lbReturnFocus = document.activeElement;
   updateLb();
-  document.getElementById('photo-lb').classList.add('open');
+  lb.classList.add('open');
+  lb.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  lb.querySelector('.lb-close').focus();
 }
 
 function updateLb() {
-  document.getElementById('lb-img').src = cldFull(lbPhotos[lbIdx]);
+  // Muestra al instante la miniatura ya cargada y la cambia por el original cuando llega
+  const img = document.getElementById('lb-img');
+  const id = lbPhotos[lbIdx];
+  img.src = cldThumb(id);
+  const full = new Image();
+  full.onload = () => { if (lbPhotos[lbIdx] === id) img.src = full.src; };
+  full.src = cldFull(id);
   document.getElementById('lb-cur').textContent = lbIdx + 1;
   document.getElementById('lb-tot').textContent = lbPhotos.length;
 }
 
 function closeLb() {
-  document.getElementById('photo-lb').classList.remove('open');
+  if (!lb.classList.contains('open')) return;
+  lb.classList.remove('open');
+  lb.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  if (lbReturnFocus) lbReturnFocus.focus();
 }
 
 function lbMove(dir) {
@@ -715,21 +910,28 @@ function lbMove(dir) {
   updateLb();
 }
 
-document.getElementById('photo-lb').addEventListener('click', e => {
-  if (e.target === document.getElementById('photo-lb')) closeLb();
-});
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
 
 /* ─────────────────────────────────────────
    TAB SWITCHING
 ───────────────────────────────────────── */
-function switchTab(tab) {
+function switchTab(tab, scroll = true) {
   document.querySelectorAll('.port-sec').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn, .nav-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn[role="tab"]').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
   document.getElementById('sec-' + tab).classList.add('active');
-  document.getElementById('tb-' + tab).classList.add('active');
-  document.getElementById('nt-' + tab).classList.add('active');
-  const bar = document.querySelector('.tabs-bar');
-  window.scrollTo({ top: bar.offsetTop - 82, behavior: 'smooth' });
+  const btn = document.getElementById('tb-' + tab);
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  btn.scrollIntoView({ block: 'nearest', inline: 'center' });
+  history.replaceState(null, '', '?cat=' + tab);
+  if (scroll) {
+    const bar = document.querySelector('.tabs-bar');
+    const navH = document.querySelector('.nav').offsetHeight;
+    window.scrollTo({ top: bar.offsetTop - navH, behavior: 'smooth' });
+  }
 }
 
 /* ─────────────────────────────────────────
@@ -737,7 +939,7 @@ function switchTab(tab) {
 ───────────────────────────────────────── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeLb(); }
-  if (document.getElementById('photo-lb').classList.contains('open')) {
+  if (lb.classList.contains('open')) {
     if (e.key === 'ArrowLeft')  lbMove(-1);
     if (e.key === 'ArrowRight') lbMove(1);
   }
@@ -748,11 +950,8 @@ document.addEventListener('keydown', e => {
    e.g. portafolio.html?cat=bodas
 ───────────────────────────────────────── */
 const initTab = new URLSearchParams(location.search).get('cat');
-if (initTab && ['videos','fotos','bodas','web'].includes(initTab)) {
-  switchTab(initTab);
-} else {
-  switchTab('videos');
-}
+const validTab = initTab && ['videos','fotos','bodas','web'].includes(initTab);
+switchTab(validTab ? initTab : 'videos', validTab);
 
 buildMasonry();
 </script>
