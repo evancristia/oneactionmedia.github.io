@@ -65,6 +65,7 @@
     a { color: inherit; }
     button { font: inherit; color: inherit; }
     ::selection { background: var(--magenta); color: var(--magenta-ink); }
+    html { caret-color: var(--magenta); accent-color: var(--magenta); color-scheme: dark; }
     :focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; border-radius: 2px; }
 
     ::-webkit-scrollbar { width: 6px; }
@@ -190,9 +191,6 @@
         radial-gradient(60% 90% at 88% 20%, rgba(255, 0, 153, 0.16), transparent 70%),
         radial-gradient(40% 60% at 10% 100%, rgba(255, 0, 153, 0.06), transparent 70%);
     }
-    .page-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
-    .page-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--magenta); }
-    .page-eyebrow .mono { color: var(--text-2); }
     .page-title {
       font-family: var(--f-display);
       font-variation-settings: 'wdth' 64;
@@ -243,11 +241,9 @@
       white-space: nowrap;
       transition: color .25s var(--ease-out), background-color .25s var(--ease-out), border-color .25s var(--ease-out);
     }
-    .tab-btn .mono { font-size: 11px; transition: color .25s; }
     .tab-btn svg { width: 14px; height: 14px; color: var(--text-3); }
     .tab-btn:hover { color: var(--text); background: rgba(245, 236, 242, 0.05); }
     .tab-btn.active { color: var(--text); border-color: var(--line-strong); background: rgba(245, 236, 242, 0.06); }
-    .tab-btn.active .mono { color: var(--magenta); }
 
     /* ── SECCIONES ── */
     .port-sec { display: none; padding-bottom: clamp(72px, 9vw, 128px); }
@@ -257,9 +253,16 @@
       padding-top: clamp(56px, 7vw, 104px);
       margin-bottom: clamp(32px, 4vw, 56px);
     }
-    .sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-    .sec-label::before { content: ''; width: 28px; height: 1px; background: var(--magenta); }
-    .sec-label .mono { color: var(--text-2); }
+    .sec-note {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: clamp(20px, 1.8vw, 26px);
+      line-height: 1.2;
+      color: var(--text-2);
+      padding-bottom: 0.4em;
+    }
+    .sec-note::before { content: ''; width: 40px; height: 1px; background: var(--magenta); }
     .sec-title {
       font-family: var(--f-display);
       font-variation-settings: 'wdth' 64;
@@ -339,7 +342,6 @@
       letter-spacing: -0.01em;
       line-height: 1.1;
     }
-    .vyt-label .mono { font-size: 11px; }
 
     .cta-row {
       display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
@@ -574,10 +576,10 @@
 <!-- HERO -->
 <section class="page-hero">
   <div class="wrap">
-    <div class="page-eyebrow"><span class="mono">One Action Media — Nuestro Trabajo</span></div>
     <h1 class="page-title"><span class="line"><span>Porta<em class="accent">folio</em></span></span></h1>
     <div class="page-foot">
       <p class="page-sub">Cada proyecto cuenta una historia. Explora nuestro trabajo por categoría.</p>
+      <p class="sec-note">One Action Media — Nuestro Trabajo</p>
     </div>
   </div>
 </section>
@@ -585,11 +587,11 @@
 <!-- CATEGORÍAS -->
 <nav class="tabs-bar" aria-label="Categorías del portafolio">
   <div class="wrap tabs" role="tablist">
-    <button class="tab-btn" id="tb-videos" role="tab" aria-controls="sec-videos" onclick="switchTab('videos')"><span class="mono">01</span>Videos</button>
-    <button class="tab-btn" id="tb-fotos" role="tab" aria-controls="sec-fotos" onclick="switchTab('fotos')"><span class="mono">02</span>Fotos</button>
-    <button class="tab-btn" id="tb-bodas" role="tab" aria-controls="sec-bodas" onclick="switchTab('bodas')"><span class="mono">03</span>Bodas</button>
-    <button class="tab-btn" id="tb-web" role="tab" aria-controls="sec-web" onclick="switchTab('web')"><span class="mono">04</span>Portafolio Web</button>
-    <a class="tab-btn" href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener"><span class="mono">05</span>Menú Digital <svg><use href="#i-out"/></svg></a>
+    <button class="tab-btn" id="tb-videos" role="tab" aria-controls="sec-videos" onclick="switchTab('videos')">Videos</button>
+    <button class="tab-btn" id="tb-fotos" role="tab" aria-controls="sec-fotos" onclick="switchTab('fotos')">Fotos</button>
+    <button class="tab-btn" id="tb-bodas" role="tab" aria-controls="sec-bodas" onclick="switchTab('bodas')">Bodas</button>
+    <button class="tab-btn" id="tb-web" role="tab" aria-controls="sec-web" onclick="switchTab('web')">Portafolio Web</button>
+    <a class="tab-btn" href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener">Menú Digital <svg><use href="#i-out"/></svg></a>
   </div>
 </nav>
 
@@ -597,40 +599,38 @@
 <section class="port-sec" id="sec-videos" role="tabpanel" aria-labelledby="tb-videos">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label"><span class="mono">Videos destacados</span></div>
-        <h2 class="sec-title">Videos</h2>
-      </div>
+      <h2 class="sec-title">Videos</h2>
+      <p class="sec-note">Videos destacados</p>
     </div>
 
     <div class="video-grid-yt">
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="dZIwIjQE5sg" data-title="Restaurantes"></div>
-        <div class="vyt-label">Restaurantes <span class="mono">01</span></div>
+        <div class="vyt-label">Restaurantes</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="8ZvSjcLVi-E" data-title="Negocios Variados"></div>
-        <div class="vyt-label">Negocios Variados <span class="mono">02</span></div>
+        <div class="vyt-label">Negocios Variados</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="HAKpVYfYsP8" data-title="Medicina"></div>
-        <div class="vyt-label">Medicina <span class="mono">03</span></div>
+        <div class="vyt-label">Medicina</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="KQ8bDLIyevs" data-title="Eventos"></div>
-        <div class="vyt-label">Eventos <span class="mono">04</span></div>
+        <div class="vyt-label">Eventos</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="Ll_bFNKs4yc" data-title="Drone"></div>
-        <div class="vyt-label">Drone <span class="mono">05</span></div>
+        <div class="vyt-label">Drone</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="wkrq4AIO7UY" data-title="Constructoras"></div>
-        <div class="vyt-label">Constructoras <span class="mono">06</span></div>
+        <div class="vyt-label">Constructoras</div>
       </div>
       <div class="vyt-card">
         <div class="vyt-wrap" data-yt="x3V8KBzqNbs" data-title="Documentales"></div>
-        <div class="vyt-label">Documentales <span class="mono">07</span></div>
+        <div class="vyt-label">Documentales</div>
       </div>
     </div>
 
@@ -646,10 +646,8 @@
 <section class="port-sec" id="sec-fotos" role="tabpanel" aria-labelledby="tb-fotos">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label"><span class="mono">Galería de imágenes</span></div>
-        <h2 class="sec-title">Fotos</h2>
-      </div>
+      <h2 class="sec-title">Fotos</h2>
+      <p class="sec-note">Galería de imágenes</p>
     </div>
 
     <div class="sub-sec">
@@ -682,10 +680,8 @@
 <section class="port-sec" id="sec-bodas" role="tabpanel" aria-labelledby="tb-bodas">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label"><span class="mono">El día más especial</span></div>
-        <h2 class="sec-title">Bodas</h2>
-      </div>
+      <h2 class="sec-title">Bodas</h2>
+      <p class="sec-note">El día más especial</p>
     </div>
 
     <div class="yt-grid">
@@ -706,10 +702,8 @@
 <section class="port-sec" id="sec-web" role="tabpanel" aria-labelledby="tb-web">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label"><span class="mono">Diseño y desarrollo</span></div>
-        <h2 class="sec-title">Portafolio Web</h2>
-      </div>
+      <h2 class="sec-title">Portafolio Web</h2>
+      <p class="sec-note">Diseño y desarrollo</p>
     </div>
 
     <div class="web-grid">
@@ -759,7 +753,7 @@
 <div id="photo-lb" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">
   <button class="lb-btn lb-close" onclick="closeLb()" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
   <button class="lb-btn" id="lb-prev" onclick="lbMove(-1)" aria-label="Foto anterior"><svg><use href="#i-back"/></svg></button>
-  <img id="lb-img" src="" alt="" />
+  <img id="lb-img" alt="" />
   <button class="lb-btn" id="lb-next" onclick="lbMove(1)" aria-label="Foto siguiente"><svg><use href="#i-arrow"/></svg></button>
   <div class="lb-counter mono"><em id="lb-cur">1</em> / <span id="lb-tot">1</span></div>
 </div>

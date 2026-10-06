@@ -74,6 +74,7 @@
     img { display: block; max-width: 100%; }
     a { color: inherit; }
     ::selection { background: var(--magenta); color: var(--magenta-ink); }
+    html { caret-color: var(--magenta); accent-color: var(--magenta); color-scheme: dark; }
 
     :focus-visible {
       outline: 2px solid var(--magenta);
@@ -227,7 +228,6 @@
       text-transform: uppercase;
       letter-spacing: -0.01em;
     }
-    .mobile-menu li a .mono { font-size: 11px; }
 
     /* ── BOTONES ── */
     .btn {
@@ -391,9 +391,18 @@
       align-items: end;
       margin-bottom: clamp(48px, 6vw, 88px);
     }
-    .sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-    .sec-label::before { content: ''; width: 28px; height: 1px; background: var(--magenta); }
-    .sec-label .mono { color: var(--text-2); }
+    /* Nota editorial al lado del título, alineada a su base */
+    .sec-note {
+      justify-self: end;
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: clamp(20px, 1.8vw, 26px);
+      line-height: 1.2;
+      color: var(--text-2);
+      padding-bottom: 0.4em;
+    }
+    .sec-note::before { content: ''; width: 40px; height: 1px; background: var(--magenta); }
     .sec-title {
       font-family: var(--f-display);
       font-variation-settings: 'wdth' 64;
@@ -402,12 +411,6 @@
       line-height: 0.86;
       letter-spacing: -0.02em;
       text-transform: uppercase;
-    }
-    .sec-intro {
-      color: var(--text-2);
-      max-width: 42ch;
-      justify-self: end;
-      text-wrap: pretty;
     }
 
     /* ── SERVICIOS: lista tipo créditos ── */
@@ -504,7 +507,6 @@
       display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
       padding: clamp(16px, 2vw, 28px);
     }
-    .shot-cap .mono { color: rgba(245, 236, 242, 0.7); display: block; margin-bottom: 8px; }
     .shot-title {
       font-family: var(--f-display);
       font-variation-settings: 'wdth' 70;
@@ -539,8 +541,13 @@
 
     /* ── CTA (#paquetes) ── */
     .cta { text-align: center; }
-    .cta .sec-label { justify-content: center; }
-    .cta .sec-label::after { content: ''; width: 28px; height: 1px; background: var(--magenta); }
+    .cta-lead {
+      margin-top: 48px;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: clamp(22px, 2vw, 28px);
+      color: var(--text);
+    }
     .cta-title {
       font-family: var(--f-display);
       font-variation-settings: 'wdth' 64;
@@ -558,7 +565,7 @@
       margin: clamp(28px, 3vw, 40px) auto 0;
       text-wrap: pretty;
     }
-    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 44px; }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
     .cta-note { margin-top: 32px; text-transform: none; letter-spacing: 0.02em; font-size: 13px; }
 
     /* ── NOSOTROS ── */
@@ -667,8 +674,8 @@
     }
     .form-card > p { color: var(--text-2); font-size: 15px; margin: 10px 0 32px; }
     .field { margin-bottom: 20px; }
-    .field label { display: block; margin-bottom: 8px; }
-    .field label .opt { text-transform: none; letter-spacing: 0; color: var(--text-3); }
+    .field label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--text-2); }
+    .field label .opt { font-weight: 400; color: var(--text-3); }
     .field input, .field select, .field textarea {
       width: 100%;
       background: rgba(11, 9, 11, 0.6);
@@ -728,7 +735,7 @@
 
       .hero-foot { grid-template-columns: 1fr; }
       .sec-head { grid-template-columns: 1fr; }
-      .sec-intro { justify-self: start; }
+      .sec-note { justify-self: start; padding-bottom: 0; }
 
       .reel { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
       .shot:nth-child(n) { grid-column: span 1; grid-row: span 1; }
@@ -803,10 +810,10 @@
 
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <ul>
-    <li><a href="#servicios"><span class="mono">01</span>Servicios</a></li>
-    <li><a href="portafolio.html"><span class="mono">02</span>Portafolio</a></li>
-    <li><a href="#paquetes"><span class="mono">03</span>Paquetes</a></li>
-    <li><a href="#nosotros"><span class="mono">04</span>Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="portafolio.html">Portafolio</a></li>
+    <li><a href="#paquetes">Paquetes</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
   </ul>
   <a href="#contacto" class="btn btn-primary btn-lg">Cotizar <svg class="arrow"><use href="#i-arrow"/></svg></a>
 </div>
@@ -845,10 +852,8 @@
 <section id="servicios" class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label reveal"><span class="mono">Lo que hacemos</span></div>
-        <h2 class="sec-title reveal">Nuestros<br />Servicios</h2>
-      </div>
+      <h2 class="sec-title">Nuestros<br />Servicios</h2>
+      <p class="sec-note">Lo que hacemos</p>
     </div>
 
     <ul class="services">
@@ -926,10 +931,8 @@
 <section id="portafolio" class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label reveal"><span class="mono">Nuestro trabajo</span></div>
-        <h2 class="sec-title reveal">Portafolio</h2>
-      </div>
+      <h2 class="sec-title">Portafolio</h2>
+      <p class="sec-note">Nuestro trabajo</p>
     </div>
 
     <div class="reel">
@@ -937,35 +940,35 @@
         <img src="https://img.youtube.com/vi/Ll_bFNKs4yc/maxresdefault.jpg" alt="Toma aérea con drone de una propiedad rodeada de vegetación" loading="lazy" />
         <span class="play mono">Reel</span>
         <span class="shot-cap">
-          <span><span class="mono">01 / 05</span><span class="shot-title">Videos</span></span>
+          <span class="shot-title">Videos</span>
           <span class="shot-arrow"><svg><use href="#i-arrow"/></svg></span>
         </span>
       </a>
       <a href="portafolio.html?cat=bodas" class="shot reveal" style="--d:.08s">
         <img src="https://img.youtube.com/vi/lhdYcw5_dCs/maxresdefault.jpg" alt="Pareja de novios caminando entre invitados en su boda" loading="lazy" class="crop-b" />
         <span class="shot-cap">
-          <span><span class="mono">02 / 05</span><span class="shot-title">Bodas</span></span>
+          <span class="shot-title">Bodas</span>
           <span class="shot-arrow"><svg><use href="#i-arrow"/></svg></span>
         </span>
       </a>
       <a href="portafolio.html?cat=fotos" class="shot reveal" style="--d:.12s">
         <img src="https://img.youtube.com/vi/dZIwIjQE5sg/maxresdefault.jpg" alt="Plato de comida fotografiado para un restaurante" loading="lazy" />
         <span class="shot-cap">
-          <span><span class="mono">03 / 05</span><span class="shot-title">Fotos</span></span>
+          <span class="shot-title">Fotos</span>
           <span class="shot-arrow"><svg><use href="#i-arrow"/></svg></span>
         </span>
       </a>
       <a href="portafolio.html?cat=web" class="shot reveal">
         <img src="assets/portfolio-web/maracuya.jpg" alt="Página web de Maracuyá Gastro Bar diseñada por One Action Media" loading="lazy" />
         <span class="shot-cap">
-          <span><span class="mono">04 / 05</span><span class="shot-title">Portafolio Web</span></span>
+          <span class="shot-title">Portafolio Web</span>
           <span class="shot-arrow"><svg><use href="#i-arrow"/></svg></span>
         </span>
       </a>
       <a href="menu-amelia-restaurante/amelia-menu.html" target="_blank" rel="noopener" class="shot reveal" style="--d:.08s">
         <img src="assets/portfolio-web/amelia.jpg" alt="Menú digital del restaurante Amelia" loading="lazy" />
         <span class="shot-cap">
-          <span><span class="mono">05 / 05</span><span class="shot-title">Menú Digital</span></span>
+          <span class="shot-title">Menú Digital</span>
           <span class="shot-arrow"><svg><use href="#i-out"/></svg></span>
         </span>
       </a>
@@ -980,14 +983,14 @@
 <!-- CTA -->
 <section id="paquetes" class="section cta">
   <div class="wrap">
-    <div class="sec-label reveal"><span class="mono">¿Listo para empezar?</span></div>
-    <h2 class="cta-title reveal">
+    <h2 class="cta-title">
       Cuéntanos tu idea.<br /><em class="accent">Nosotros la hacemos</em><br />realidad.
     </h2>
-    <p class="cta-sub reveal">
+    <p class="cta-sub">
       Cada proyecto es único. Escríbenos, cuéntanos qué necesitas y te damos una propuesta personalizada sin compromiso.
     </p>
-    <div class="cta-actions reveal">
+    <p class="cta-lead">¿Listo para empezar?</p>
+    <div class="cta-actions">
       <a href="https://wa.me/18296481698?text=Hola!%20Vi%20su%20página%20y%20me%20interesa%20cotizar%20un%20servicio." target="_blank" rel="noopener" class="btn btn-primary btn-lg">
         <svg><use href="#i-wa"/></svg> Escribir por WhatsApp
       </a>
@@ -995,7 +998,7 @@
         <svg><use href="#i-mail"/></svg> Enviar un correo
       </a>
     </div>
-    <p class="cta-note mono reveal">Respondemos en menos de 24 horas · República Dominicana</p>
+    <p class="cta-note mono">Respondemos en menos de 24 horas · República Dominicana</p>
   </div>
 </section>
 
@@ -1003,29 +1006,27 @@
 <section id="nosotros" class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label reveal"><span class="mono">Quiénes somos</span></div>
-        <h2 class="sec-title reveal">Sobre<br />Nosotros</h2>
-      </div>
+      <h2 class="sec-title">Sobre<br />Nosotros</h2>
+      <p class="sec-note">Quiénes somos</p>
     </div>
 
     <div class="about">
       <div class="about-text">
-        <p class="about-lede reveal">
+        <p class="about-lede">
           <em>One Action Media</em> es una agencia de contenido digital con base en la República Dominicana, comprometida con contar historias que conectan de verdad con las personas.
         </p>
-        <p class="reveal">
+        <p>
           Creemos que cada marca tiene una historia única que merece ser contada con <em>autenticidad, creatividad y precisión</em>. No hacemos contenido genérico: hacemos contenido que representa quién eres y lo que ofreces.
         </p>
-        <p class="reveal">
+        <p>
           Desde reels para redes hasta documentales cinematográficos, trabajamos con negocios de todos los sectores a lo largo de todo el país — con pasión, talento y una visión clara: <em class="accent">una sola gran acción puede cambiarlo todo</em>.
         </p>
-        <p class="reveal">
+        <p>
           Además de nuestros servicios de producción, contenido y diseño, desarrollamos <em>OneMenu</em>, nuestro propio producto de menús digitales con tecnología NFC para restaurantes.
         </p>
       </div>
 
-      <div class="stats reveal">
+      <div class="stats">
         <div class="stat">
           <div class="stat-number"><span class="accent">∞</span></div>
           <span class="mono">Creatividad</span>
@@ -1051,17 +1052,15 @@
 <section id="contacto" class="section">
   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="sec-label reveal"><span class="mono">Hablemos</span></div>
-        <h2 class="sec-title reveal">Contáctanos</h2>
-      </div>
+      <h2 class="sec-title">Contáctanos</h2>
+      <p class="sec-note">Hablemos</p>
     </div>
 
     <div class="contact">
       <div class="contact-intro">
-        <p class="reveal">¿Tienes un proyecto en mente? Escríbenos y te respondemos rápido. Estamos listos para ayudarte a crear contenido que impacte.</p>
+        <p>¿Tienes un proyecto en mente? Escríbenos y te respondemos rápido. Estamos listos para ayudarte a crear contenido que impacte.</p>
 
-        <ul class="channels reveal">
+        <ul class="channels">
           <li>
             <a href="https://wa.me/18296481698" target="_blank" rel="noopener" class="channel">
               <span><span class="mono">WhatsApp</span><span class="channel-value">+1 (829) 648-1698</span></span>
@@ -1076,7 +1075,7 @@
           </li>
         </ul>
 
-        <div class="socials reveal">
+        <div class="socials">
           <a href="https://instagram.com/oneactionmedia" target="_blank" rel="noopener" class="social">
             <svg><use href="#i-ig"/></svg> @oneactionmedia
           </a>
@@ -1086,20 +1085,20 @@
         </div>
       </div>
 
-      <form class="form-card reveal" id="quote-form" novalidate>
+      <form class="form-card" id="quote-form" novalidate>
         <h3>Solicitar Cotización</h3>
         <p>Te responderemos en menos de 24 horas.</p>
         <div class="field">
-          <label for="q-name" class="mono">Nombre</label>
+          <label for="q-name" >Nombre</label>
           <input id="q-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre completo" required />
           <p class="field-error" id="q-name-err">Escribe tu nombre para poder dirigirnos a ti.</p>
         </div>
         <div class="field">
-          <label for="q-phone" class="mono">WhatsApp / Teléfono</label>
+          <label for="q-phone">WhatsApp / Teléfono</label>
           <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+1 (809) 000-0000" />
         </div>
         <div class="field">
-          <label for="q-service" class="mono">Servicio de interés</label>
+          <label for="q-service">Servicio de interés</label>
           <select id="q-service" name="service" required>
             <option value="">Selecciona un servicio</option>
             <option>Reels &amp; Video para Redes</option>
@@ -1120,7 +1119,7 @@
           <p class="field-error" id="q-service-err">Elige el servicio que te interesa.</p>
         </div>
         <div class="field">
-          <label for="q-msg" class="mono">Mensaje <span class="opt">(opcional)</span></label>
+          <label for="q-msg">Mensaje <span class="opt">(opcional)</span></label>
           <textarea id="q-msg" name="message" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary btn-lg"><svg><use href="#i-wa"/></svg> Enviar por WhatsApp <svg class="arrow"><use href="#i-arrow"/></svg></button>
